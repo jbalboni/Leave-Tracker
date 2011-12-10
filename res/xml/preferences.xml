@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory 
+        android:title="Settings"
+        android:key="settings_category">
+        
+        <com.jbalboni.vacation.DatePickerPreference
+			android:key="startDate"
+			android:title="Start Date"
+			android:summary="The date when your leave began accruing"
+			android:dialogTitle="Start Date"
+			android:dialogMessage="Provide a start date"
+			android:defaultValue="2011-05-02" />
+			
+		<EditTextPreference
+			android:key="daysPerYear"
+			android:title="Vacation Days Per Year"
+			android:summary=""
+			android:dialogTitle="Vacation Days"
+			android:dialogMessage=""
+			android:defaultValue="10"
+			android:inputType="number"
+			android:numeric="integer" />
+			
+		<EditTextPreference
+			android:key="hoursUsed"
+			android:title="Vacation Hours Used"
+			android:summary=""
+			android:dialogTitle="Vacation Hours Used"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="number" />
+ 
+            
+    </PreferenceCategory>
+    
+</PreferenceScreen>

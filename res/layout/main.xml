@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.jbalboni.vacation"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <com.markupartist.android.widget.ActionBar
+    	android:id="@+id/actionbar"
+    	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+    	app:title="@string/app_name"
+    	style="@style/ActionBar" />
+    <TextView
+        android:id="@+id/daysAvailableLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/days_avail"
+        android:layout_below="@+id/actionbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dip"
+        android:textSize="10pt" />
+    <TextView
+        android:id="@+id/daysAvailable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/daysAvailableLabel"
+        android:layout_centerHorizontal="true"
+        android:textSize="30pt" />
+    <TextView
+        android:id="@+id/daysAvailableAsOf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/daysAvailable"
+        android:text="@string/days_avail_as_of"
+        android:layout_centerHorizontal="true"
+        android:textSize="10pt" />
+</RelativeLayout>
