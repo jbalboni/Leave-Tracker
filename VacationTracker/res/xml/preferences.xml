@@ -31,7 +31,7 @@
 			android:dialogTitle="Vacation Hours Used"
 			android:dialogMessage=""
 			android:defaultValue="0"
-			android:inputType="number" />
+			android:inputType="numberDecimal" />
  
             
     </PreferenceCategory>

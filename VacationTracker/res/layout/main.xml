@@ -49,7 +49,7 @@
   android:weightSum="2.0" 
   android:padding="1px"
   android:layout_height="wrap_content"
-  android:background="#dddddd"
+  android:background="#ffffff"
   
   android:layout_weight="0.05"
   android:layout_alignParentBottom="true">

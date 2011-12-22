@@ -38,6 +38,10 @@ public class VacationTracker
     {
         this.hoursUsed = hoursUsed;
     }
+    public void addHoursUsed(float hoursUsed)
+    {
+        this.hoursUsed += hoursUsed;
+    }
     public float getHoursUsed()
     {
         return hoursUsed;
