@@ -16,19 +16,28 @@
 			
 		<EditTextPreference
 			android:key="daysPerYear"
-			android:title="Vacation Days Per Year"
+			android:title="Hours of Leave Per Year"
 			android:summary=""
-			android:dialogTitle="Vacation Days"
+			android:dialogTitle="Leave Hours"
 			android:dialogMessage=""
-			android:defaultValue="10"
+			android:defaultValue="80"
 			android:inputType="number"
 			android:numeric="integer" />
 			
 		<EditTextPreference
 			android:key="hoursUsed"
-			android:title="Vacation Hours Used"
+			android:title="Leave Hours Used"
 			android:summary=""
-			android:dialogTitle="Vacation Hours Used"
+			android:dialogTitle="Leave Hours Used"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
+			
+		<EditTextPreference
+			android:key="intialHours"
+			android:title="Initial Leave Hours"
+			android:summary=""
+			android:dialogTitle="Starting Leave"
 			android:dialogMessage=""
 			android:defaultValue="0"
 			android:inputType="numberDecimal" />

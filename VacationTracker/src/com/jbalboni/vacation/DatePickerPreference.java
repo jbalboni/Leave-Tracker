@@ -21,7 +21,7 @@ OnDateChangedListener, OnDateSetListener {
         strDate = getPersistedString("2011-05-02");
         LocalDate startDate = fmt.parseLocalDate(strDate);
 
-        picker.init(startDate.getYear(),startDate.getMonthOfYear(),startDate.getDayOfMonth(), this);
+        picker.init(startDate.getYear(),startDate.getMonthOfYear()-1,startDate.getDayOfMonth(), this);
         return picker;
     }
 
