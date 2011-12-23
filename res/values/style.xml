@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="VacationTheme" parent="android:Theme.Light">
-    	<item name="android:windowNoTitle">true</item>
+    <style name="VacationTheme" parent="android:Theme.Holo.Light">
+    	<item name="android:windowNoTitle">false</item>
     </style>
 </resources>

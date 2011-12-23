@@ -4,10 +4,6 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.markupartist.android.widget.ActionBar;
-import com.markupartist.android.widget.ActionBar.Action;
-import com.markupartist.android.widget.ActionBar.IntentAction;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -18,19 +14,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.text.InputType;
 
 public class VacationTrackerActivity extends Activity {
     private VacationTracker vacationTracker;
     private LocalDate asOfDate = new LocalDate();
     
-    private Button asOfDatePicker;
-    private Button useHoursPicker;
     static final int DATE_DIALOG_ID = 0;
     static final int HOURS_DIALOG_ID = 1;
     static final String HOURS_IN_DAY = "8";
@@ -46,31 +40,35 @@ public class VacationTrackerActivity extends Activity {
         
         setContentView(R.layout.main);
         
-        vacationTracker = VacationStateManager.createVacationTracker(prefs,this);
+        vacationTracker = VacationStateManager.createVacationTracker(prefs);
         
-        TextView daysAvailable = (TextView)findViewById(R.id.hoursAvailable);
-        daysAvailable.setText(String.format("%s %.2f",getString(R.string.hours_avail),vacationTracker.calculateHours(asOfDate)));
-        
-        ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+        /*ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         //actionBar.setHomeAction(new IntentAction(this, VacationTrackerActivity.createIntent(this), R.drawable.ic_title_home_default));
         final Action settingsAction = new IntentAction(this, new Intent(this, SettingsActivity.class), R.drawable.ic_action_settings);
         actionBar.addAction(settingsAction);
+        */
         
-        asOfDatePicker = (Button) findViewById(R.id.changeAsOfDate);
-        asOfDatePicker.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showDialog(DATE_DIALOG_ID);
-            }
-        });
-        
-        useHoursPicker = (Button) findViewById(R.id.useHours);
-        useHoursPicker.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showDialog(HOURS_DIALOG_ID);
-            }
-        });
     }
     
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.leave_menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+        case R.id.settings:
+            Intent test = new Intent(this,SettingsActivity.class);
+            startActivity(test);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -84,16 +82,16 @@ public class VacationTrackerActivity extends Activity {
             alert.setMessage("Add to your used leave");
 
             // Set an EditText view to get user input
-            final EditText input = new EditText(this);
-            input.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-            input.setText(HOURS_IN_DAY);
-            alert.setView(input);
+            final EditText hoursUsedInput = new EditText(this);
+            hoursUsedInput.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            hoursUsedInput.setText(HOURS_IN_DAY);
+            alert.setView(hoursUsedInput);
 
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-              Float hoursUsed = Float.parseFloat(input.getText().toString());
-              vacationTracker.addHoursUsed(hoursUsed);
-              updateDisplay();
+              Float hoursUsed = Float.parseFloat(hoursUsedInput.getText().toString());
+              ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).addHoursUsed(hoursUsed);
+              ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).updateDisplay();
               VacationStateManager.saveVacationTracker(vacationTracker, prefs);
               }
             });
@@ -112,24 +110,15 @@ public class VacationTrackerActivity extends Activity {
     private DatePickerDialog.OnDateSetListener mDateSetListener =
         new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                asOfDate = new LocalDate(year,monthOfYear+1,dayOfMonth);
-                updateDisplay();
+                ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).setAsOfDate(new LocalDate(year,monthOfYear+1,dayOfMonth));
+                ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).updateDisplay();
             }
         };
-    
-    @Override
-    protected void onResume() {
-        super.onResume();
-        
-        vacationTracker = VacationStateManager.createVacationTracker(PreferenceManager.getDefaultSharedPreferences(this),this);
-        
-        updateDisplay();
-    }
 
-    private void updateDisplay()
+    /*private void updateDisplay()
     {
-        TextView daysAvailable = (TextView)findViewById(R.id.hoursAvailable);
-        daysAvailable.setText(String.format("%.2f",vacationTracker.calculateHours(asOfDate)));
+        TextView hoursAvailable = (TextView)findViewById(R.id.hoursAvailable);
+        hoursAvailable.setText(String.format("%.2f",vacationTracker.calculateHours(asOfDate)));
         TextView asOfDateTextView = (TextView) findViewById(R.id.asOfDateDesc);
         if (asOfDate.compareTo(new LocalDate()) != 0) {
             asOfDateTextView.setText(fmt.print(asOfDate));
@@ -137,7 +126,7 @@ public class VacationTrackerActivity extends Activity {
         else {
             asOfDateTextView.setText(getString(R.string.default_as_of_date));
         }
-    }
+    }*/
     
     public static Intent createIntent(Context context) {
         Intent i = new Intent(context, VacationTrackerActivity.class);
