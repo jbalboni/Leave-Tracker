@@ -7,7 +7,7 @@ import org.joda.time.format.ISODateTimeFormat;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-public final class VacationStateManager
+public final class LeaveStateManager
 {
     private static final DateTimeFormatter fmt = ISODateTimeFormat.localDateParser();
     public static VacationTracker createVacationTracker(SharedPreferences prefs)

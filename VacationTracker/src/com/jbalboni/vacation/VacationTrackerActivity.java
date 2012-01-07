@@ -4,6 +4,8 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -40,7 +42,14 @@ public class VacationTrackerActivity extends Activity {
         
         setContentView(R.layout.main);
         
-        vacationTracker = VacationStateManager.createVacationTracker(prefs);
+        vacationTracker = LeaveStateManager.createVacationTracker(prefs);
+        
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        Tab tab = actionBar.newTab()
+        .setText("Vacation")
+        .setTabListener(new LeaveCategoryTabListener(new LeaveFragment()));
+        actionBar.addTab(tab);
         
         /*ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
         //actionBar.setHomeAction(new IntentAction(this, VacationTrackerActivity.createIntent(this), R.drawable.ic_title_home_default));
@@ -92,7 +101,7 @@ public class VacationTrackerActivity extends Activity {
               Float hoursUsed = Float.parseFloat(hoursUsedInput.getText().toString());
               ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).addHoursUsed(hoursUsed);
               ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).updateDisplay();
-              VacationStateManager.saveVacationTracker(vacationTracker, prefs);
+              LeaveStateManager.saveVacationTracker(vacationTracker, prefs);
               }
             });
 
@@ -114,19 +123,6 @@ public class VacationTrackerActivity extends Activity {
                 ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).updateDisplay();
             }
         };
-
-    /*private void updateDisplay()
-    {
-        TextView hoursAvailable = (TextView)findViewById(R.id.hoursAvailable);
-        hoursAvailable.setText(String.format("%.2f",vacationTracker.calculateHours(asOfDate)));
-        TextView asOfDateTextView = (TextView) findViewById(R.id.asOfDateDesc);
-        if (asOfDate.compareTo(new LocalDate()) != 0) {
-            asOfDateTextView.setText(fmt.print(asOfDate));
-        }
-        else {
-            asOfDateTextView.setText(getString(R.string.default_as_of_date));
-        }
-    }*/
     
     public static Intent createIntent(Context context) {
         Intent i = new Intent(context, VacationTrackerActivity.class);

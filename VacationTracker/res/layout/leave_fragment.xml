@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.jbalboni.vacation"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/hoursAvailableLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hours_avail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dip"
+        android:textSize="10pt" />
+    <TextView
+        android:id="@+id/hoursAvailable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hoursAvailableLabel"
+        android:layout_centerHorizontal="true"
+        android:textSize="30pt" />
+    <TextView
+        android:id="@+id/hoursAvailableAsOf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hoursAvailable"
+        android:text="@string/hours_avail_as_of"
+        android:layout_centerHorizontal="true"
+        android:textSize="10pt" />
+    <TextView
+        android:id="@+id/asOfDateDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hoursAvailableAsOf"
+        android:text="@string/default_as_of_date"
+        android:layout_centerHorizontal="true"
+        android:textSize="10pt" />
+    <LinearLayout
+  android:layout_width="fill_parent"
+  android:orientation="horizontal"
+  android:weightSum="2.0" 
+  android:padding="1px"
+  android:layout_height="wrap_content"
+  
+  android:layout_weight="0.05"
+  android:layout_alignParentBottom="true">
+
+  <Button android:id="@+id/useHours"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_width="fill_parent"
+          android:text="Use Hours"
+          android:textSize="6pt"/>
+
+  <Button android:id="@+id/changeAsOfDate"
+          android:layout_weight="1"
+          android:layout_height="wrap_content"
+          android:layout_width="fill_parent"
+          android:text="Change As Of Date"
+          android:textSize="6pt" />
+
+</LinearLayout>
+</RelativeLayout>
