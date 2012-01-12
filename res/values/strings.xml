@@ -5,5 +5,10 @@
     <string name="hours_avail_as_of">hours available, as of</string>
     <string name="default_as_of_date">today</string>
     <string name="app_name">Leave Tracker</string>
+    <string name="default_left_name">Sick Leave</string>
+    <string name="default_center_name">Paid Leave</string>
+    <string name="default_right_name">Comp Time</string>
+    <string name="use_hours_alert_title">Use Hours</string>
+    <string name="use_hours_alert_msg">Add to your used leave</string>
 
 </resources>

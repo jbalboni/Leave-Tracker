@@ -3,10 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res/com.jbalboni.vacation"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-<fragment android:name="com.jbalboni.vacation.LeaveFragment"
-            android:id="@+id/vacationFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+    android:background="#FFFFFFFF">
+    
+<com.viewpagerindicator.TitlePageIndicator
+    android:id="@+id/titles"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+        app:footerLineHeight="1dp"
+        app:footerIndicatorHeight="3dp"
+        app:footerIndicatorStyle="underline"
+        app:textColor="#AA000000"
+        app:selectedColor="#FF000000"
+        app:footerColor="#ff33b5e5"
+        app:selectedBold="false" />
+    
+<android.support.v4.view.ViewPager
+	android:layout_below="@+id/titles"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    android:id="@+id/leavePager"/>
 </RelativeLayout>
