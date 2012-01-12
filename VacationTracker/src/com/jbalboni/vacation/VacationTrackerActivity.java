@@ -1,17 +1,14 @@
 package com.jbalboni.vacation;
 
-import org.joda.time.LocalDate;
+import java.util.List;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import android.app.ActionBar;
-import android.app.ActionBar.Tab;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.TitleProvider;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,44 +16,75 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.text.InputType;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 
-public class VacationTrackerActivity extends Activity {
-    private VacationTracker vacationTracker;
-    private LocalDate asOfDate = new LocalDate();
+public class VacationTrackerActivity extends FragmentActivity {
+    
+    LeaveAdapter mAdapter;
+    ViewPager mPager;
     
     static final int DATE_DIALOG_ID = 0;
     static final int HOURS_DIALOG_ID = 1;
     static final String HOURS_IN_DAY = "8";
     DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
     
-    private SharedPreferences prefs;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        
         setContentView(R.layout.main);
         
-        vacationTracker = LeaveStateManager.createVacationTracker(prefs);
+        mAdapter = new LeaveAdapter(getSupportFragmentManager(),LeaveStateManager.getTitles(PreferenceManager.getDefaultSharedPreferences(this),getApplicationContext()));
+
+        mPager = (ViewPager)findViewById(R.id.leavePager);
+        mPager.setAdapter(mAdapter);
+        mPager.setCurrentItem(1,false);
         
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        Tab tab = actionBar.newTab()
-        .setText("Vacation")
-        .setTabListener(new LeaveCategoryTabListener(new LeaveFragment()));
-        actionBar.addTab(tab);
+
+        //Bind the title indicator to the adapter
+        TitlePageIndicator titleIndicator = (TitlePageIndicator)findViewById(R.id.titles);
+        titleIndicator.setViewPager(mPager);
+        titleIndicator.setCurrentItem(1);
         
-        /*ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        //actionBar.setHomeAction(new IntentAction(this, VacationTrackerActivity.createIntent(this), R.drawable.ic_title_home_default));
-        final Action settingsAction = new IntentAction(this, new Intent(this, SettingsActivity.class), R.drawable.ic_action_settings);
-        actionBar.addAction(settingsAction);
-        */
+    }
+    
+    public static class LeaveAdapter extends FragmentPagerAdapter implements TitleProvider {
+        List<String> titles;
+        public LeaveAdapter(FragmentManager fm, List<String> titles) {
+            super(fm);
+            this.titles = titles;
+        }
+
+        @Override
+        public int getCount() {
+            return titles.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return LeaveFragment.newInstance(position);
+        }
+
+        @Override
+        public String getTitle(int position)
+        {
+            return titles.get(position);
+        }
         
+        public void updateTitles(List<String> newTitles) {
+            titles = newTitles;
+        }
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.updateTitles(LeaveStateManager.getTitles(PreferenceManager.getDefaultSharedPreferences(this),getApplicationContext()));
     }
     
     @Override
@@ -78,55 +106,11 @@ public class VacationTrackerActivity extends Activity {
             return super.onOptionsItemSelected(item);
         }
     }
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-        case DATE_DIALOG_ID:
-            return new DatePickerDialog(this,
-                    mDateSetListener, asOfDate.getYear(), asOfDate.getMonthOfYear()-1, asOfDate.getDayOfMonth());
-        case HOURS_DIALOG_ID:
-            AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-            alert.setTitle("Use hours");
-            alert.setMessage("Add to your used leave");
-
-            // Set an EditText view to get user input
-            final EditText hoursUsedInput = new EditText(this);
-            hoursUsedInput.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-            hoursUsedInput.setText(HOURS_IN_DAY);
-            alert.setView(hoursUsedInput);
-
-            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-              Float hoursUsed = Float.parseFloat(hoursUsedInput.getText().toString());
-              ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).addHoursUsed(hoursUsed);
-              ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).updateDisplay();
-              LeaveStateManager.saveVacationTracker(vacationTracker, prefs);
-              }
-            });
-
-            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-              public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-              }
-            });
-
-            return alert.create();
-        }
-        return null;
-    }
-    
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-        new DatePickerDialog.OnDateSetListener() {
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).setAsOfDate(new LocalDate(year,monthOfYear+1,dayOfMonth));
-                ((LeaveFragment)getFragmentManager().findFragmentById(R.id.vacationFragment)).updateDisplay();
-            }
-        };
     
     public static Intent createIntent(Context context) {
         Intent i = new Intent(context, VacationTrackerActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         return i;
     }
+
 }

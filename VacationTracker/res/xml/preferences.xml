@@ -2,20 +2,37 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory 
-        android:title="Settings"
-        android:key="settings_category">
-        
-        <com.jbalboni.vacation.DatePickerPreference
+	<com.jbalboni.vacation.DatePickerPreference
 			android:key="startDate"
 			android:title="Start Date"
 			android:summary="The date when your leave began accruing"
 			android:dialogTitle="Start Date"
 			android:dialogMessage="Provide a start date"
-			android:defaultValue="2011-05-02" />
+			android:defaultValue="" />
+
+	<ListPreference
+			android:key="leaveInterval"
+			android:title="Leave Interval"
+			android:summary=""
+			android:defaultValue="Day"
+			android:entries="@array/leave_intervals"
+			android:entryValues="@array/leave_intervals" />
+	
+    <PreferenceCategory 
+        android:title="Left Category Settings"
+        android:key="catLeft_settings">
+		
+		<EditTextPreference
+			android:key="catLeft_title"
+			android:title="Category Title"
+			android:summary=""
+			android:dialogTitle="Left Category Title"
+			android:dialogMessage=""
+			android:defaultValue="@string/default_left_name"
+			android:inputType="text" />
 			
 		<EditTextPreference
-			android:key="daysPerYear"
+			android:key="catLeft_hoursPerYear"
 			android:title="Hours of Leave Per Year"
 			android:summary=""
 			android:dialogTitle="Leave Hours"
@@ -25,7 +42,7 @@
 			android:numeric="integer" />
 			
 		<EditTextPreference
-			android:key="hoursUsed"
+			android:key="catLeft_hoursUsed"
 			android:title="Leave Hours Used"
 			android:summary=""
 			android:dialogTitle="Leave Hours Used"
@@ -34,7 +51,95 @@
 			android:inputType="numberDecimal" />
 			
 		<EditTextPreference
-			android:key="intialHours"
+			android:key="catLeft_intialHours"
+			android:title="Initial Leave Hours"
+			android:summary=""
+			android:dialogTitle="Starting Leave"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
+ 
+            
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="Center Category Settings"
+        android:key="catCenter_settings">
+        
+        <EditTextPreference
+			android:key="catCenter_title"
+			android:title="Category Title"
+			android:summary=""
+			android:dialogTitle="Center Category Title"
+			android:dialogMessage=""
+			android:defaultValue="@string/default_center_name"
+			android:inputType="text" />
+			
+		<EditTextPreference
+			android:key="catCenter_hoursPerYear"
+			android:title="Hours of Leave Per Year"
+			android:summary=""
+			android:dialogTitle="Leave Hours"
+			android:dialogMessage=""
+			android:defaultValue="80"
+			android:inputType="number"
+			android:numeric="integer" />
+			
+		<EditTextPreference
+			android:key="catCenter_hoursUsed"
+			android:title="Leave Hours Used"
+			android:summary=""
+			android:dialogTitle="Leave Hours Used"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
+			
+		<EditTextPreference
+			android:key="catCenter_intialHours"
+			android:title="Initial Leave Hours"
+			android:summary=""
+			android:dialogTitle="Starting Leave"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
+ 
+            
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="Right Category Settings"
+        android:key="catRight_settings">
+        
+        <EditTextPreference
+			android:key="catRight_title"
+			android:title="Category Title"
+			android:summary=""
+			android:dialogTitle="Right Category Title"
+			android:dialogMessage=""
+			android:defaultValue="@string/default_right_name"
+			android:inputType="text" />
+			
+		<EditTextPreference
+			android:key="catRight_hoursPerYear"
+			android:title="Hours of Leave Per Year"
+			android:summary=""
+			android:dialogTitle="Leave Hours"
+			android:dialogMessage=""
+			android:defaultValue="80"
+			android:inputType="number"
+			android:numeric="integer" />
+			
+		<EditTextPreference
+			android:key="catRight_hoursUsed"
+			android:title="Leave Hours Used"
+			android:summary=""
+			android:dialogTitle="Leave Hours Used"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
+			
+		<EditTextPreference
+			android:key="catRight_intialHours"
 			android:title="Initial Leave Hours"
 			android:summary=""
 			android:dialogTitle="Starting Leave"

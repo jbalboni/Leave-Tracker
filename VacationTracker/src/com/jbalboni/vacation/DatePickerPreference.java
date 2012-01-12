@@ -18,16 +18,17 @@ OnDateChangedListener, OnDateSetListener {
     @Override
     protected View onCreateDialogView() {
         DatePicker picker = new DatePicker(getContext());
-        strDate = getPersistedString("2011-05-02");
-        LocalDate startDate = fmt.parseLocalDate(strDate);
-
+        strDate = getPersistedString(null);
+        LocalDate startDate = strDate == null ? new LocalDate() : fmt.parseLocalDate(strDate);
+        
+        picker.setCalendarViewShown(false);
         picker.init(startDate.getYear(),startDate.getMonthOfYear()-1,startDate.getDayOfMonth(), this);
         return picker;
     }
 
     public void onDateChanged(DatePicker view, int year, int monthOfYear,  
             int dayOfMonth) {
-        strDate = String.format("%4d-%02d-%02d",year,monthOfYear,dayOfMonth);
+        strDate = String.format("%4d-%02d-%02d",year,monthOfYear+1,dayOfMonth);
     }
 
     public void onDateSet(DatePicker view, int year, int monthOfYear,  
@@ -37,7 +38,7 @@ OnDateChangedListener, OnDateSetListener {
 
     @Override
     public void setDefaultValue(Object defaultValue) {
-        super.setDefaultValue("2011-05-02");
+        super.setDefaultValue(null);
     }
 
     @Override
