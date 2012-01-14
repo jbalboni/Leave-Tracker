@@ -12,6 +12,9 @@
     <style name="LeaveViewText.Top">
     	<item name="android:layout_marginTop">60dip</item>
     </style>
+    <style name="LeaveViewText.Top.Land">
+    	<item name="android:layout_marginTop">10dip</item>
+    </style>
     <style name="LeaveViewText.Content">
     	<item name="android:textSize">30pt</item>
     </style>

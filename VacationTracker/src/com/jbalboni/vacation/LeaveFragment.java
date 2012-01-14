@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -43,6 +44,7 @@ public class LeaveFragment extends Fragment
         LeaveFragment f = new LeaveFragment();
         
         Bundle args = new Bundle();
+        //R.string.leave_category_position
         args.putInt("pos", position);
         f.setArguments(args);
         
@@ -53,7 +55,7 @@ public class LeaveFragment extends Fragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        leaveCategory = LeaveCategory.getCategoryByPosition(getArguments() != null ? getArguments().getInt("pos") : null);
+        leaveCategory = LeaveCategory.getCategoryByPosition(getArguments() != null ? getArguments().getInt(getString(R.string.leave_category_position)) : null);
         vacationTracker = LeaveStateManager.createVacationTracker(prefs,leaveCategory.getPrefix());
     }
     
@@ -65,11 +67,6 @@ public class LeaveFragment extends Fragment
         TextView hoursAvailable = (TextView)leaveFrag.findViewById(R.id.hoursAvailable);
         hoursAvailable.setText(String.format("%s %.2f",getString(R.string.hours_avail),vacationTracker.calculateHours(asOfDate)));
         
-        /*ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-        //actionBar.setHomeAction(new IntentAction(this, VacationTrackerActivity.createIntent(this), R.drawable.ic_title_home_default));
-        final Action settingsAction = new IntentAction(this, new Intent(this, SettingsActivity.class), R.drawable.ic_action_settings);
-        actionBar.addAction(settingsAction);
-        */
         asOfDatePicker = (Button) leaveFrag.findViewById(R.id.changeAsOfDate);
         asOfDatePicker.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -11,4 +11,5 @@
     <string name="use_hours_alert_msg">Add to your used leave</string>
 	<string name="quick_use_hours">Use Hours</string>
 	<string name="quick_use_date">Change As Of Date</string>
+	<string name="leave_category_position">pos</string>
 </resources>

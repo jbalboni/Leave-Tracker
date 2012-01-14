@@ -2,15 +2,11 @@ package com.jbalboni.vacation;
 
 import java.util.List;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -26,11 +22,6 @@ public class VacationTrackerActivity extends FragmentActivity {
     
     LeaveAdapter mAdapter;
     ViewPager mPager;
-    
-    static final int DATE_DIALOG_ID = 0;
-    static final int HOURS_DIALOG_ID = 1;
-    static final String HOURS_IN_DAY = "8";
-    DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
     
     /** Called when the activity is first created. */
     @Override
