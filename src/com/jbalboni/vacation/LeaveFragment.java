@@ -95,7 +95,7 @@ public class LeaveFragment extends Fragment
 
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
 
-            alert.setTitle(getString(R.string.use_hours_alert_title));
+            alert.setTitle(getString(R.string.quick_use_hours));
             alert.setMessage(getString(R.string.use_hours_alert_msg));
 
             // Set an EditText view to get user input
@@ -104,7 +104,7 @@ public class LeaveFragment extends Fragment
             hoursUsedInput.setText(HOURS_IN_DAY);
             alert.setView(hoursUsedInput);
 
-            alert.setPositiveButton(getString(R.string.use_hours_alert_title), new DialogInterface.OnClickListener() {
+            alert.setPositiveButton(getString(R.string.quick_use_hours), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
               Float hoursUsed = Float.parseFloat(hoursUsedInput.getText().toString());
               vacationTracker.addHoursUsed(hoursUsed);

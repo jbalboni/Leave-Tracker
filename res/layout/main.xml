@@ -7,19 +7,10 @@
     
 <com.viewpagerindicator.TitlePageIndicator
     android:id="@+id/titles"
-    android:layout_height="wrap_content"
-    android:layout_width="fill_parent"
-        app:footerLineHeight="1dp"
-        app:footerIndicatorHeight="3dp"
-        app:footerIndicatorStyle="underline"
-        app:textColor="#AA000000"
-        app:selectedColor="#FF000000"
-        app:footerColor="#ff33b5e5"
-        app:selectedBold="false" />
+    style="@style/ViewPagerIndicator" />
     
 <android.support.v4.view.ViewPager
 	android:layout_below="@+id/titles"
-    android:layout_width="match_parent" 
-    android:layout_height="match_parent" 
+    style="@style/ViewPager" 
     android:id="@+id/leavePager"/>
 </RelativeLayout>
