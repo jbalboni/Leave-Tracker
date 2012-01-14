@@ -31,7 +31,7 @@ public final class LeaveStateManager
         prefsEditor.putString(categoryPrefix+"hoursUsed", Float.toString(vacationTracker.getHoursUsed()));
         prefsEditor.putString(categoryPrefix+"hoursPerYear", Float.toString(vacationTracker.getHoursPerYear()));
         prefsEditor.putString(categoryPrefix+"intialHours", Float.toString(vacationTracker.getInitialHours()));
-        prefsEditor.putString("startDate", String.format("%4d-%2d-%2d",vacationTracker.getStartDate().getYear(),vacationTracker.getStartDate().getMonthOfYear()
+        prefsEditor.putString("startDate", String.format("%4d-%02d-%02d",vacationTracker.getStartDate().getYear(),vacationTracker.getStartDate().getMonthOfYear()
                 ,vacationTracker.getStartDate().getDayOfMonth()));
         prefsEditor.commit();
     }
