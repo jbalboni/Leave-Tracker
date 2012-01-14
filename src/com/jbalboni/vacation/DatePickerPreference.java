@@ -21,7 +21,9 @@ OnDateChangedListener, OnDateSetListener {
         strDate = getPersistedString(null);
         LocalDate startDate = strDate == null ? new LocalDate() : fmt.parseLocalDate(strDate);
         
-        picker.setCalendarViewShown(false);
+        if(android.os.Build.VERSION.SDK_INT >= 11) {
+            picker.setCalendarViewShown(false);    
+         }
         picker.init(startDate.getYear(),startDate.getMonthOfYear()-1,startDate.getDayOfMonth(), this);
         return picker;
     }
