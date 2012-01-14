@@ -4,4 +4,4 @@ This is an application for tracking different types of paid leave. There are thr
 
 The point of this is mainly to learn how to write Android apps, so there's definitely going to be sub-optimal code in here for a while.
 
-Needs View Pager Indicator included as a library project.
+Needs View Pager Indicator and ActionBarSherlock included as library projects.
