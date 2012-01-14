@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="VacationTheme" parent="android:Theme.Light">
-    	<item name="android:windowNoTitle">false</item>
+    <style name="VacationTheme" parent="@style/Theme.Sherlock.Light">
+    	<item name="abBackground">#22555555</item>
     </style>
     <style name="LeaveViewText">
     	<item name="android:textSize">10pt</item>
