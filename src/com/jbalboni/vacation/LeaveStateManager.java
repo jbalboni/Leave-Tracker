@@ -18,6 +18,14 @@ public final class LeaveStateManager
     {
         String startDateStr = prefs.getString("startDate",null);
         String leaveInterval = prefs.getString("leaveInterval", "Daily");
+        if (leaveInterval.equals("Day"))
+            leaveInterval = "Daily";
+        else if (leaveInterval.equals("Week"))
+            leaveInterval = "Weekly";
+        else if (leaveInterval.equals("Month"))
+            leaveInterval = "Monthly";
+        else
+            leaveInterval = "Daily";
         LocalDate startDate = startDateStr == null ? new LocalDate() : fmt.parseLocalDate(startDateStr);
         Float hoursUsed = Float.parseFloat(prefs.getString(categoryPrefix+"hoursUsed", "0"));
         float hoursPerYear = Float.parseFloat(prefs.getString(categoryPrefix+"hoursPerYear", "80"));
