@@ -78,7 +78,7 @@
 			android:summary=""
 			android:dialogTitle="@string/leave_pref_title"
 			android:dialogMessage=""
-			android:defaultValue="@string/default_left_name"
+			android:defaultValue="@string/default_center_name"
 			android:inputType="text" />
 			
 		<CheckBoxPreference
@@ -129,7 +129,7 @@
 			android:summary=""
 			android:dialogTitle="@string/leave_pref_title"
 			android:dialogMessage=""
-			android:defaultValue="@string/default_left_name"
+			android:defaultValue="@string/default_right_name"
 			android:inputType="text" />
 			
 		<CheckBoxPreference
