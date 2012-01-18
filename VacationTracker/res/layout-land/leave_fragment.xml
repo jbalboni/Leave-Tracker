@@ -10,7 +10,7 @@
         android:text="@string/hours_avail" />
     <TextView
         android:id="@+id/hoursAvailable"
-        style="@style/LeaveViewText.Content"
+        style="@style/LeaveViewText.Content.Land"
         android:layout_below="@+id/hoursAvailableLabel" />
     <TextView
         android:id="@+id/hoursAvailableAsOf"

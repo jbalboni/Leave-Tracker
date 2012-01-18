@@ -166,10 +166,10 @@ public class LeaveFragment extends Fragment
         hoursAvailable.setText(String.format("%.2f",vacationTracker.calculateHours(asOfDate)));
         TextView asOfDateTextView = (TextView) getView().findViewById(R.id.asOfDateDesc);
         if (asOfDate.compareTo(new LocalDate()) != 0) {
-            asOfDateTextView.setText(fmt.print(asOfDate));
+            asOfDateTextView.setText(" "+fmt.print(asOfDate));
         }
         else {
-            asOfDateTextView.setText(getString(R.string.default_as_of_date));
+            asOfDateTextView.setText(" "+getString(R.string.default_as_of_date));
         }
     }
     
