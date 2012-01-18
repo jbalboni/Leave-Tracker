@@ -18,6 +18,9 @@
     <style name="LeaveViewText.Content">
     	<item name="android:textSize">30pt</item>
     </style>
+    <style name="LeaveViewText.Content.Land">
+    	<item name="android:textSize">25pt</item>
+    </style>
     <style name="ButtonLayout">
     	<item name="android:layout_width">fill_parent</item>
   		<item name="android:orientation">horizontal</item>

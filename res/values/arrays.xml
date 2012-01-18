@@ -2,8 +2,9 @@
 <resources>
     <array
         name="leave_intervals">
-        <item>Day</item>
-        <item>Week</item>
-        <item>Month</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Bi-Weekly</item>
+        <item>Monthly</item>
     </array>
 </resources>

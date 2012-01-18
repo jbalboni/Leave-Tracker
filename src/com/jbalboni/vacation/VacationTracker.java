@@ -16,33 +16,43 @@ public class VacationTracker
     private float hoursPerYear;
     private float initialHours;
     private String leaveInterval;
+    private boolean accrualOn;
     
     public VacationTracker() {
     }
-    public VacationTracker(LocalDate startDate, float hoursUsed, float hoursPerYear, float initialHours, String leaveInterval) {
+    public VacationTracker(LocalDate startDate, float hoursUsed, float hoursPerYear, float initialHours, String leaveInterval, boolean accrualOn) {
         this.startDate = startDate;
         this.hoursUsed = hoursUsed;
         this.hoursPerYear = hoursPerYear;
         this.initialHours = initialHours;
         this.leaveInterval = leaveInterval;
+        this.accrualOn = accrualOn;
      }
     public float calculateHours(LocalDate asOfDate) {
         int interval = 0;
         float vacationHours = 0;
-        if (leaveInterval.equals("Day")) {
-            Days days = Days.daysBetween(startDate, asOfDate);
-            interval = days.getDays();
-            vacationHours = (interval * ((hoursPerYear / WEEKS_IN_YEAR) / DAYS_IN_WEEK) - hoursUsed);
-        } else if (leaveInterval.equals("Week")) {
-            Weeks weeks = Weeks.weeksBetween(startDate, asOfDate);
-            interval = weeks.getWeeks();
-            vacationHours = (interval * (hoursPerYear / WEEKS_IN_YEAR) - hoursUsed);
-        } else if (leaveInterval.equals("Month")) {
-            Months months = Months.monthsBetween(startDate, asOfDate);
-            interval = months.getMonths();
-            vacationHours = (interval * (hoursPerYear / MONTHS_IN_YEAR) - hoursUsed);
+        if (this.accrualOn == true) {
+            if (leaveInterval.equals("Daily")) {
+                Days days = Days.daysBetween(startDate, asOfDate);
+                interval = days.getDays();
+                vacationHours = (interval * ((hoursPerYear / WEEKS_IN_YEAR) / DAYS_IN_WEEK) - hoursUsed);
+            } else if (leaveInterval.equals("Weekly")) {
+                Weeks weeks = Weeks.weeksBetween(startDate, asOfDate);
+                interval = weeks.getWeeks();
+                vacationHours = (interval * (hoursPerYear / WEEKS_IN_YEAR) - hoursUsed);
+            } else if (leaveInterval.equals("Bi-Weekly")) {
+                Weeks weeks = Weeks.weeksBetween(startDate, asOfDate);
+                interval = weeks.getWeeks() / 2;
+                vacationHours = (interval * (hoursPerYear / (WEEKS_IN_YEAR / 2)) - hoursUsed);
+            } else if (leaveInterval.equals("Monthly")) {
+                Months months = Months.monthsBetween(startDate, asOfDate);
+                interval = months.getMonths();
+                vacationHours = (interval * (hoursPerYear / MONTHS_IN_YEAR) - hoursUsed);
+            }
+        } else {
+            vacationHours = hoursPerYear - hoursUsed;
         }
-        return vacationHours;
+        return vacationHours + initialHours;
     }
     public void setStartDate(LocalDate startDate)
     {
@@ -79,6 +89,10 @@ public class VacationTracker
     public void setInitialHours(float initialHours)
     {
         this.initialHours = initialHours;
+    }
+    public boolean isAccrualOn()
+    {
+        return accrualOn;
     }
     
 }
