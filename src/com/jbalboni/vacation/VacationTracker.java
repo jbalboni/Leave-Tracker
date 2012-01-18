@@ -1,5 +1,6 @@
 package com.jbalboni.vacation;
 
+import org.joda.time.DateTimeConstants;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
@@ -17,6 +18,10 @@ public class VacationTracker
     private float initialHours;
     private String leaveInterval;
     private boolean accrualOn;
+    //private float maxLeave;
+    //private float carryoverLimit;
+    //private boolean useMaxLeave;
+    //private boolean useCarryoverLimit;
     
     public VacationTracker() {
     }
@@ -32,6 +37,12 @@ public class VacationTracker
         int interval = 0;
         float vacationHours = 0;
         if (this.accrualOn == true) {
+//            LocalDate endOfYear = startDate.withMonthOfYear(DateTimeConstants.DECEMBER).withDayOfMonth(31);
+//            int yearEnds = 0;
+//            while (endOfYear.isBefore(asOfDate)) {
+//                yearEnds++;
+//                endOfYear.plusYears(1);
+//            }
             if (leaveInterval.equals("Daily")) {
                 Days days = Days.daysBetween(startDate, asOfDate);
                 interval = days.getDays();
