@@ -12,61 +12,60 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 
-public class DatePickerPreference extends DialogPreference implements  
-OnDateChangedListener, OnDateSetListener {
+public class DatePickerPreference extends DialogPreference implements OnDateChangedListener, OnDateSetListener {
 
-    @Override
-    protected View onCreateDialogView() {
-        DatePicker picker = new DatePicker(getContext());
-        strDate = getPersistedString(null);
-        LocalDate startDate = strDate == null ? new LocalDate() : fmt.parseLocalDate(strDate);
-        
-        if(android.os.Build.VERSION.SDK_INT >= 11) {
-            picker.setCalendarViewShown(false);    
-         }
-        picker.init(startDate.getYear(),startDate.getMonthOfYear()-1,startDate.getDayOfMonth(), this);
-        return picker;
-    }
+	@Override
+	protected View onCreateDialogView() {
+		DatePicker picker = new DatePicker(getContext());
+		strDate = getPersistedString(null);
+		LocalDate startDate = strDate == null ? new LocalDate() : fmt.parseLocalDate(strDate);
 
-    public void onDateChanged(DatePicker view, int year, int monthOfYear,  
-            int dayOfMonth) {
-        strDate = String.format("%4d-%02d-%02d",year,monthOfYear+1,dayOfMonth);
-    }
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			picker.setCalendarViewShown(false);
+		}
+		picker.init(startDate.getYear(), startDate.getMonthOfYear() - 1, startDate.getDayOfMonth(), this);
+		return picker;
+	}
 
-    public void onDateSet(DatePicker view, int year, int monthOfYear,  
-            int dayOfMonth) {
-        onDateChanged(view, year, monthOfYear, dayOfMonth);
-    }
+	public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		strDate = String.format("%4d-%02d-%02d", year, monthOfYear + 1, dayOfMonth);
+	}
 
-    @Override
-    public void setDefaultValue(Object defaultValue) {
-        super.setDefaultValue(null);
-    }
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		onDateChanged(view, year, monthOfYear, dayOfMonth);
+	}
 
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        super.onDialogClosed(positiveResult);
+	@Override
+	public void setDefaultValue(Object defaultValue) {
+		super.setDefaultValue(null);
+	}
 
-        if(positiveResult) {
-            if(isPersistent()) {
-                persistString(strDate);
-            }
-            callChangeListener(strDate);
-        }
-    }
+	@Override
+	protected void onDialogClosed(boolean positiveResult) {
+		super.onDialogClosed(positiveResult);
 
-    public DatePickerPreference(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
+		if (positiveResult) {
+			if (isPersistent()) {
+				persistString(strDate);
+			}
+			callChangeListener(strDate);
+		}
+	}
 
-    public DatePickerPreference(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        init();
-    }
+	public DatePickerPreference(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		init();
+	}
 
-    public void init() { setPersistent(true); }
+	public DatePickerPreference(Context context, AttributeSet attrs, int defStyle) {
+		super(context, attrs, defStyle);
+		init();
+	}
 
-    private String strDate;
-    private static final DateTimeFormatter fmt = ISODateTimeFormat.localDateParser();
+	public void init() {
+		setPersistent(true);
+	}
+
+	private String strDate;
+	private static final DateTimeFormatter fmt = ISODateTimeFormat.localDateParser();
 }
