@@ -46,7 +46,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 				accrualOn);
 		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear);
 	}
-	
+
 	public void testHoursUsed() {
 		float initialHours = 0;
 		float hoursUsed = 17;
@@ -59,8 +59,9 @@ public class VacationTrackerTest extends AndroidTestCase {
 
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
 				accrualOn);
-		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear-hoursUsed);
+		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear - hoursUsed);
 	}
+
 	public void testWeekly() {
 		float initialHours = 0;
 		float hoursUsed = 0;
@@ -74,10 +75,11 @@ public class VacationTrackerTest extends AndroidTestCase {
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
 				accrualOn);
 		assertEquals(tracker.calculateHours(new LocalDate()), initialHours);
-		
+
 		tracker.setStartDate(startDate.minusDays(1));
-		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear/52.0f);
+		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear / 52.0f);
 	}
+
 	public void testMonthly() {
 		float initialHours = 0;
 		float hoursUsed = 0;
@@ -91,10 +93,11 @@ public class VacationTrackerTest extends AndroidTestCase {
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
 				accrualOn);
 		assertEquals(tracker.calculateHours(new LocalDate()), initialHours);
-		
+
 		tracker.setStartDate(startDate.minusDays(1));
-		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear/12.0f);
+		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear / 12.0f);
 	}
+
 	public void testBiWeekly() {
 		float initialHours = 0;
 		float hoursUsed = 0;
@@ -108,8 +111,8 @@ public class VacationTrackerTest extends AndroidTestCase {
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
 				accrualOn);
 		assertEquals(tracker.calculateHours(new LocalDate()), initialHours);
-		
+
 		tracker.setStartDate(startDate.minusDays(1));
-		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear/26.0f);
+		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear / 26.0f);
 	}
 }
