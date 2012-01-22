@@ -110,4 +110,55 @@ public class VacationTracker {
 		return accrualOn;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (accrualOn ? 1231 : 1237);
+		result = prime * result + Float.floatToIntBits(hoursPerYear);
+		result = prime * result + Float.floatToIntBits(hoursUsed);
+		result = prime * result + Float.floatToIntBits(initialHours);
+		result = prime * result + ((leaveInterval == null) ? 0 : leaveInterval.hashCode());
+		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+		return result;
+	}
+
+	public String getLeaveInterval() {
+		return leaveInterval;
+	}
+
+	public void setLeaveInterval(String leaveInterval) {
+		this.leaveInterval = leaveInterval;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof VacationTracker))
+			return false;
+		VacationTracker other = (VacationTracker) obj;
+		if (accrualOn != other.accrualOn)
+			return false;
+		if (Float.floatToIntBits(hoursPerYear) != Float.floatToIntBits(other.hoursPerYear))
+			return false;
+		if (Float.floatToIntBits(hoursUsed) != Float.floatToIntBits(other.hoursUsed))
+			return false;
+		if (Float.floatToIntBits(initialHours) != Float.floatToIntBits(other.initialHours))
+			return false;
+		if (leaveInterval == null) {
+			if (other.leaveInterval != null)
+				return false;
+		} else if (!leaveInterval.equals(other.leaveInterval))
+			return false;
+		if (startDate == null) {
+			if (other.startDate != null)
+				return false;
+		} else if (!startDate.equals(other.startDate))
+			return false;
+		return true;
+	}
+
 }

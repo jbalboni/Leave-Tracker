@@ -16,7 +16,7 @@ public final class LeaveStateManager {
 
 	public static VacationTracker createVacationTracker(SharedPreferences prefs, String categoryPrefix) {
 		String startDateStr = prefs.getString("startDate", null);
-		String leaveInterval = prefs.getString("leaveInterval", "Daily");
+		String leaveInterval = prefs.getString("leaveInterval", "Weekly");
 
 		if (leaveInterval.equals("Day"))
 			leaveInterval = "Daily";
@@ -39,8 +39,10 @@ public final class LeaveStateManager {
 		Editor prefsEditor = prefs.edit();
 		prefsEditor.putString(categoryPrefix + "hoursUsed", Float.toString(vacationTracker.getHoursUsed()));
 		prefsEditor.putString(categoryPrefix + "hoursPerYear", Float.toString(vacationTracker.getHoursPerYear()));
-		prefsEditor.putString(categoryPrefix + "intialHours", Float.toString(vacationTracker.getInitialHours()));
+		prefsEditor.putString(categoryPrefix + "initialHours", Float.toString(vacationTracker.getInitialHours()));
 		prefsEditor.putBoolean(categoryPrefix + "accrualOn", vacationTracker.isAccrualOn());
+		
+		prefsEditor.putString("leaveInterval", vacationTracker.getLeaveInterval());
 		prefsEditor.putString("startDate", String.format("%4d-%02d-%02d", vacationTracker.getStartDate().getYear(),
 				vacationTracker.getStartDate().getMonthOfYear(), vacationTracker.getStartDate().getDayOfMonth()));
 		prefsEditor.commit();
