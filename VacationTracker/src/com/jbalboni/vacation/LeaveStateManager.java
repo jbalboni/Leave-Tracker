@@ -30,8 +30,10 @@ public final class LeaveStateManager {
 		float hoursPerYear = Float.parseFloat(prefs.getString(categoryPrefix + "hoursPerYear", "80"));
 		float initialHours = Float.parseFloat(prefs.getString(categoryPrefix + "initialHours", "0"));
 		boolean accrualOn = prefs.getBoolean(categoryPrefix + "accrualOn", true);
+		float leaveCap = prefs.getFloat(categoryPrefix+"leaveCap", 0);
+		LeaveCapType leaveCapType = LeaveCapType.getLeaveCapType(prefs.getString(categoryPrefix+"leaveCapType", "None"));
 
-		return new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval, accrualOn);
+		return new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval, accrualOn, leaveCapType, leaveCap);
 	}
 
 	public static void saveVacationTracker(VacationTracker vacationTracker, SharedPreferences prefs,
@@ -41,6 +43,8 @@ public final class LeaveStateManager {
 		prefsEditor.putString(categoryPrefix + "hoursPerYear", Float.toString(vacationTracker.getHoursPerYear()));
 		prefsEditor.putString(categoryPrefix + "initialHours", Float.toString(vacationTracker.getInitialHours()));
 		prefsEditor.putBoolean(categoryPrefix + "accrualOn", vacationTracker.isAccrualOn());
+		prefsEditor.putFloat(categoryPrefix + "leaveCap", vacationTracker.getLeaveCap());
+		prefsEditor.putString(categoryPrefix + "leaveCapType", vacationTracker.getLeaveCapType().toString());
 		
 		prefsEditor.putString("leaveInterval", vacationTracker.getLeaveInterval());
 		prefsEditor.putString("startDate", String.format("%4d-%02d-%02d", vacationTracker.getStartDate().getYear(),
