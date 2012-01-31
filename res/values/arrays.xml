@@ -7,4 +7,16 @@
         <item>Bi-Weekly</item>
         <item>Monthly</item>
     </array>
+    <array
+        name="leave_cap_type_vals">
+        <item>None</item>
+        <item>Max</item>
+        <item>Carryover</item>
+    </array>
+    <array
+        name="leave_cap_types">
+        <item>None</item>
+        <item>Maximum number of hours</item>
+        <item>Carryover limit at year end</item>
+    </array>
 </resources>

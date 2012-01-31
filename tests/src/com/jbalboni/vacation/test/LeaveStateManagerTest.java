@@ -2,6 +2,7 @@ package com.jbalboni.vacation.test;
 
 import org.joda.time.LocalDate;
 
+import com.jbalboni.vacation.LeaveCapType;
 import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.VacationTracker;
@@ -16,6 +17,7 @@ public class LeaveStateManagerTest extends AndroidTestCase {
 		super();
 	}
 	
+	@Override
 	public void setUp() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		SharedPreferences.Editor editor = prefs.edit();
@@ -30,9 +32,11 @@ public class LeaveStateManagerTest extends AndroidTestCase {
 		String leaveInterval = "Weekly";
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
+		float leaveCap = 0;
+		LeaveCapType leaveCapType = LeaveCapType.NONE;
 
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
-				accrualOn);
+				accrualOn, leaveCapType, leaveCap);
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		VacationTracker prefTracker = LeaveStateManager.createVacationTracker(prefs, LeaveCategory.LEFT.getPrefix());
@@ -45,9 +49,11 @@ public class LeaveStateManagerTest extends AndroidTestCase {
 		String leaveInterval = "Monthly";
 		boolean accrualOn = true;
 		LocalDate startDate = (new LocalDate()).minusYears(1);
+		float leaveCap = 6;
+		LeaveCapType leaveCapType = LeaveCapType.MAX;
 
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
-				accrualOn);
+				accrualOn, leaveCapType, leaveCap);
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 		LeaveStateManager.saveVacationTracker(tracker,prefs,LeaveCategory.CENTER.getPrefix());

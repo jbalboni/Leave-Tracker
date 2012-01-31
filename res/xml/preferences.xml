@@ -46,6 +46,14 @@
 			android:defaultValue="80"
 			android:inputType="number"
 			android:numeric="integer" />
+		
+		<ListPreference
+			android:key="catLeft_leaveCapType"
+			android:title="@string/leave_pref_cap_type"
+			android:summary="@string/leave_pref_cap_type_summary"
+			android:defaultValue="None"
+			android:entries="@array/leave_cap_types"
+			android:entryValues="@array/leave_cap_type_vals" />
 			
 		<EditTextPreference
 			android:key="catLeft_hoursUsed"
