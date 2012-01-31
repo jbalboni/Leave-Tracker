@@ -46,14 +46,6 @@
 			android:defaultValue="80"
 			android:inputType="number"
 			android:numeric="integer" />
-		
-		<ListPreference
-			android:key="catLeft_leaveCapType"
-			android:title="@string/leave_pref_cap_type"
-			android:summary="@string/leave_pref_cap_type_summary"
-			android:defaultValue="None"
-			android:entries="@array/leave_cap_types"
-			android:entryValues="@array/leave_cap_type_vals" />
 			
 		<EditTextPreference
 			android:key="catLeft_hoursUsed"
@@ -73,6 +65,22 @@
 			android:defaultValue="0"
 			android:inputType="numberDecimal" />
  
+ 		<ListPreference
+			android:key="catLeft_leaveCapType"
+			android:title="@string/leave_pref_cap_type"
+			android:summary="@string/leave_pref_cap_type_summary"
+			android:defaultValue="None"
+			android:entries="@array/leave_cap_types"
+			android:entryValues="@array/leave_cap_type_vals" />
+			
+		<EditTextPreference
+			android:key="catLeft_leaveCapVal"
+			android:title="@string/leave_pref_cap_val_carry"
+			android:summary="@string/leave_pref_cap_val_summary_carry"
+			android:dialogTitle="@string/leave_pref_cap_val_carry"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
             
     </PreferenceCategory>
     
@@ -124,7 +132,22 @@
 			android:defaultValue="0"
 			android:inputType="numberDecimal" />
  
-            
+        <ListPreference
+			android:key="catCenter_leaveCapType"
+			android:title="@string/leave_pref_cap_type"
+			android:summary="@string/leave_pref_cap_type_summary"
+			android:defaultValue="None"
+			android:entries="@array/leave_cap_types"
+			android:entryValues="@array/leave_cap_type_vals" />
+			
+		<EditTextPreference
+			android:key="catCenter_leaveCapVal"
+			android:title="@string/leave_pref_cap_val_carry"
+			android:summary="@string/leave_pref_cap_val_summary_carry"
+			android:dialogTitle="@string/leave_pref_cap_val_carry"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
     </PreferenceCategory>
     
     <PreferenceCategory 
@@ -174,7 +197,23 @@
 			android:dialogMessage=""
 			android:defaultValue="0"
 			android:inputType="numberDecimal" />
- 
+ 		
+ 		<ListPreference
+			android:key="catRight_leaveCapType"
+			android:title="@string/leave_pref_cap_type"
+			android:summary="@string/leave_pref_cap_type_summary"
+			android:defaultValue="None"
+			android:entries="@array/leave_cap_types"
+			android:entryValues="@array/leave_cap_type_vals" />
+			
+		<EditTextPreference
+			android:key="catRight_leaveCapVal"
+			android:title="@string/leave_pref_cap_val_carry"
+			android:summary="@string/leave_pref_cap_val_summary_carry"
+			android:dialogTitle="@string/leave_pref_cap_val_carry"
+			android:dialogMessage=""
+			android:defaultValue="0"
+			android:inputType="numberDecimal" />
             
     </PreferenceCategory>
     

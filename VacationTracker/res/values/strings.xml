@@ -24,6 +24,10 @@
 	<string name="leave_pref_start_sum">The date when you want your leave to begin accruing</string>
 	<string name="leave_pref_interval">Leave Interval</string>
 	<string name="leave_pref_interval_sum">How often your leave accrues</string>
-	<string name="leave_pref_cap_type">Leave Accrual Limit</string>
+	<string name="leave_pref_cap_type">Leave Accrual Limit Type</string>
 	<string name="leave_pref_cap_type_summary">Set the type of leave hours limiting you have</string>
+	<string name="leave_pref_cap_val_carry">Leave Carryover Limit</string>
+	<string name="leave_pref_cap_val_summary_carry">Set the number of leave hours you can carry at the end of the year</string>
+	<string name="leave_pref_cap_val_max">Leave Hours Max</string>
+	<string name="leave_pref_cap_val_summary_max">Set max number of leave hours you can have</string>
 </resources>
