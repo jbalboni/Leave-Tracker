@@ -94,6 +94,10 @@ public class VacationTrackerActivity extends FragmentActivity {
 			Intent test = new Intent(this, SettingsActivity.class);
 			startActivity(test);
 			return true;
+		case R.id.leaveHistory:
+			Intent leaveHistory = new Intent(this, LeaveHistoryActivity.class);
+			startActivity(leaveHistory);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

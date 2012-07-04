@@ -41,12 +41,17 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	private void setAccrualLimitText(PreferenceScreen preferenceScreen, String prefix) {
 		ListPreference leaveCapType = (ListPreference)findPreference(prefix+"leaveCapType");
 		EditTextPreference leaveCapVal = (EditTextPreference)findPreference(prefix+"leaveCapVal");
-		if (leaveCapType.getValue().equals(LeaveCapType.CARRYOVER.toString())) {
+		setAccrualLimit(leaveCapVal, leaveCapType.getValue());
+		
+	}
+	
+	public void setAccrualLimit(EditTextPreference leaveCapVal, String leaveCapType ) {
+		if (leaveCapType.equals(LeaveCapType.CARRYOVER.toString())) {
 			leaveCapVal.setEnabled(true);
 			leaveCapVal.setTitle(getString(R.string.leave_pref_cap_val_carry));
 			leaveCapVal.setDialogTitle(getString(R.string.leave_pref_cap_val_carry));
 			leaveCapVal.setSummary(getString(R.string.leave_pref_cap_val_summary_carry));
-		} else if (leaveCapType.getValue().equals(LeaveCapType.MAX.toString())) {
+		} else if (leaveCapType.equals(LeaveCapType.MAX.toString())) {
 			leaveCapVal.setEnabled(true);
 			leaveCapVal.setTitle(getString(R.string.leave_pref_cap_val_max));
 			leaveCapVal.setDialogTitle(getString(R.string.leave_pref_cap_val_max));
@@ -56,7 +61,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 			leaveCapVal.setSummary("");
 			leaveCapVal.setTitle("Leave Accrual Limit");
 		}
-		
 	}
 
 	@Override
@@ -83,21 +87,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	@Override
 	public boolean onPreferenceChange(Preference preference, Object newValue) {
 		EditTextPreference leaveCapVal = (EditTextPreference)findPreference(preference.getKey().substring(0, preference.getKey().indexOf('_') + 1)+"leaveCapVal");
-		if (newValue.toString().equals(LeaveCapType.CARRYOVER.toString())) {
-			leaveCapVal.setEnabled(true);
-			leaveCapVal.setTitle(getString(R.string.leave_pref_cap_val_carry));
-			leaveCapVal.setDialogTitle(getString(R.string.leave_pref_cap_val_carry));
-			leaveCapVal.setSummary(getString(R.string.leave_pref_cap_val_summary_carry));
-		} else if (newValue.toString().equals(LeaveCapType.MAX.toString())) {
-			leaveCapVal.setEnabled(true);
-			leaveCapVal.setTitle(getString(R.string.leave_pref_cap_val_max));
-			leaveCapVal.setDialogTitle(getString(R.string.leave_pref_cap_val_max));
-			leaveCapVal.setSummary(getString(R.string.leave_pref_cap_val_summary_max));
-		} else {
-			leaveCapVal.setEnabled(false);
-			leaveCapVal.setSummary("");
-			leaveCapVal.setTitle("Leave Accrual Limit");
-		}
+		setAccrualLimit(leaveCapVal, newValue.toString());
 		return true;
 	}
 }
