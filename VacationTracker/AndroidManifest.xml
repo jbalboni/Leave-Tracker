@@ -24,6 +24,14 @@
             android:theme="@android:style/Theme.Holo.NoActionBar"
             android:name=".SettingsActivity" >
         </activity>
+        <activity
+            android:name=".LeaveHistoryActivity" 
+            android:theme="@style/VacationTheme">
+        </activity>
+        <provider
+    		android:authorities="com.jbalboni.vacation.data.LeaveHistoryProvider"
+    		android:multiprocess="true"
+    		android:name="com.jbalboni.vacation.data.LeaveHistoryProvider"></provider>
     </application>
 
 </manifest>
