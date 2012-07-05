@@ -5,7 +5,7 @@
           android:showAsAction="ifRoom"
           android:title="Settings" />
     <item android:id="@+id/leaveHistory"
-          android:icon="@drawable/ic_menu_settings"
+          android:icon="@drawable/ic_menu_recent_history"
           android:showAsAction="ifRoom"
           android:title="Leave History" />
 </menu>
