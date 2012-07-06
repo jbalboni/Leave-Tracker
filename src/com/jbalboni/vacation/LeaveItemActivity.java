@@ -1,9 +1,10 @@
 package com.jbalboni.vacation;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 
-public class LeaveItemActivity extends FragmentActivity {
+import android.os.Bundle;
+
+public class LeaveItemActivity extends SherlockFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

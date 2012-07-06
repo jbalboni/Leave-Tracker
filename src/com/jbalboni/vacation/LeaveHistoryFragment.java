@@ -1,5 +1,6 @@
 package com.jbalboni.vacation;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
@@ -7,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri.Builder;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class LeaveHistoryFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class LeaveHistoryFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
 	private int currentID;
 
@@ -71,7 +71,7 @@ public class LeaveHistoryFragment extends ListFragment implements LoaderManager.
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		//Seems wrong to do output formatting here
 		String[] projection = { LeaveTrackerDatabase.ID, "cast(number as text)||\" hours\" as number", "strftime(\"%m/%d\",date) as date" };
-		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra("com.jbalboni.vacation.catID", 2)));
+		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null,
 				null, null);
 		return cursorLoader;

@@ -19,4 +19,9 @@
         <item>Maximum number of hours</item>
         <item>Carryover limit at year end</item>
     </array>
+    <array
+        name="menu_category">
+        <item>Edit Category</item>
+        <item>Delete Category</item>
+    </array>
 </resources>

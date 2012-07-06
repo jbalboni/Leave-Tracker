@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="VacationTheme" parent="@style/Theme.Sherlock.Light">
-    	<item name="abBackground">#22555555</item>
-    </style>
+
+	</style>
     <style name="LeaveViewText">
     	<item name="android:textSize">10pt</item>
     	<item name="android:layout_width">wrap_content</item>
@@ -52,7 +52,6 @@
         <item name="com.jbalboni.vacation:footerLineHeight">1dp</item>
         <item name="com.jbalboni.vacation:footerIndicatorHeight">3dp</item>
         <item name="com.jbalboni.vacation:footerIndicatorStyle">underline</item>
-        <item name="com.jbalboni.vacation:textColor">#AA000000</item>
         <item name="com.jbalboni.vacation:selectedColor">#FF000000</item>
         <item name="com.jbalboni.vacation:footerColor">#ff33b5e5</item>
         <item name="com.jbalboni.vacation:selectedBold">false</item>

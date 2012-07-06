@@ -1,5 +1,6 @@
 package com.jbalboni.vacation;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
@@ -8,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri.Builder;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class LeaveCategoryFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class LeaveCategoryFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 	private static final int LEAVE_CATEGORY_LOADER = 0x02;
 	private int currentID;
 

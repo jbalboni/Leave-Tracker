@@ -3,22 +3,21 @@ package com.jbalboni.vacation;
 import java.util.List;
 
 import com.viewpagerindicator.TitlePageIndicator;
-import com.viewpagerindicator.TitleProvider;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.view.Menu;
-import android.view.MenuInflater;
-import android.support.v4.view.MenuItem;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-public class VacationTrackerActivity extends FragmentActivity {
+public class VacationTrackerActivity extends SherlockFragmentActivity {
 
 	LeaveAdapter mAdapter;
 	ViewPager mPager;
@@ -44,7 +43,7 @@ public class VacationTrackerActivity extends FragmentActivity {
 
 	}
 
-	public static class LeaveAdapter extends FragmentPagerAdapter implements TitleProvider {
+	public static class LeaveAdapter extends FragmentPagerAdapter {
 		List<String> titles;
 
 		public LeaveAdapter(FragmentManager fm, List<String> titles) {
@@ -58,12 +57,12 @@ public class VacationTrackerActivity extends FragmentActivity {
 		}
 
 		@Override
-		public Fragment getItem(int position) {
+		public SherlockFragment getItem(int position) {
 			return LeaveFragment.newInstance(position);
 		}
 
 		@Override
-		public String getTitle(int position) {
+		public String getPageTitle(int position) {
 			return titles.get(position);
 		}
 
@@ -81,26 +80,25 @@ public class VacationTrackerActivity extends FragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.leave_menu, menu);
+		menu.add(getString(R.string.menu_settings)).setIcon(R.drawable.ic_menu_settings)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add(getString(R.string.menu_history)).setIcon(R.drawable.ic_menu_recent_history)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		switch (item.getItemId()) {
-		case R.id.settings:
+		String title = item.getTitle().toString();
+		if (title.equals(getString(R.string.menu_settings))) {
 			Intent test = new Intent(this, SettingsActivity.class);
 			startActivity(test);
-			return true;
-		case R.id.leaveHistory:
+		} else if (title.equals(getString(R.string.menu_history))) {
 			Intent leaveCategory = new Intent(this, LeaveCategoryActivity.class);
 			startActivity(leaveCategory);
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
 		}
+		return true;
 	}
 
 	public static Intent createIntent(Context context) {
