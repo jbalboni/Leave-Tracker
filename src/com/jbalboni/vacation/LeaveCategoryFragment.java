@@ -2,12 +2,10 @@ package com.jbalboni.vacation;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
-import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri.Builder;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;

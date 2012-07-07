@@ -32,6 +32,10 @@
             android:name=".LeaveCategoryActivity" 
             android:theme="@style/VacationTheme">
         </activity>
+        <activity
+            android:name=".LeaveItemActivity" 
+            android:theme="@style/VacationTheme">
+        </activity>
         <provider
     		android:authorities="com.jbalboni.vacation.data.LeaveHistoryProvider"
     		android:multiprocess="true"

@@ -9,6 +9,6 @@ public class LeaveItemActivity extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.leave_item);
+		setContentView(R.layout.leave_item_activity);
 	}
 }
