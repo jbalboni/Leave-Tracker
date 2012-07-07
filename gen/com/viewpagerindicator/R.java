@@ -1257,6 +1257,7 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0b0009;
         public static final int app_name=0x7f0b000d;
+        public static final int cat_title=0x7f0b0035;
         public static final int database_name=0x7f0b0027;
         public static final int default_as_of_date=0x7f0b000c;
         public static final int default_center_name=0x7f0b000f;
@@ -1265,6 +1266,7 @@ containing a value of this type.
         public static final int hours_avail=0x7f0b000a;
         public static final int hours_avail_as_of=0x7f0b000b;
         public static final int intent_catid=0x7f0b0033;
+        public static final int intent_catname=0x7f0b0034;
         public static final int leave_category_position=0x7f0b0014;
         public static final int leave_pref_accrual=0x7f0b0016;
         public static final int leave_pref_accrual_off=0x7f0b0018;

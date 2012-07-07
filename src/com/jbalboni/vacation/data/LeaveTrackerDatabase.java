@@ -18,6 +18,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	public static String LEAVE_HISTORY_TABLE = "leave_history";
 	public static String LEAVE_CATEGORY_TABLE = "leave_categories";
 	public static String ID = "_id";
+	public static String TITLE = "title";
 	public static String CATEGORY_ID = "leave_category_id";
 
 	public LeaveTrackerDatabase(Context context) {

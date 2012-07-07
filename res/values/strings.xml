@@ -43,4 +43,6 @@
 	<string name="menu_delete">Delete</string>
 	<string name="menu_add">Add</string>
 	<string name="intent_catid">com.jbalboni.vacation.catID</string>
+	<string name="intent_catname">com.jbalboni.vacation.catName</string>
+	<string name="cat_title">Leave Categories</string>
 </resources>

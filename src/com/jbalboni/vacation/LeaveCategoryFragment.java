@@ -58,7 +58,8 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 		int categoryID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.ID));
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), LeaveHistoryActivity.class);
-		intent.putExtra("com.jbalboni.vacation.catID", categoryID);
+		intent.putExtra(getString(R.string.intent_catid), categoryID);
+		intent.putExtra(getString(R.string.intent_catname), cursor.getString(cursor.getColumnIndex(LeaveTrackerDatabase.TITLE)));
 		startActivity(intent);
 	}
 
