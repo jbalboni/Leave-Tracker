@@ -56,4 +56,12 @@
         <item name="com.jbalboni.vacation:footerColor">#ff33b5e5</item>
         <item name="com.jbalboni.vacation:selectedBold">false</item>
     </style>
+    <style name="EditLabel">
+    	<item name="android:layout_height">wrap_content</item>
+    	<item name="android:layout_width">fill_parent</item>
+        <item name="android:textColor">#ff33b5e5</item>
+        <item name="android:background">@drawable/underline</item>
+        <item name="android:paddingLeft">10px</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>
