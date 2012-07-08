@@ -20,11 +20,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnDateChangedListener {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
 	private int currentID;
 
@@ -50,13 +51,18 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.leave_item, container, false);
+		View editLayout = inflater.inflate(R.layout.leave_item, container, false);
+		DatePicker datePicker = (DatePicker) editLayout.findViewById(R.id.datePicker);
+		if (android.os.Build.VERSION.SDK_INT >= 11) {
+			datePicker.setCalendarViewShown(false);
+		}
+		return editLayout;
 	}
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		//Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.ID, "hours", "notes", "date" };
+		String[] projection = { LeaveTrackerDatabase.ID, "number", "notes", "date" };
 		Builder itemUri = LeaveHistoryProvider.CONTENT_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid),0)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null,
 				null, null);
@@ -73,10 +79,10 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		
 		int dateCol = cursor.getColumnIndex("date");
 		LocalDate date = new LocalDate(cursor.getLong(dateCol));
-		DatePicker editDate = (DatePicker) getView().findViewById(R.id.date);
-		editDate.init(date.getYear(), date.getMonthOfYear(), date.getDayOfMonth(), null);
+		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
+		editDate.init(date.getYear(), date.getMonthOfYear()-1, date.getDayOfMonth(), this);
 		
-		int hoursCol = cursor.getColumnIndex("hours");
+		int hoursCol = cursor.getColumnIndex("number");
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		editHours.setText(cursor.getString(hoursCol));
 	}
@@ -84,5 +90,11 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		//adapter.swapCursor(null);
+	}
+
+	@Override
+	public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		// TODO Auto-generated method stub
+		
 	}
 }

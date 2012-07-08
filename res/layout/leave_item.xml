@@ -2,34 +2,33 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent" 
+        android:padding="10px">
 
         <TextView
             android:id="@+id/dateLabel"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:text="@string/ItemLabelDate"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            style="@style/EditLabel" />
 
         <DatePicker
             android:id="@+id/datePicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView1" />
+            android:layout_below="@+id/dateLabel" />
 
         <TextView
             android:id="@+id/hoursLabel"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/datePicker2"
+            android:layout_below="@+id/datePicker"
             android:layout_marginTop="20dp"
             android:text="@string/ItemLabelHours"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            style="@style/EditLabel" />
 
         <EditText
             android:id="@+id/hours"
@@ -37,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/hoursLabel"
             android:inputType="numberDecimal" >
 
             <requestFocus />
@@ -45,12 +44,11 @@
 
         <TextView
             android:id="@+id/notesLabel"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/editText1"
+            android:layout_below="@+id/hours"
             android:text="@string/ItemLabelNotes"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            style="@style/EditLabel" />
 
         <EditText
             android:id="@+id/notes"
@@ -58,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView3"
+            android:layout_below="@+id/notesLabel"
             android:inputType="textMultiLine" />
 
     </RelativeLayout>
