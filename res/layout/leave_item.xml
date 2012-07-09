@@ -2,8 +2,9 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:padding="10px">
+        android:layout_height="wrap_content" 
+        android:paddingLeft="20px"
+        android:paddingRight="20px">
 
         <TextView
             android:id="@+id/dateLabel"
@@ -26,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/datePicker"
-            android:layout_marginTop="20dp"
             android:text="@string/ItemLabelHours"
             style="@style/EditLabel" />
 

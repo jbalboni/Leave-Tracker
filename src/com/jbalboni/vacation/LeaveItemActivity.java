@@ -1,8 +1,12 @@
 package com.jbalboni.vacation;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 public class LeaveItemActivity extends SherlockFragmentActivity {
 	@Override
@@ -10,5 +14,26 @@ public class LeaveItemActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.leave_item_activity);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(R.string.menu_save).setIcon(R.drawable.ic_menu_save)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add(R.string.menu_delete).setIcon(R.drawable.ic_menu_delete)
+        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		String title = item.getTitle().toString();
+		if (title.equals(getString(R.string.menu_save))) {
+			FragmentManager fm = getSupportFragmentManager();
+			LeaveEditFragment fragment = (LeaveEditFragment) fm.findFragmentById(R.id.leaveEditFragment);
+			fragment.saveLeaveItem();
+		}
+		return true;
 	}
 }

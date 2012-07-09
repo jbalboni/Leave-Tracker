@@ -1,33 +1,32 @@
 package com.jbalboni.vacation;
 
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
-import android.content.Intent;
+import android.content.ContentValues;
 import android.database.Cursor;
+import android.net.Uri;
 import android.net.Uri.Builder;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
 public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnDateChangedListener {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
-	private int currentID;
+	private static final DateTimeFormatter fmt = ISODateTimeFormat.localDateParser();
+	private int itemID;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -35,17 +34,24 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 
 		if (savedInstanceState != null) {
 			// Restore last state for checked position.
-			currentID = savedInstanceState.getInt("currentID", 0);
+			itemID = savedInstanceState.getInt("itemID", 0);
+		} else {
+			itemID = getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid),0);
 		}
-
-		getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
+		
+		if (itemID == 0) {
+			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_add);
+		} else {
+			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_edit);
+			getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
+		}
 
 	}
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("currentID", currentID);
+		outState.putInt("itemID", itemID);
 	}
 
 	@Override
@@ -78,13 +84,41 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		editNotes.setText(cursor.getString(notesCol));
 		
 		int dateCol = cursor.getColumnIndex("date");
-		LocalDate date = new LocalDate(cursor.getLong(dateCol));
+		LocalDate date = new LocalDate(fmt.parseLocalDate(cursor.getString(dateCol)));
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
 		editDate.init(date.getYear(), date.getMonthOfYear()-1, date.getDayOfMonth(), this);
 		
 		int hoursCol = cursor.getColumnIndex("number");
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		editHours.setText(cursor.getString(hoursCol));
+	}
+	
+	public void saveLeaveItem() {
+		ContentValues leaveItemValues = new ContentValues();
+
+		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
+		leaveItemValues.put("notes", editNotes.getText().toString());
+		
+		EditText editHours = (EditText) getView().findViewById(R.id.hours);
+		leaveItemValues.put("number", editHours.getText().toString());
+		
+		DatePicker editDate = (DatePicker) getView().findViewById(R.id.date);
+		leaveItemValues.put("date", new LocalDate(editDate.getYear(),editDate.getMonth()+1,editDate.getDayOfMonth()).toString());
+
+		if (itemID == 0) {
+			Uri leaveUri = getActivity().getContentResolver().insert(
+					LeaveHistoryProvider.CONTENT_URI,
+					leaveItemValues
+			);
+		} else {
+			String[] idArgs = {Integer.toString(itemID)};
+			int updatedRows = getActivity().getContentResolver().update(
+					LeaveHistoryProvider.CONTENT_URI,
+					leaveItemValues,
+					LeaveTrackerDatabase.ID+"=",
+					idArgs
+			);
+		}
 	}
 
 	@Override

@@ -3,6 +3,9 @@ package com.jbalboni.vacation;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jbalboni.vacation.data.LeaveTrackerDatabase;
+
+import android.content.Intent;
 import android.os.Bundle;
 
 public class LeaveHistoryActivity extends SherlockFragmentActivity {
@@ -16,7 +19,7 @@ public class LeaveHistoryActivity extends SherlockFragmentActivity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(getString(R.string.menu_add)).setIcon(R.drawable.ic_menu_add)
+		menu.add(R.string.menu_add).setIcon(R.drawable.ic_menu_add)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add("Edit Category").setIcon(R.drawable.ic_menu_edit)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
@@ -29,6 +32,11 @@ public class LeaveHistoryActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		String title = item.getTitle().toString();
+		if (title.equals(getString(R.string.menu_add))) {
+			Intent intent = new Intent();
+			intent.setClass(this, LeaveItemActivity.class);
+			startActivity(intent);
+		}
 		return true;
 	}
 	

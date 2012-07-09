@@ -1100,15 +1100,16 @@ containing a value of this type.
         public static final int ic_menu_delete=0x7f020057;
         public static final int ic_menu_edit=0x7f020058;
         public static final int ic_menu_recent_history=0x7f020059;
-        public static final int ic_menu_settings=0x7f02005a;
-        public static final int textline=0x7f02005b;
-        public static final int vpi__tab_indicator=0x7f02005c;
-        public static final int vpi__tab_selected_focused_holo=0x7f02005d;
-        public static final int vpi__tab_selected_holo=0x7f02005e;
-        public static final int vpi__tab_selected_pressed_holo=0x7f02005f;
-        public static final int vpi__tab_unselected_focused_holo=0x7f020060;
-        public static final int vpi__tab_unselected_holo=0x7f020061;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020062;
+        public static final int ic_menu_save=0x7f02005a;
+        public static final int ic_menu_settings=0x7f02005b;
+        public static final int underline=0x7f02005c;
+        public static final int vpi__tab_indicator=0x7f02005d;
+        public static final int vpi__tab_selected_focused_holo=0x7f02005e;
+        public static final int vpi__tab_selected_holo=0x7f02005f;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020060;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020061;
+        public static final int vpi__tab_unselected_holo=0x7f020062;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020063;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050025;
@@ -1258,7 +1259,7 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0b0009;
         public static final int app_name=0x7f0b000d;
-        public static final int cat_title=0x7f0b0036;
+        public static final int cat_title=0x7f0b0037;
         public static final int database_name=0x7f0b0027;
         public static final int default_as_of_date=0x7f0b000c;
         public static final int default_center_name=0x7f0b000f;
@@ -1266,9 +1267,9 @@ containing a value of this type.
         public static final int default_right_name=0x7f0b0010;
         public static final int hours_avail=0x7f0b000a;
         public static final int hours_avail_as_of=0x7f0b000b;
-        public static final int intent_catid=0x7f0b0033;
-        public static final int intent_catname=0x7f0b0034;
-        public static final int intent_itemid=0x7f0b0035;
+        public static final int intent_catid=0x7f0b0034;
+        public static final int intent_catname=0x7f0b0035;
+        public static final int intent_itemid=0x7f0b0036;
         public static final int leave_category_position=0x7f0b0014;
         public static final int leave_pref_accrual=0x7f0b0016;
         public static final int leave_pref_accrual_off=0x7f0b0018;
@@ -1293,6 +1294,7 @@ containing a value of this type.
         public static final int menu_delete=0x7f0b0031;
         public static final int menu_edit=0x7f0b0030;
         public static final int menu_history=0x7f0b002f;
+        public static final int menu_save=0x7f0b0033;
         public static final int menu_settings=0x7f0b002e;
         public static final int no_records=0x7f0b002c;
         public static final int quick_use_date=0x7f0b0013;
