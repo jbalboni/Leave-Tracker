@@ -180,7 +180,7 @@ public class LeaveFragment extends SherlockFragment {
 	}
 
 	public static Intent createIntent(Context context) {
-		Intent i = new Intent(context, VacationTrackerActivity.class);
+		Intent i = new Intent(context, LeaveTrackerActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		return i;
 	}

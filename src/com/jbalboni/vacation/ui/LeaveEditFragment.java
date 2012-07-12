@@ -62,7 +62,7 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View editLayout = inflater.inflate(R.layout.leave_item, container, false);
+		View editLayout = inflater.inflate(R.layout.leave_edit, container, false);
 		DatePicker datePicker = (DatePicker) editLayout.findViewById(R.id.datePicker);
 		if (android.os.Build.VERSION.SDK_INT >= 11) {
 			datePicker.setCalendarViewShown(false);

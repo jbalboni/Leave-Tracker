@@ -24,7 +24,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-public class VacationTrackerActivity extends SherlockFragmentActivity {
+public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 	LeaveAdapter mAdapter;
 	ViewPager mPager;
@@ -109,7 +109,7 @@ public class VacationTrackerActivity extends SherlockFragmentActivity {
 	}
 
 	public static Intent createIntent(Context context) {
-		Intent i = new Intent(context, VacationTrackerActivity.class);
+		Intent i = new Intent(context, LeaveTrackerActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		return i;
 	}
