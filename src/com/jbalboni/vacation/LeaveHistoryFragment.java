@@ -73,7 +73,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 		String[] projection = { LeaveTrackerDatabase.ID, "cast(number as text)||\" hours\" as number", "strftime(\"%m/%d\",date) as date" };
 		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null,
-				null, null);
+				null, LeaveTrackerDatabase.LEAVE_HISTORY.DATE+" DESC");
 		return cursorLoader;
 	}
 
