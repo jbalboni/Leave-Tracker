@@ -1,10 +1,14 @@
-package com.jbalboni.vacation;
+package com.jbalboni.vacation.ui;
 
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.R.id;
+import com.jbalboni.vacation.R.layout;
+import com.jbalboni.vacation.R.string;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 

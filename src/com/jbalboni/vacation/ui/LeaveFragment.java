@@ -1,10 +1,17 @@
-package com.jbalboni.vacation;
+package com.jbalboni.vacation.ui;
 
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.jbalboni.vacation.LeaveCategory;
+import com.jbalboni.vacation.LeaveStateManager;
+import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.VacationTracker;
+import com.jbalboni.vacation.R.id;
+import com.jbalboni.vacation.R.layout;
+import com.jbalboni.vacation.R.string;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;

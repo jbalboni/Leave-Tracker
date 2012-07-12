@@ -12,7 +12,7 @@
         android:label="@string/app_name" >
         <activity
             android:label="@string/app_name"
-            android:name=".VacationTrackerActivity" 
+            android:name=".ui.VacationTrackerActivity" 
             android:theme="@style/VacationTheme">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
@@ -22,18 +22,18 @@
         </activity>
         <activity
             android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:name=".SettingsActivity" >
+            android:name=".ui.SettingsActivity" >
         </activity>
         <activity
-            android:name=".LeaveHistoryActivity" 
+            android:name=".ui.LeaveHistoryActivity" 
             android:theme="@style/VacationTheme">
         </activity>
         <activity
-            android:name=".LeaveCategoryActivity" 
+            android:name=".ui.LeaveCategoryActivity" 
             android:theme="@style/VacationTheme">
         </activity>
         <activity
-            android:name=".LeaveEditActivity" 
+            android:name=".ui.LeaveEditActivity" 
             android:theme="@style/VacationTheme">
         </activity>
         <provider

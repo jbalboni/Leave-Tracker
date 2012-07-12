@@ -1,8 +1,13 @@
-package com.jbalboni.vacation;
+package com.jbalboni.vacation.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.R.drawable;
+import com.jbalboni.vacation.R.id;
+import com.jbalboni.vacation.R.layout;
+import com.jbalboni.vacation.R.string;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;

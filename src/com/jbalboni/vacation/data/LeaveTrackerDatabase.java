@@ -93,11 +93,20 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 
 	}
 	public static class LEAVE_HISTORY {
-		public static String ID = "_id";
-		public static String TITLE = "title";
-		public static String NUMBER = "number";
-		public static String DATE = "date";
-		public static String NOTES = "notes";
-		public static String CATEGORY = "leave_category_id";
+		public static final String ID = "_id";
+		public static final String TITLE = "title";
+		public static final String NUMBER = "number";
+		public static final String DATE = "date";
+		public static final String NOTES = "notes";
+		public static final String CATEGORY = "leave_category_id";
+	};
+	public static class LEAVE_CATEGORY {
+		public static final String ID = "_id";
+		public static final String TITLE = "title";
+		public static final String ACCRUAL_ON = "accrual_on";
+		public static final String HOURS_PER_YEAR = "hours_per_year";
+		public static final String CAP_TYPE = "leave_cap_type";
+		public static final String CAP_VAL = "leave_cap_val";
+		public static final String CATEGORY = "leave_category_id";
 	};
 }

@@ -1,9 +1,13 @@
-package com.jbalboni.vacation;
+package com.jbalboni.vacation.ui;
 
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.R.drawable;
+import com.jbalboni.vacation.R.layout;
+import com.jbalboni.vacation.R.string;
 
 public class LeaveCategoryActivity extends SherlockFragmentActivity {
 	/** Called when the activity is first created. */

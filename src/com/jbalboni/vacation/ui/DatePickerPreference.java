@@ -1,4 +1,4 @@
-package com.jbalboni.vacation;
+package com.jbalboni.vacation.ui;
 
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
