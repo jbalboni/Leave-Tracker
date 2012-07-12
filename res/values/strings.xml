@@ -47,4 +47,7 @@
 	<string name="intent_catname">com.jbalboni.vacation.catName</string>
 	<string name="intent_itemid">com.jbalboni.vacation.itemID</string>
 	<string name="cat_title">Leave Categories</string>
+	<string name="saved_msg">Saved</string>
+	<string name="added_msg">Added</string>
+	<string name="error_msg">An error occurred</string>
 </resources>

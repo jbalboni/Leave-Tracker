@@ -33,16 +33,6 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 			// Restore last state for checked position.
 			currentID = savedInstanceState.getInt("currentID", 0);
 		}
-
-		String[] uiBindFrom = { "number", "date" };
-		int[] uiBindTo = { R.id.hours, R.id.date};
-
-		getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
-
-		adapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), R.layout.leave_history_row, null,
-				uiBindFrom, uiBindTo, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-
-		setListAdapter(adapter);
 	}
 
 	@Override
@@ -56,13 +46,23 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 		Cursor cursor = (Cursor) adapter.getItem(position);
 		int leaveItemID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.ID));
 		Intent intent = new Intent();
-		intent.setClass(getActivity(), LeaveItemActivity.class);
+		intent.setClass(getActivity(), LeaveEditActivity.class);
+		intent.putExtra(getString(R.string.intent_catid), getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 		intent.putExtra(getString(R.string.intent_itemid), leaveItemID);
 		startActivity(intent);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		String[] uiBindFrom = { "number", "date" };
+		int[] uiBindTo = { R.id.hours, R.id.date};
+
+		getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
+
+		adapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), R.layout.leave_history_row, null,
+				uiBindFrom, uiBindTo, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+		setListAdapter(adapter);
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.leave_history_list, container, false);
 	}
@@ -89,5 +89,10 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
+	}
+	@Override
+	public void onResume() {
+		getLoaderManager().restartLoader(LEAVE_HISTORY_LOADER, null, this);
+		super.onResume();
 	}
 }

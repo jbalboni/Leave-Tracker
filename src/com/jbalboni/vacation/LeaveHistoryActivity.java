@@ -34,7 +34,8 @@ public class LeaveHistoryActivity extends SherlockFragmentActivity {
 		String title = item.getTitle().toString();
 		if (title.equals(getString(R.string.menu_add))) {
 			Intent intent = new Intent();
-			intent.setClass(this, LeaveItemActivity.class);
+			intent.setClass(this, LeaveEditActivity.class);
+			intent.putExtra(getString(R.string.intent_catid), getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 			startActivity(intent);
 		}
 		return true;

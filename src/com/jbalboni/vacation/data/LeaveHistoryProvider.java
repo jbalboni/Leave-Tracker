@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
@@ -47,8 +48,9 @@ public class LeaveHistoryProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
-		// TODO Auto-generated method stub
-		return null;
+		SQLiteDatabase db = leaveDB.getReadableDatabase();
+		long newID = db.insert(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE, null, values);
+		return uri.buildUpon().appendPath(Long.toString(newID)).build();
 	}
 
 	@Override
@@ -79,7 +81,8 @@ public class LeaveHistoryProvider extends ContentProvider {
 
 	@Override
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		SQLiteDatabase db = leaveDB.getReadableDatabase();
+		int rows = db.update(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE, values, selection, selectionArgs);
+		return rows;
 	}
 }

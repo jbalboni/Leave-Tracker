@@ -11,7 +11,7 @@ import android.preference.PreferenceManager;
 
 public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
-	private static final String LEAVE_HISTORY_CREATE = "CREATE TABLE leave_history ( _id INTEGER PRIMARY KEY AUTOINCREMENT, notes TEXT, number REAL, date DATE, leave_category_id INTEGER, FOREIGN KEY(leave_category_id) REFERENCES leave_categories(_id))";
+	private static final String LEAVE_HISTORY_CREATE = "CREATE TABLE leave_history ( _id INTEGER PRIMARY KEY AUTOINCREMENT, notes TEXT, number REAL, date DATE, leave_category_id INTEGER NOT NULL, FOREIGN KEY(leave_category_id) REFERENCES leave_categories(_id))";
 	private static final String LEAVE_CATEGORY_CREATE = "CREATE TABLE leave_categories ( _id INTEGER PRIMARY KEY AUTOINCREMENT, prefix TEXT, title TEXT, display_pos NULL)";
 	private SharedPreferences prefs;
 	private Context context;
@@ -92,5 +92,12 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		onCreate(db);
 
 	}
-
+	public static class LEAVE_HISTORY {
+		public static String ID = "_id";
+		public static String TITLE = "title";
+		public static String NUMBER = "number";
+		public static String DATE = "date";
+		public static String NOTES = "notes";
+		public static String CATEGORY = "leave_category_id";
+	};
 }

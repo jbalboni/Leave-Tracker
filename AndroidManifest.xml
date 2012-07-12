@@ -33,7 +33,7 @@
             android:theme="@style/VacationTheme">
         </activity>
         <activity
-            android:name=".LeaveItemActivity" 
+            android:name=".LeaveEditActivity" 
             android:theme="@style/VacationTheme">
         </activity>
         <provider

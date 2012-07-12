@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnDateChangedListener {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
@@ -97,28 +98,38 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		ContentValues leaveItemValues = new ContentValues();
 
 		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
-		leaveItemValues.put("notes", editNotes.getText().toString());
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, editNotes.getText().toString());
 		
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
-		leaveItemValues.put("number", editHours.getText().toString());
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, editHours.getText().toString());
 		
-		DatePicker editDate = (DatePicker) getView().findViewById(R.id.date);
-		leaveItemValues.put("date", new LocalDate(editDate.getYear(),editDate.getMonth()+1,editDate.getDayOfMonth()).toString());
+		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE, new LocalDate(editDate.getYear(),editDate.getMonth()+1,editDate.getDayOfMonth()).toString());
+		
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY, getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 
 		if (itemID == 0) {
 			Uri leaveUri = getActivity().getContentResolver().insert(
 					LeaveHistoryProvider.CONTENT_URI,
 					leaveItemValues
 			);
+			Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 		} else {
 			String[] idArgs = {Integer.toString(itemID)};
 			int updatedRows = getActivity().getContentResolver().update(
 					LeaveHistoryProvider.CONTENT_URI,
 					leaveItemValues,
-					LeaveTrackerDatabase.ID+"=",
+					LeaveTrackerDatabase.LEAVE_HISTORY.ID+"=?",
 					idArgs
 			);
+			if (updatedRows > 0) {
+				Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(getActivity(), R.string.error_msg, Toast.LENGTH_LONG).show();
+			}
+			
 		}
+		getActivity().finish();
 	}
 
 	@Override
