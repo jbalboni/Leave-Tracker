@@ -36,6 +36,10 @@
             android:name=".ui.LeaveEditActivity" 
             android:theme="@style/VacationTheme">
         </activity>
+        <activity
+            android:name=".ui.LeaveCategoryEditActivity" 
+            android:theme="@style/VacationTheme">
+        </activity>
         <provider
     		android:authorities="com.jbalboni.vacation.data.LeaveHistoryProvider"
     		android:multiprocess="true"

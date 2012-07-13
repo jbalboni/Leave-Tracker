@@ -12,7 +12,6 @@ import com.jbalboni.vacation.R.string;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -29,7 +28,7 @@ import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnDateChangedListener {
+public class LeaveCategoryEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnDateChangedListener {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
 	private static final DateTimeFormatter fmt = ISODateTimeFormat.localDateParser();
 	private int itemID;
@@ -60,7 +59,6 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		outState.putInt("itemID", itemID);
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
