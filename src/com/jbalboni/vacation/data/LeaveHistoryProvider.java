@@ -1,3 +1,8 @@
+/*
+ * It might be overkill to use a content provider in this app. I'm using it because
+ * loaders are a really easy way to load data into list fragments. It also is an
+ * understandable place for db code to go.
+ */
 package com.jbalboni.vacation.data;
 
 import android.content.ContentProvider;
@@ -17,6 +22,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 
 	private static final String LEAVE_HISTORY_BASE_PATH = "leave-history";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LEAVE_HISTORY_BASE_PATH);
+	//Normally we want to get the leave history of a specific category
 	public static final Uri LIST_URI = Uri.parse("content://" + AUTHORITY + "/" + LEAVE_HISTORY_BASE_PATH + "/category");
 
 	public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/leave-history";
@@ -36,8 +42,9 @@ public class LeaveHistoryProvider extends ContentProvider {
 
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		// TODO Auto-generated method stub
-		return 0;
+		SQLiteDatabase db = leaveDB.getReadableDatabase();
+		int rows = db.delete(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE, selection, selectionArgs);
+		return rows;
 	}
 
 	@Override
@@ -59,6 +66,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	    SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 	    queryBuilder.setTables(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE);
 	 
+	    //Choosing between single leave item and list of items by category
 	    int uriType = sURIMatcher.match(uri);
 	    switch (uriType) {
 	    case LEAVE_HISTORY_ID:

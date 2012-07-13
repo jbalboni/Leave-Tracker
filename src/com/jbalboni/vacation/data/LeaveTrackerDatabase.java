@@ -28,6 +28,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	}
 
 	@Override
+	//TODO fix gross string sql statements
 	public void onCreate(SQLiteDatabase db) {
 		LeaveCategory.LEFT.setTitle(context.getString(R.string.default_left_name));
 		LeaveCategory.CENTER.setTitle(context.getString(R.string.default_center_name));
@@ -92,6 +93,8 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		onCreate(db);
 
 	}
+	
+	//I'm not happy with this method, but at least my columns are defined somewhere consistently
 	public static class LEAVE_HISTORY {
 		public static final String ID = "_id";
 		public static final String TITLE = "title";

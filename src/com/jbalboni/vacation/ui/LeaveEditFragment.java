@@ -135,6 +135,23 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		}
 		getActivity().finish();
 	}
+	
+	public void deleteLeaveItem() {
+		if (itemID != 0) {
+			String[] idArgs = {Integer.toString(itemID)};
+			int updatedRows = getActivity().getContentResolver().delete(
+					LeaveHistoryProvider.CONTENT_URI,
+					LeaveTrackerDatabase.LEAVE_HISTORY.ID+"=?",
+					idArgs
+			);
+			if (updatedRows > 0) {
+				Toast.makeText(getActivity(), R.string.deleted_msg, Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(getActivity(), R.string.error_msg, Toast.LENGTH_LONG).show();
+			}
+			getActivity().finish();
+		}
+	}
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
@@ -146,4 +163,5 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		// TODO Auto-generated method stub
 		
 	}
+
 }

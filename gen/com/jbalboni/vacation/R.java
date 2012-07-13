@@ -1260,7 +1260,8 @@ containing a value of this type.
         public static final int default_center_name=0x7f0b000f;
         public static final int default_left_name=0x7f0b000e;
         public static final int default_right_name=0x7f0b0010;
-        public static final int error_msg=0x7f0b003c;
+        public static final int deleted_msg=0x7f0b003c;
+        public static final int error_msg=0x7f0b003d;
         public static final int hours_avail=0x7f0b000a;
         public static final int hours_avail_as_of=0x7f0b000b;
         public static final int intent_catid=0x7f0b0036;

@@ -51,5 +51,6 @@
 	<string name="cat_title">Leave Categories</string>
 	<string name="saved_msg">Saved</string>
 	<string name="added_msg">Added</string>
+	<string name="deleted_msg">Deleted</string>
 	<string name="error_msg">An error occurred</string>
 </resources>
