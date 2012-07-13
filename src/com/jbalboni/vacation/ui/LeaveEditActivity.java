@@ -17,7 +17,7 @@ public class LeaveEditActivity extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.leave_edit_activity);
+		setContentView(R.layout.leave_edit);
 	}
 	
 	@Override

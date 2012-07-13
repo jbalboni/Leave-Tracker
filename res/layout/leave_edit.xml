@@ -1,62 +1,11 @@
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/relativeLayout1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" 
-        android:paddingLeft="20px"
-        android:paddingRight="20px">
-
-        <TextView
-            android:id="@+id/dateLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/ItemLabelDate"
-            style="@style/EditLabel" />
-
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/dateLabel" />
-
-        <TextView
-            android:id="@+id/hoursLabel"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/datePicker"
-            android:text="@string/ItemLabelHours"
-            style="@style/EditLabel" />
-
-        <EditText
-            android:id="@+id/hours"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/hoursLabel"
-            android:inputType="numberDecimal" >
-
-            <requestFocus />
-        </EditText>
-
-        <TextView
-            android:id="@+id/notesLabel"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/hours"
-            android:text="@string/ItemLabelNotes"
-            style="@style/EditLabel" />
-
-        <EditText
-            android:id="@+id/notes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/notesLabel"
-            android:inputType="textMultiLine" />
-
-    </RelativeLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+	<fragment android:name="com.jbalboni.vacation.ui.LeaveEditFragment"
+            android:id="@+id/leaveEditFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+</LinearLayout>
