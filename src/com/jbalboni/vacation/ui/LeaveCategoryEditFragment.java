@@ -45,7 +45,7 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_add);
 		} else {
 			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_edit);
-			//getLoaderManager().initLoader(LEAVE_CATEGORY_LOADER, null, this);
+			getLoaderManager().initLoader(LEAVE_CATEGORY_LOADER, null, this);
 		}
 
 	}
