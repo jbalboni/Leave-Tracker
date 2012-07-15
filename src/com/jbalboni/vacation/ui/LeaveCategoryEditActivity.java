@@ -13,15 +13,15 @@ public class LeaveCategoryEditActivity extends SherlockFragmentActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.leave_edit);
+		setContentView(R.layout.leave_category_edit);
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(R.string.menu_save).setIcon(R.drawable.ic_menu_save)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		int itemID = getIntent().getIntExtra(getString(R.string.intent_itemid),0);
-		if (itemID != 0) {
+		int catID = getIntent().getIntExtra(getString(R.string.intent_catid),0);
+		if (catID != 0) {
 			menu.add(R.string.menu_delete).setIcon(R.drawable.ic_menu_delete)
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		}

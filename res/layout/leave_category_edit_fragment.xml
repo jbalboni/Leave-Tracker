@@ -3,60 +3,83 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:paddingLeft="20px"
-        android:paddingRight="20px">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <TextView
-            android:id="@+id/dateLabel"
+            android:id="@+id/hoursPerYearLabel"
+            style="@style/EditLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="@string/ItemLabelDate"
-            style="@style/EditLabel" />
-
-        <DatePicker
-            android:id="@+id/datePicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/dateLabel" />
-
-        <TextView
-            android:id="@+id/hoursLabel"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/datePicker"
-            android:text="@string/ItemLabelHours"
-            style="@style/EditLabel" />
+            android:text="@string/leave_pref_perYear" />
 
         <EditText
-            android:id="@+id/hours"
-            android:layout_width="wrap_content"
+            android:id="@+id/hoursPerYear"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/hoursLabel"
-            android:inputType="numberDecimal" >
-
-            <requestFocus />
-        </EditText>
-
+			android:layout_below="@+id/hoursPerYearLabel"
+            android:inputType="numberDecimal" />
+           
         <TextView
-            android:id="@+id/notesLabel"
+            android:id="@+id/categoryTitleLabel"
+            style="@style/EditLabel"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/hours"
-            android:text="@string/ItemLabelNotes"
-            style="@style/EditLabel" />
+            android:layout_below="@+id/hoursPerYear"
+            android:text="@string/leave_pref_title" />
 
         <EditText
-            android:id="@+id/notes"
-            android:layout_width="wrap_content"
+            android:id="@+id/categoryTitle"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/notesLabel"
-            android:inputType="textMultiLine" />
+			android:layout_below="@+id/categoryTitleLabel" 
+			android:inputType="text" />
+		
+		<TextView
+            android:id="@+id/initialHoursLabel"
+            style="@style/EditLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categoryTitle"
+            android:text="@string/leave_pref_initial" />
+
+        <EditText
+            android:id="@+id/initialHours"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/initialHoursLabel"
+			android:inputType="text" />
+			
+		<TextView
+            android:id="@+id/leaveCapTypeLabel"
+            style="@style/EditLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/initialHours"
+            android:text="@string/leave_pref_cap_type" />
+
+        <Spinner
+            android:id="@+id/leaveCapType"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/leaveCapTypeLabel" />
+		
+		<TextView
+            android:id="@+id/leaveCapValLabel"
+            style="@style/EditLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/leaveCapType"
+            android:text="@string/leave_pref_cap_val_max" />
+
+        <EditText
+            android:id="@+id/leaveCapVal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/leaveCapValLabel"
+			android:inputType="numberDecimal" />
 
     </RelativeLayout>

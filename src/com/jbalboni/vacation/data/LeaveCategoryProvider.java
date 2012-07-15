@@ -15,7 +15,7 @@ public class LeaveCategoryProvider extends ContentProvider {
 	public static final int CATEGORY_ID = 110;
 
 	private static final String LEAVE_CATEGORY_BASE_PATH = "leave-category";
-	public static final Uri LIST_URI = Uri.parse("content://" + AUTHORITY + "/" + LEAVE_CATEGORY_BASE_PATH);
+	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + LEAVE_CATEGORY_BASE_PATH);
 
 	public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/leave-category";
 	public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/leave-category";

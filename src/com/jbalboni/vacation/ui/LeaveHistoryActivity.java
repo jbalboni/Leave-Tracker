@@ -41,6 +41,11 @@ public class LeaveHistoryActivity extends SherlockFragmentActivity {
 			intent.setClass(this, LeaveEditActivity.class);
 			intent.putExtra(getString(R.string.intent_catid), getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 			startActivity(intent);
+		} else if (title.equals(getString(R.string.menu_edit_cat))) {
+			Intent intent = new Intent();
+			intent.setClass(this, LeaveCategoryEditActivity.class);
+			intent.putExtra(getString(R.string.intent_catid), getIntent().getIntExtra(getString(R.string.intent_catid), 0));
+			startActivity(intent);
 		}
 		return true;
 	}
