@@ -75,7 +75,7 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		//Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.ID, "number", "notes", "date" };
+		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "number", "notes", "date" };
 		Builder itemUri = LeaveHistoryProvider.CONTENT_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid),0)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null,
 				null, null);

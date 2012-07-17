@@ -57,11 +57,11 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Cursor cursor = (Cursor) adapter.getItem(position);
-		int categoryID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.ID));
+		int categoryID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ID));
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), LeaveHistoryActivity.class);
 		intent.putExtra(getString(R.string.intent_catid), categoryID);
-		intent.putExtra(getString(R.string.intent_catname), cursor.getString(cursor.getColumnIndex(LeaveTrackerDatabase.TITLE)));
+		intent.putExtra(getString(R.string.intent_catname), cursor.getString(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE)));
 		startActivity(intent);
 	}
 
@@ -74,7 +74,7 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		//Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.ID, "title" };
+		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, "title" };
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), LeaveCategoryProvider.CONTENT_URI, projection, null,
 				null, null);
 		return cursorLoader;

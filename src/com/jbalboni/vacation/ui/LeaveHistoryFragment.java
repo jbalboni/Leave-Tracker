@@ -48,7 +48,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Cursor cursor = (Cursor) adapter.getItem(position);
-		int leaveItemID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.ID));
+		int leaveItemID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ID));
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), LeaveEditActivity.class);
 		intent.putExtra(getString(R.string.intent_catid), getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
@@ -74,7 +74,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		//Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.ID, "cast(number as text)||\" hours\" as number", "date" };
+		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "cast(number as text)||\" hours\" as number", "date" };
 		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null,
 				null, LeaveTrackerDatabase.LEAVE_HISTORY.DATE+" DESC");

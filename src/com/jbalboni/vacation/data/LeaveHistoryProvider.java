@@ -70,11 +70,11 @@ public class LeaveHistoryProvider extends ContentProvider {
 	    int uriType = sURIMatcher.match(uri);
 	    switch (uriType) {
 	    case LEAVE_HISTORY_ID:
-	        queryBuilder.appendWhere(LeaveTrackerDatabase.ID + "="
+	        queryBuilder.appendWhere(LeaveTrackerDatabase.LEAVE_HISTORY.ID + "="
 	                + uri.getLastPathSegment());
 	        break;
 	    case LEAVE_HISTORY:
-	    	queryBuilder.appendWhere(LeaveTrackerDatabase.CATEGORY_ID + "="
+	    	queryBuilder.appendWhere(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY + "="
 	                + uri.getLastPathSegment());
 	        break;
 	    default:
