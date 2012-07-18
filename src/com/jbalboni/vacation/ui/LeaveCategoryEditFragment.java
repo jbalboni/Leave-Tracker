@@ -17,15 +17,18 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LeaveCategoryEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>,
-		OnDateChangedListener {
+		OnDateChangedListener, OnItemSelectedListener {
 	private static final int LEAVE_CATEGORY_LOADER = 0x03;
 	private int catID;
 
@@ -94,17 +97,13 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		spinner.setAdapter(adapter);
 		spinner.setSelection(cursor.getInt(colNum));
 
+		spinner.setOnItemSelectedListener(this);
+		
+		setLeaveCapVal(cursor.getInt(colNum));
+		
 		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL);
 		editView = (EditText) getView().findViewById(R.id.leaveCapVal);
-		editView.setText(Float.toString(cursor.getFloat(colNum)));
-		
-		//Need to hide the leave cap value field if there is no cap
-		if (spinner.getSelectedItemPosition() == LeaveTrackerDatabase.LEAVE_CAP_TYPE.NONE) {
-			editView.setVisibility(View.GONE);
-			View view = getView().findViewById(R.id.leaveCapValLabel);
-			view.setVisibility(View.GONE);
-		}
-		
+		editView.setText(Float.toString(cursor.getFloat(colNum)));	
 
 		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR);
 		editView = (EditText) getView().findViewById(R.id.hoursPerYear);
@@ -176,6 +175,35 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 	public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	private void setLeaveCapVal(int position) {
+		EditText editView = (EditText) getView().findViewById(R.id.leaveCapVal);
+		TextView view = (TextView) getView().findViewById(R.id.leaveCapValLabel);
+		//Need to hide the leave cap value field if there is no cap
+		if (position == LeaveTrackerDatabase.LEAVE_CAP_TYPE.NONE) {
+			editView.setVisibility(View.GONE);
+			view.setVisibility(View.GONE);
+		} else if (position == LeaveTrackerDatabase.LEAVE_CAP_TYPE.MAX) {
+			view.setText(R.string.leave_pref_cap_val_max);
+			editView.setVisibility(View.VISIBLE);
+			view.setVisibility(View.VISIBLE);
+		} else if (position == LeaveTrackerDatabase.LEAVE_CAP_TYPE.CARRY_OVER) {
+			view.setText(R.string.leave_pref_cap_val_carry);
+			editView.setVisibility(View.VISIBLE);
+			view.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		setLeaveCapVal(pos);
+	}
+
+	@Override
+	public void onNothingSelected(AdapterView<?> arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
