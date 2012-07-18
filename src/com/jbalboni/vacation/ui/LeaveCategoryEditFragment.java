@@ -17,12 +17,15 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-public class LeaveCategoryEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnDateChangedListener {
+public class LeaveCategoryEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>,
+		OnDateChangedListener {
 	private static final int LEAVE_CATEGORY_LOADER = 0x03;
 	private int catID;
 
@@ -34,9 +37,9 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 			// Restore last state for checked position.
 			catID = savedInstanceState.getInt("catID", 0);
 		} else {
-			catID = getActivity().getIntent().getIntExtra(getString(R.string.intent_catid),0);
+			catID = getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0);
 		}
-		
+
 		if (catID == 0) {
 			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_add);
 		} else {
@@ -61,78 +64,100 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		//Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, "number", "notes", "date" };
-		Builder itemUri = LeaveCategoryProvider.CONTENT_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid),0)));
-		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null,
-				null, null);
+		// Seems wrong to do output formatting here
+		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL,
+				LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR, LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE,
+				LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE, LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL,
+				LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS };
+		Builder itemUri = LeaveCategoryProvider.CONTENT_URI.buildUpon().appendPath(
+				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0)));
+		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null, null, null);
 		return cursorLoader;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		cursor.moveToFirst();
+
+		int colNum = 0;
+		EditText editView;
+
+		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE);
+		editView = (EditText) getView().findViewById(R.id.categoryTitle);
+		editView.setText(cursor.getString(colNum));
+
+		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE);
+		Spinner spinner = (Spinner) getView().findViewById(R.id.leaveCapType);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.leave_cap_types,
+				android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		spinner.setSelection(cursor.getInt(colNum));
+
+		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL);
+		editView = (EditText) getView().findViewById(R.id.leaveCapVal);
+		editView.setText(Float.toString(cursor.getFloat(colNum)));
 		
-//		int notesCol = cursor.getColumnIndex("notes");
-//		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
-//		editNotes.setText(cursor.getString(notesCol));
-//		
-//		int dateCol = cursor.getColumnIndex("date");
-//		LocalDate date = new LocalDate(fmt.parseLocalDate(cursor.getString(dateCol)));
-//		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
-//		editDate.init(date.getYear(), date.getMonthOfYear()-1, date.getDayOfMonth(), this);
-//		
-//		int hoursCol = cursor.getColumnIndex("number");
-//		EditText editHours = (EditText) getView().findViewById(R.id.hours);
-//		editHours.setText(cursor.getString(hoursCol));
+		//Need to hide the leave cap value field if there is no cap
+		if (spinner.getSelectedItemPosition() == LeaveTrackerDatabase.LEAVE_CAP_TYPE.NONE) {
+			editView.setVisibility(View.GONE);
+			View view = getView().findViewById(R.id.leaveCapValLabel);
+			view.setVisibility(View.GONE);
+		}
+		
+
+		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR);
+		editView = (EditText) getView().findViewById(R.id.hoursPerYear);
+		editView.setText(Float.toString(cursor.getFloat(colNum)));
+
+		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS);
+		editView = (EditText) getView().findViewById(R.id.initialHours);
+		editView.setText(Float.toString(cursor.getFloat(colNum)));
+
+		// colNum =
+		// cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL_ON);
+		// editView = (EditText) getView().findViewById(R.id.leaveCapType);
+		// editView.setText(cursor.getString(colNum));
 	}
-	
+
 	public void saveCategory() {
 		ContentValues leaveItemValues = new ContentValues();
 
 		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
 		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, editNotes.getText().toString());
-		
+
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, editHours.getText().toString());
-		
+
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE, new LocalDate(editDate.getYear(),editDate.getMonth()+1,editDate.getDayOfMonth()).toString());
-		
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY, getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
+				new LocalDate(editDate.getYear(), editDate.getMonth() + 1, editDate.getDayOfMonth()).toString());
+
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY,
+				getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 
 		if (catID == 0) {
-			getActivity().getContentResolver().insert(
-					LeaveCategoryProvider.CONTENT_URI,
-					leaveItemValues
-			);
+			getActivity().getContentResolver().insert(LeaveCategoryProvider.CONTENT_URI, leaveItemValues);
 			Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 		} else {
-			String[] idArgs = {Integer.toString(catID)};
-			int updatedRows = getActivity().getContentResolver().update(
-					LeaveCategoryProvider.CONTENT_URI,
-					leaveItemValues,
-					LeaveTrackerDatabase.LEAVE_HISTORY.ID+"=?",
-					idArgs
-			);
+			String[] idArgs = { Integer.toString(catID) };
+			int updatedRows = getActivity().getContentResolver().update(LeaveCategoryProvider.CONTENT_URI,
+					leaveItemValues, LeaveTrackerDatabase.LEAVE_HISTORY.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
 			} else {
 				Toast.makeText(getActivity(), R.string.error_msg, Toast.LENGTH_LONG).show();
 			}
-			
+
 		}
 		getActivity().finish();
 	}
-	
+
 	public void deleteCategory() {
 		if (catID != 0) {
-			String[] idArgs = {Integer.toString(catID)};
-			int updatedRows = getActivity().getContentResolver().delete(
-					LeaveCategoryProvider.CONTENT_URI,
-					LeaveTrackerDatabase.LEAVE_CATEGORY.ID+"=?",
-					idArgs
-			);
+			String[] idArgs = { Integer.toString(catID) };
+			int updatedRows = getActivity().getContentResolver().delete(LeaveCategoryProvider.CONTENT_URI,
+					LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.deleted_msg, Toast.LENGTH_LONG).show();
 			} else {
@@ -144,13 +169,13 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
-		//adapter.swapCursor(null);
+		// adapter.swapCursor(null);
 	}
 
 	@Override
 	public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

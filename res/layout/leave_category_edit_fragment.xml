@@ -7,13 +7,28 @@
         android:paddingRight="10dp">
 
         <TextView
-            android:id="@+id/hoursPerYearLabel"
+            android:id="@+id/categoryTitleLabel"
             style="@style/EditLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:text="@string/leave_pref_title" />
+
+        <EditText
+            android:id="@+id/categoryTitle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+			android:layout_below="@+id/categoryTitleLabel" 
+			android:inputType="text" />
+        
+        <TextView
+            android:id="@+id/hoursPerYearLabel"
+            style="@style/EditLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/categoryTitle"
             android:text="@string/leave_pref_perYear" />
 
         <EditText
@@ -23,27 +38,12 @@
 			android:layout_below="@+id/hoursPerYearLabel"
             android:inputType="numberDecimal" />
            
-        <TextView
-            android:id="@+id/categoryTitleLabel"
-            style="@style/EditLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/hoursPerYear"
-            android:text="@string/leave_pref_title" />
-
-        <EditText
-            android:id="@+id/categoryTitle"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-			android:layout_below="@+id/categoryTitleLabel" 
-			android:inputType="text" />
-		
 		<TextView
             android:id="@+id/initialHoursLabel"
             style="@style/EditLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/categoryTitle"
+            android:layout_below="@+id/hoursPerYear"
             android:text="@string/leave_pref_initial" />
 
         <EditText

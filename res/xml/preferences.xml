@@ -71,7 +71,7 @@
 			android:summary="@string/leave_pref_cap_type_summary"
 			android:defaultValue="None"
 			android:entries="@array/leave_cap_types"
-			android:entryValues="@array/leave_cap_type_vals" />
+			android:entryValues="@array/leave_cap_types" />
 			
 		<EditTextPreference
 			android:key="catLeft_leaveCapVal"
@@ -138,7 +138,7 @@
 			android:summary="@string/leave_pref_cap_type_summary"
 			android:defaultValue="None"
 			android:entries="@array/leave_cap_types"
-			android:entryValues="@array/leave_cap_type_vals" />
+			android:entryValues="@array/leave_cap_types" />
 			
 		<EditTextPreference
 			android:key="catCenter_leaveCapVal"
@@ -204,7 +204,7 @@
 			android:summary="@string/leave_pref_cap_type_summary"
 			android:defaultValue="None"
 			android:entries="@array/leave_cap_types"
-			android:entryValues="@array/leave_cap_type_vals" />
+			android:entryValues="@array/leave_cap_types" />
 			
 		<EditTextPreference
 			android:key="catRight_leaveCapVal"

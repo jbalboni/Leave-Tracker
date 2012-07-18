@@ -9,10 +9,9 @@ package com.jbalboni.vacation;
 
 public final class R {
     public static final class array {
-        public static final int leave_cap_type_vals=0x7f0c0001;
-        public static final int leave_cap_types=0x7f0c0002;
+        public static final int leave_cap_types=0x7f0c0001;
         public static final int leave_intervals=0x7f0c0000;
-        public static final int menu_category=0x7f0c0003;
+        public static final int menu_category=0x7f0c0002;
     }
     public static final class attr {
         /**  Specified if we are forcing an action item overflow menu. 
@@ -1142,8 +1141,8 @@ containing a value of this type.
         public static final int abs__titleDivider=0x7f05001f;
         public static final int abs__up=0x7f05000e;
         public static final int asOfDateDesc=0x7f050042;
-        public static final int categoryTitle=0x7f050030;
-        public static final int categoryTitleLabel=0x7f05002f;
+        public static final int categoryTitle=0x7f05002e;
+        public static final int categoryTitleLabel=0x7f05002d;
         public static final int changeAsOfDate=0x7f050044;
         public static final int date=0x7f050046;
         public static final int dateLabel=0x7f050039;
@@ -1155,8 +1154,8 @@ containing a value of this type.
         public static final int hoursAvailableAsOf=0x7f050041;
         public static final int hoursAvailableLabel=0x7f05003f;
         public static final int hoursLabel=0x7f05003b;
-        public static final int hoursPerYear=0x7f05002e;
-        public static final int hoursPerYearLabel=0x7f05002d;
+        public static final int hoursPerYear=0x7f050030;
+        public static final int hoursPerYearLabel=0x7f05002f;
         public static final int initialHours=0x7f050032;
         public static final int initialHoursLabel=0x7f050031;
         public static final int leaveCapType=0x7f050034;

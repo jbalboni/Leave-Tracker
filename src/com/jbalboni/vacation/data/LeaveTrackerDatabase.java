@@ -12,7 +12,7 @@ import android.preference.PreferenceManager;
 public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 	private static final String LEAVE_HISTORY_CREATE = "CREATE TABLE leave_history ( _id INTEGER PRIMARY KEY AUTOINCREMENT, notes TEXT, number REAL, date DATE, leave_category_id INTEGER NOT NULL, FOREIGN KEY(leave_category_id) REFERENCES leave_categories(_id))";
-	private static final String LEAVE_CATEGORY_CREATE = "CREATE TABLE leave_categories ( _id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, display_pos INTEGER, initial_hours REAL NOT NULL, accrual INTEGER NOT NULL, cap_type INTEGER NOT NULL, cap_val REAL)";
+	private static final String LEAVE_CATEGORY_CREATE = "CREATE TABLE leave_categories ( _id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, display_pos INTEGER, hours_per_year REAL NOT NULL, initial_hours REAL NOT NULL, accrual INTEGER NOT NULL, cap_type INTEGER NOT NULL, cap_val REAL)";
 	private SharedPreferences prefs;
 	private Context context;
 	public static String LEAVE_HISTORY_TABLE = "leave_history";
@@ -35,12 +35,12 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		LeaveCategory.RIGHT.setTitle(context.getString(R.string.default_right_name));
 		db.execSQL(LEAVE_CATEGORY_CREATE);
 
-		db.execSQL(String.format("insert into %s (_id,title,display_pos,initial_hours,accrual,cap_type) VALUES (1,'%s','%d','%d','%d','%d')",
-				LEAVE_CATEGORY_TABLE, LeaveCategory.LEFT.getTitle(), 0, 0, 1, LEAVE_CAP_TYPE.NONE));
-		db.execSQL(String.format("insert into %s (_id,title,display_pos,initial_hours,accrual,cap_type) VALUES (2,'%s','%d','%d','%d','%d')",
-				LEAVE_CATEGORY_TABLE, LeaveCategory.CENTER.getTitle(), 1, 0, 1, LEAVE_CAP_TYPE.NONE));
-		db.execSQL(String.format("insert into %s (_id,title,display_pos,initial_hours,accrual,cap_type) VALUES (3,'%s','%d','%d','%d','%d')",
-				LEAVE_CATEGORY_TABLE, LeaveCategory.RIGHT.getTitle(), 2, 0, 0, LEAVE_CAP_TYPE.NONE));
+		db.execSQL(String.format("insert into %s (_id,title,display_pos,hours_per_year,initial_hours,accrual,cap_type) VALUES (1,'%s','%d','%d','%d','%d','%d')",
+				LEAVE_CATEGORY_TABLE, LeaveCategory.LEFT.getTitle(), 0, 80, 0, 1, LEAVE_CAP_TYPE.NONE));
+		db.execSQL(String.format("insert into %s (_id,title,display_pos,hours_per_year,initial_hours,accrual,cap_type) VALUES (2,'%s','%d','%d','%d','%d','%d')",
+				LEAVE_CATEGORY_TABLE, LeaveCategory.CENTER.getTitle(), 1, 80, 0, 1, LEAVE_CAP_TYPE.NONE));
+		db.execSQL(String.format("insert into %s (_id,title,display_pos,hours_per_year,initial_hours,accrual,cap_type) VALUES (3,'%s','%d','%d','%d','%d','%d')",
+				LEAVE_CATEGORY_TABLE, LeaveCategory.RIGHT.getTitle(), 2, 80, 0, 0, LEAVE_CAP_TYPE.NONE));
 
 		db.execSQL(LEAVE_HISTORY_CREATE);
 		if (!prefs.getString(LeaveCategory.LEFT.getPrefix() + "initialHours", "0").equals("0")) {
@@ -106,11 +106,11 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	public static class LEAVE_CATEGORY {
 		public static final String ID = "_id";
 		public static final String TITLE = "title";
-		public static final String ACCRUAL_ON = "accrual_on";
+		public static final String ACCRUAL = "accrual";
 		public static final String HOURS_PER_YEAR = "hours_per_year";
-		public static final String CAP_TYPE = "leave_cap_type";
-		public static final String CAP_VAL = "leave_cap_val";
-		public static final String CATEGORY = "leave_category_id";
+		public static final String CAP_TYPE = "cap_type";
+		public static final String CAP_VAL = "cap_val";
+		public static final String INITIAL_HOURS = "initial_hours";
 	};
 	public static class LEAVE_CAP_TYPE {
 		public static final int NONE = 0;
