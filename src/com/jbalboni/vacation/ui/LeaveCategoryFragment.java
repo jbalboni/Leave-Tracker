@@ -2,9 +2,6 @@ package com.jbalboni.vacation.ui;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.R;
-import com.jbalboni.vacation.R.id;
-import com.jbalboni.vacation.R.layout;
-import com.jbalboni.vacation.R.string;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 

@@ -3,8 +3,6 @@ package com.jbalboni.vacation.ui;
 import com.jbalboni.vacation.LeaveCapType;
 import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.R;
-import com.jbalboni.vacation.R.string;
-import com.jbalboni.vacation.R.xml;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

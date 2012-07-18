@@ -3,8 +3,8 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:paddingLeft="20px"
-        android:paddingRight="20px">
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:id="@+id/dateLabel"

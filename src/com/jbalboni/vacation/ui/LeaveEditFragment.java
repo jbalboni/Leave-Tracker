@@ -6,16 +6,12 @@ import org.joda.time.format.ISODateTimeFormat;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbalboni.vacation.R;
-import com.jbalboni.vacation.R.id;
-import com.jbalboni.vacation.R.layout;
-import com.jbalboni.vacation.R.string;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.net.Uri;
 import android.net.Uri.Builder;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -115,7 +111,7 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY, getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 
 		if (itemID == 0) {
-			Uri leaveUri = getActivity().getContentResolver().insert(
+			getActivity().getContentResolver().insert(
 					LeaveHistoryProvider.CONTENT_URI,
 					leaveItemValues
 			);
