@@ -23,12 +23,33 @@
 			android:layout_below="@+id/categoryTitleLabel" 
 			android:inputType="text" />
         
+        <LinearLayout 
+	        android:id="@+id/accrualLayout"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+            android:layout_below="@+id/categoryTitle"
+	        android:orientation="horizontal">
+	        
+	        <TextView
+	            android:id="@+id/accrualLabel"
+	            android:layout_gravity="bottom"
+	            style="@style/EditLabelText"
+	            android:layout_weight="2"
+	            android:layout_height="wrap_content"
+	            android:text="@string/leave_pref_accrual" />
+	        <CheckBox android:id="@+id/accrual"
+	            android:layout_gravity="bottom|right"
+		        android:layout_width="wrap_content"
+		        android:layout_weight="0"
+		        android:layout_height="wrap_content"/>
+        </LinearLayout>
+        
         <TextView
             android:id="@+id/hoursPerYearLabel"
             style="@style/EditLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/categoryTitle"
+            android:layout_below="@+id/accrualLayout"
             android:text="@string/leave_pref_perYear" />
 
         <EditText

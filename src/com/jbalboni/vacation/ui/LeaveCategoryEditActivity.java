@@ -34,12 +34,12 @@ public class LeaveCategoryEditActivity extends SherlockFragmentActivity {
 		String title = item.getTitle().toString();
 		if (title.equals(getString(R.string.menu_save))) {
 			FragmentManager fm = getSupportFragmentManager();
-			LeaveEditFragment fragment = (LeaveEditFragment) fm.findFragmentById(R.id.leaveCategoryEditFragment);
-			fragment.saveLeaveItem();
+			LeaveCategoryEditFragment fragment = (LeaveCategoryEditFragment) fm.findFragmentById(R.id.leaveCategoryEditFragment);
+			fragment.saveCategory();
 		} else if (title.equals(getString(R.string.menu_delete))) {
 			FragmentManager fm = getSupportFragmentManager();
-			LeaveEditFragment fragment = (LeaveEditFragment) fm.findFragmentById(R.id.leaveCategoryEditFragment);
-			fragment.deleteLeaveItem();
+			LeaveCategoryEditFragment fragment = (LeaveCategoryEditFragment) fm.findFragmentById(R.id.leaveCategoryEditFragment);
+			fragment.deleteCategory();
 		}
 		return true;
 	}

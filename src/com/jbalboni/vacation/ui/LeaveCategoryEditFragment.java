@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
@@ -113,10 +114,9 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		editView = (EditText) getView().findViewById(R.id.initialHours);
 		editView.setText(Float.toString(cursor.getFloat(colNum)));
 
-		// colNum =
-		// cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL_ON);
-		// editView = (EditText) getView().findViewById(R.id.leaveCapType);
-		// editView.setText(cursor.getString(colNum));
+		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL);
+		CheckBox editBox = (CheckBox) getView().findViewById(R.id.accrual);
+		editBox.setChecked(cursor.getInt(colNum) == 1);
 	}
 
 	public void saveCategory() {

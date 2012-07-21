@@ -64,4 +64,9 @@
         <item name="android:padding">10px</item>
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="EditLabelText">
+        <item name="android:textColor">#ff33b5e5</item>
+        <item name="android:padding">10px</item>
+        <item name="android:textSize">15sp</item>
+    </style>
 </resources>
