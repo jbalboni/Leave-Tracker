@@ -94,6 +94,14 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 
 	}
 	
+	public static float getFloat(String val) {
+		if (val == null || val.equals("")) {
+			return 0;
+		} else {
+			return Float.parseFloat(val);
+		}
+	}
+	
 	//I'm not happy with this method, but at least my columns are defined somewhere consistently
 	public static class LEAVE_HISTORY {
 		public static final String ID = "_id";

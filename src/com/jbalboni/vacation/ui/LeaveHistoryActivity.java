@@ -23,8 +23,8 @@ public class LeaveHistoryActivity extends SherlockFragmentActivity {
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add(R.string.menu_edit_cat).setIcon(R.drawable.ic_menu_edit)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
-		menu.add(R.string.menu_delete_cat).setIcon(R.drawable.ic_menu_delete)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		//menu.add(R.string.menu_delete_cat).setIcon(R.drawable.ic_menu_delete)
+        //.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		return super.onCreateOptionsMenu(menu);
 	}
 

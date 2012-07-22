@@ -1,7 +1,5 @@
 package com.jbalboni.vacation.ui;
 
-import org.joda.time.LocalDate;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
@@ -124,28 +122,35 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 	}
 
 	public void saveCategory() {
-		ContentValues leaveItemValues = new ContentValues();
-
-		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, editNotes.getText().toString());
-
-		EditText editHours = (EditText) getView().findViewById(R.id.hours);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, editHours.getText().toString());
-
-		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
-				new LocalDate(editDate.getYear(), editDate.getMonth() + 1, editDate.getDayOfMonth()).toString());
-
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY,
-				getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
+		ContentValues categoryValues = new ContentValues();
+		
+		EditText editView;
+		
+		editView = (EditText) getView().findViewById(R.id.categoryTitle);
+		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE, editView.getText().toString());
+		
+		editView = (EditText) getView().findViewById(R.id.hoursPerYear);
+		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR, LeaveTrackerDatabase.getFloat(editView.getText().toString()));
+		
+		editView = (EditText) getView().findViewById(R.id.initialHours);
+		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS, LeaveTrackerDatabase.getFloat(editView.getText().toString()));
+		
+		editView = (EditText) getView().findViewById(R.id.leaveCapVal);
+		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL, LeaveTrackerDatabase.getFloat(editView.getText().toString()));
+		
+		CheckBox accrualOn = (CheckBox) getView().findViewById(R.id.accrual);
+		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL, accrualOn.isChecked() ? 1 : 0);
+		
+		Spinner leaveCapType = (Spinner) getView().findViewById(R.id.leaveCapType);
+		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE, leaveCapType.getSelectedItemPosition());
 
 		if (catID == 0) {
-			getActivity().getContentResolver().insert(LeaveCategoryProvider.CONTENT_URI, leaveItemValues);
+			getActivity().getContentResolver().insert(LeaveCategoryProvider.CONTENT_URI, categoryValues);
 			Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 		} else {
 			String[] idArgs = { Integer.toString(catID) };
 			int updatedRows = getActivity().getContentResolver().update(LeaveCategoryProvider.CONTENT_URI,
-					leaveItemValues, LeaveTrackerDatabase.LEAVE_HISTORY.ID + "=?", idArgs);
+					categoryValues, LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
 			} else {

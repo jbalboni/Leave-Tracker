@@ -90,4 +90,10 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
 	}
+	
+	@Override
+	public void onResume() {
+		getLoaderManager().restartLoader(LEAVE_CATEGORY_LOADER, null, this);
+		super.onResume();
+	}
 }

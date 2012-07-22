@@ -23,7 +23,7 @@ public class LeaveCategoryEditActivity extends SherlockFragmentActivity {
 		menu.add(R.string.menu_save).setIcon(R.drawable.ic_menu_save)
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		int catID = getIntent().getIntExtra(getString(R.string.intent_catid),0);
-		if (catID != 0) {
+		if (catID > 2) {
 			menu.add(R.string.menu_delete).setIcon(R.drawable.ic_menu_delete)
 			.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		}
