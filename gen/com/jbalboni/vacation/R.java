@@ -1266,21 +1266,21 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0b0009;
-        public static final int added_msg=0x7f0b003b;
+        public static final int added_msg=0x7f0b003c;
         public static final int app_name=0x7f0b000d;
-        public static final int cat_title=0x7f0b0039;
+        public static final int cat_title=0x7f0b003a;
         public static final int database_name=0x7f0b0027;
         public static final int default_as_of_date=0x7f0b000c;
         public static final int default_center_name=0x7f0b000f;
         public static final int default_left_name=0x7f0b000e;
         public static final int default_right_name=0x7f0b0010;
-        public static final int deleted_msg=0x7f0b003c;
-        public static final int error_msg=0x7f0b003d;
+        public static final int deleted_msg=0x7f0b003d;
+        public static final int error_msg=0x7f0b003e;
         public static final int hours_avail=0x7f0b000a;
         public static final int hours_avail_as_of=0x7f0b000b;
-        public static final int intent_catid=0x7f0b0036;
-        public static final int intent_catname=0x7f0b0037;
-        public static final int intent_itemid=0x7f0b0038;
+        public static final int intent_catid=0x7f0b0037;
+        public static final int intent_catname=0x7f0b0038;
+        public static final int intent_itemid=0x7f0b0039;
         public static final int leave_category_position=0x7f0b0014;
         public static final int leave_pref_accrual=0x7f0b0016;
         public static final int leave_pref_accrual_off=0x7f0b0018;
@@ -1302,8 +1302,9 @@ containing a value of this type.
         public static final int leave_pref_used=0x7f0b0019;
         public static final int load_msg=0x7f0b002d;
         public static final int menu_add=0x7f0b0032;
+        public static final int menu_add_cat=0x7f0b0035;
         public static final int menu_delete=0x7f0b0031;
-        public static final int menu_delete_cat=0x7f0b0035;
+        public static final int menu_delete_cat=0x7f0b0036;
         public static final int menu_edit=0x7f0b0030;
         public static final int menu_edit_cat=0x7f0b0034;
         public static final int menu_history=0x7f0b002f;
@@ -1312,7 +1313,7 @@ containing a value of this type.
         public static final int no_records=0x7f0b002c;
         public static final int quick_use_date=0x7f0b0013;
         public static final int quick_use_hours=0x7f0b0012;
-        public static final int saved_msg=0x7f0b003a;
+        public static final int saved_msg=0x7f0b003b;
         public static final int separator=0x7f0b002b;
         public static final int use_hours_alert_msg=0x7f0b0011;
     }

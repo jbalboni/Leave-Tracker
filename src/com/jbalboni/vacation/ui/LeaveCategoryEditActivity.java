@@ -7,6 +7,8 @@ import com.jbalboni.vacation.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.view.View;
+import android.widget.CheckBox;
 
 public class LeaveCategoryEditActivity extends SherlockFragmentActivity {
 	@Override
@@ -42,5 +44,12 @@ public class LeaveCategoryEditActivity extends SherlockFragmentActivity {
 			fragment.deleteCategory();
 		}
 		return true;
+	}
+	
+	public void onAccrualChecked(View view) {
+		boolean checked = ((CheckBox) view).isChecked();
+		FragmentManager fm = getSupportFragmentManager();
+		LeaveCategoryEditFragment fragment = (LeaveCategoryEditFragment) fm.findFragmentById(R.id.leaveCategoryEditFragment);
+		fragment.toggleAccrual(checked);
 	}
 }

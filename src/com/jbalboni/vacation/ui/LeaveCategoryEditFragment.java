@@ -45,9 +45,9 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		}
 
 		if (catID == 0) {
-			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_add);
+			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_add_cat);
 		} else {
-			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_edit);
+			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_edit_cat);
 			getLoaderManager().initLoader(LEAVE_CATEGORY_LOADER, null, this);
 		}
 
@@ -63,6 +63,16 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
 		View editLayout = inflater.inflate(R.layout.leave_category_edit_fragment, container, false);
+		
+		//Set up limit list
+		Spinner spinner = (Spinner) editLayout.findViewById(R.id.leaveCapType);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.leave_cap_types,
+				android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		spinner.setSelection(0);
+		spinner.setOnItemSelectedListener(this);
+		
 		return editLayout;
 	}
 
@@ -92,14 +102,7 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 
 		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE);
 		Spinner spinner = (Spinner) getView().findViewById(R.id.leaveCapType);
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.leave_cap_types,
-				android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner.setAdapter(adapter);
 		spinner.setSelection(cursor.getInt(colNum));
-
-		spinner.setOnItemSelectedListener(this);
-		
 		setLeaveCapVal(cursor.getInt(colNum));
 		
 		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL);
@@ -117,6 +120,7 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL);
 		CheckBox editBox = (CheckBox) getView().findViewById(R.id.accrual);
 		editBox.setChecked(cursor.getInt(colNum) == 1);
+		toggleAccrual(editBox.isChecked());
 	}
 
 	public void saveCategory() {
@@ -203,6 +207,30 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void toggleAccrual(boolean accrualOn) {
+		View perYearView = getView().findViewById(R.id.hoursPerYear);
+		View perYearLabelView = getView().findViewById(R.id.hoursPerYearLabel);
+		Spinner leaveCapType = (Spinner) getView().findViewById(R.id.leaveCapType);
+		View leaveCapLabelView = getView().findViewById(R.id.leaveCapTypeLabel);
+		View leaveCapValView = getView().findViewById(R.id.leaveCapVal);
+		View leaveCapValLabelView = getView().findViewById(R.id.leaveCapValLabel);
+		if (accrualOn) {
+			perYearView.setVisibility(View.VISIBLE);
+			perYearLabelView.setVisibility(View.VISIBLE);
+			leaveCapType.setVisibility(View.VISIBLE);
+			leaveCapLabelView.setVisibility(View.VISIBLE);
+			setLeaveCapVal(leaveCapType.getSelectedItemPosition());
+		} else {
+			perYearView.setVisibility(View.GONE);
+			perYearLabelView.setVisibility(View.GONE);
+			leaveCapType.setVisibility(View.GONE);
+			leaveCapLabelView.setVisibility(View.GONE);
+			leaveCapValView.setVisibility(View.GONE);
+			leaveCapValLabelView.setVisibility(View.GONE);
+		}
 		
 	}
 

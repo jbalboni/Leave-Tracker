@@ -1,5 +1,6 @@
 package com.jbalboni.vacation.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -24,8 +25,11 @@ public class LeaveCategoryActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle item selection
-		//String title = item.getTitle().toString();
+		if (item.getTitle().equals(getString(R.string.menu_add))) {
+			Intent intent = new Intent();
+			intent.setClass(this, LeaveCategoryEditActivity.class);
+			startActivity(intent);
+		}
 		return true;
 	}
 }
