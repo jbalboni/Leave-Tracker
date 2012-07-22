@@ -1,20 +1,19 @@
 package com.jbalboni.vacation.ui;
 
-import java.util.List;
-
 import com.viewpagerindicator.TitlePageIndicator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -32,8 +31,7 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.main);
 
-		mAdapter = new LeaveAdapter(getSupportFragmentManager(), LeaveStateManager.getTitles(
-				PreferenceManager.getDefaultSharedPreferences(this), getApplicationContext()));
+		mAdapter = new LeaveAdapter(getSupportFragmentManager(), getApplicationContext());
 
 		mPager = (ViewPager) findViewById(R.id.leavePager);
 		mPager.setAdapter(mAdapter);
@@ -47,16 +45,24 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 	}
 
 	public static class LeaveAdapter extends FragmentPagerAdapter {
-		List<String> titles;
+		private SQLiteQueryBuilder titleQuery;
+		private LeaveTrackerDatabase leaveDB;
+		private String selection = LeaveTrackerDatabase.LEAVE_CATEGORY.ID + " in (1,2,3)";
+		private String selTitle = LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?";
+		private String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE };
+		private String sortOrder = LeaveTrackerDatabase.LEAVE_CATEGORY.ID;
 
-		public LeaveAdapter(FragmentManager fm, List<String> titles) {
+		public LeaveAdapter(FragmentManager fm, Context context) {
 			super(fm);
-			this.titles = titles;
+			leaveDB = new LeaveTrackerDatabase(context);
+			titleQuery = new SQLiteQueryBuilder();
+			titleQuery.setTables(LeaveTrackerDatabase.LEAVE_CATEGORY_TABLE);
 		}
 
 		@Override
 		public int getCount() {
-			return titles.size();
+			return titleQuery.query(leaveDB.getReadableDatabase(), projection, selection, null, null, null,
+					sortOrder).getCount();
 		}
 
 		@Override
@@ -66,27 +72,24 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 		@Override
 		public String getPageTitle(int position) {
-			return titles.get(position);
-		}
-
-		public void updateTitles(List<String> newTitles) {
-			titles = newTitles;
+			Cursor cursor = titleQuery.query(leaveDB.getReadableDatabase(), projection, selTitle, new String []{Integer.toString(position+1)}, null, null,
+					sortOrder);
+			cursor.moveToFirst();
+			return cursor.getString(0);
 		}
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		mAdapter.updateTitles(LeaveStateManager.getTitles(PreferenceManager.getDefaultSharedPreferences(this),
-				getApplicationContext()));
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(getString(R.string.menu_settings)).setIcon(R.drawable.ic_menu_settings)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add(getString(R.string.menu_history)).setIcon(R.drawable.ic_menu_recent_history)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 
