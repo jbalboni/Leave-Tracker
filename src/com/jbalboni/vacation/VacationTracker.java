@@ -1,5 +1,7 @@
 package com.jbalboni.vacation;
 
+import java.util.List;
+
 import org.joda.time.DateTimeConstants;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
@@ -12,7 +14,7 @@ public class VacationTracker {
 	private static final int DAYS_IN_YEAR = 365;
 
 	private LocalDate startDate;
-	private float hoursUsed;
+	private List<LeaveItem> history;
 	private float hoursPerYear;
 	private float initialHours;
 	private String leaveInterval;
@@ -28,10 +30,10 @@ public class VacationTracker {
 	public VacationTracker() {
 	}
 
-	public VacationTracker(LocalDate startDate, float hoursUsed, float hoursPerYear, float initialHours,
+	public VacationTracker(LocalDate startDate, List<LeaveItem> history, float hoursPerYear, float initialHours,
 			String leaveInterval, boolean accrualOn, LeaveCapType leaveCapType, float leaveCap) {
 		this.startDate = startDate;
-		this.hoursUsed = hoursUsed;
+		this.history = history;
 		this.hoursPerYear = hoursPerYear;
 		this.initialHours = initialHours;
 		this.leaveInterval = leaveInterval;

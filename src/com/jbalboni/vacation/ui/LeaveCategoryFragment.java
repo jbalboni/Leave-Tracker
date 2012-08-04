@@ -70,7 +70,6 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		//Seems wrong to do output formatting here
 		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, "title" };
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), LeaveCategoryProvider.CONTENT_URI, projection, null,
 				null, null);

@@ -13,6 +13,7 @@ import com.jbalboni.vacation.VacationTracker;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,9 +60,11 @@ public class LeaveFragment extends SherlockFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		leaveCategory = LeaveCategory.getCategoryByPosition(getArguments() != null ? getArguments().getInt(
-				getString(R.string.leave_category_position)) : null);
-		vacationTracker = LeaveStateManager.createVacationTracker(prefs, leaveCategory.getPrefix());
+		ContentResolver content = getActivity().getContentResolver();
+		//leaveCategory = LeaveCategory.getCategoryByPosition(getArguments() != null ? getArguments().getInt(
+		//		getString(R.string.leave_category_position)) : null);
+		vacationTracker = LeaveStateManager.createVacationTracker(prefs, content, getArguments().getInt(
+				getString(R.string.leave_category_position)));
 	}
 
 	@Override
