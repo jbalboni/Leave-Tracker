@@ -61,10 +61,11 @@ public class LeaveFragment extends SherlockFragment {
 		super.onCreate(savedInstanceState);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 		ContentResolver content = getActivity().getContentResolver();
-		//leaveCategory = LeaveCategory.getCategoryByPosition(getArguments() != null ? getArguments().getInt(
-		//		getString(R.string.leave_category_position)) : null);
-		vacationTracker = LeaveStateManager.createVacationTracker(prefs, content, getArguments().getInt(
-				getString(R.string.leave_category_position)));
+		// leaveCategory = LeaveCategory.getCategoryByPosition(getArguments() !=
+		// null ? getArguments().getInt(
+		// getString(R.string.leave_category_position)) : null);
+		vacationTracker = LeaveStateManager.createVacationTracker(prefs, content,
+				getArguments().getInt(getString(R.string.leave_category_position)));
 	}
 
 	@Override
@@ -163,7 +164,8 @@ public class LeaveFragment extends SherlockFragment {
 		super.onResume();
 
 		vacationTracker = LeaveStateManager.createVacationTracker(
-				PreferenceManager.getDefaultSharedPreferences(getActivity()), leaveCategory.getPrefix());
+				PreferenceManager.getDefaultSharedPreferences(getActivity()), getActivity().getContentResolver(),
+				getArguments().getInt(getString(R.string.leave_category_position)));
 
 		updateDisplay();
 	}

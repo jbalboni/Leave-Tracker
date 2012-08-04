@@ -1,6 +1,5 @@
 package com.jbalboni.vacation;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
@@ -46,8 +44,6 @@ public final class LeaveStateManager {
 		category.moveToFirst();
 
 		LocalDate startDate = startDateStr == null ? new LocalDate() : fmt.parseLocalDate(startDateStr);
-		// float hoursUsed = Float.parseFloat(prefs.getString(categoryPrefix +
-		// "hoursUsed", "0"));
 		float hoursPerYear = category.getFloat(category
 				.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR));
 		float initialHours = category.getFloat(category
@@ -84,26 +80,10 @@ public final class LeaveStateManager {
 	public static void saveVacationTracker(VacationTracker vacationTracker, SharedPreferences prefs,
 			String categoryPrefix) {
 		Editor prefsEditor = prefs.edit();
-		prefsEditor.putString(categoryPrefix + "hoursUsed", Float.toString(vacationTracker.getHoursUsed()));
-		prefsEditor.putString(categoryPrefix + "hoursPerYear", Float.toString(vacationTracker.getHoursPerYear()));
-		prefsEditor.putString(categoryPrefix + "initialHours", Float.toString(vacationTracker.getInitialHours()));
-		prefsEditor.putBoolean(categoryPrefix + "accrualOn", vacationTracker.isAccrualOn());
-		prefsEditor.putString(categoryPrefix + "leaveCapVal", Float.toString(vacationTracker.getLeaveCap()));
-		prefsEditor.putString(categoryPrefix + "leaveCapType", vacationTracker.getLeaveCapType().toString());
 
 		prefsEditor.putString("leaveInterval", vacationTracker.getLeaveInterval());
 		prefsEditor.putString("startDate", String.format("%4d-%02d-%02d", vacationTracker.getStartDate().getYear(),
 				vacationTracker.getStartDate().getMonthOfYear(), vacationTracker.getStartDate().getDayOfMonth()));
 		prefsEditor.commit();
-	}
-
-	public static List<String> getTitles(SharedPreferences prefs, Context ctxt) {
-		List<String> titles = new ArrayList<String>();
-		titles.add(prefs.getString(LeaveCategory.LEFT.getPrefix() + "title", ctxt.getString(R.string.default_left_name)));
-		titles.add(prefs.getString(LeaveCategory.CENTER.getPrefix() + "title",
-				ctxt.getString(R.string.default_center_name)));
-		titles.add(prefs.getString(LeaveCategory.RIGHT.getPrefix() + "title",
-				ctxt.getString(R.string.default_right_name)));
-		return titles;
 	}
 }
