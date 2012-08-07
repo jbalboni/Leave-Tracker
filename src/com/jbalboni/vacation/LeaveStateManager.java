@@ -73,6 +73,7 @@ public final class LeaveStateManager {
 					.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.DATE)))), history.getFloat(history
 					.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER)));
 			list.add(item);
+			history.moveToNext();
 		}
 		return list;
 	}

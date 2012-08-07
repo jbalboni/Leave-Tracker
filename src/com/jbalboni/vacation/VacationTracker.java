@@ -53,7 +53,7 @@ public class VacationTracker {
 			vacationHours = initialHours;
 		} else {
 			//we only care about the dates when the carryover limit is used
-			leaveSum = sumLeave();
+			leaveSum = sumLeave(trimmedHist);
 			vacationHours = initialHours - leaveSum;
 		}
 		if (this.accrualOn == true) {
@@ -188,9 +188,9 @@ public class VacationTracker {
 			return vacationHours;
 	}
 
-	private float sumLeave() {
+	private float sumLeave(List<LeaveItem> hist) {
 		float leaveSum = 0;
-		for (LeaveItem item : history) {
+		for (LeaveItem item : hist) {
 			leaveSum += item.getHours();
 		}
 		return leaveSum;

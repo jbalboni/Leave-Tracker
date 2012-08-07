@@ -67,7 +67,7 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 		@Override
 		public SherlockFragment getItem(int position) {
-			return LeaveFragment.newInstance(position);
+			return LeaveFragment.newInstance(position+1);
 		}
 
 		@Override
