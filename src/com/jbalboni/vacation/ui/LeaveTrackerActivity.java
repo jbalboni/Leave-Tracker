@@ -18,6 +18,7 @@ import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
@@ -111,6 +112,15 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		Intent i = new Intent(context, LeaveTrackerActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		return i;
+	}
+	
+	public void onClickAvailable(View v) {
+		Intent intent = new Intent();
+		intent.setClass(this, LeaveHistoryActivity.class);
+		int catID = mPager.getCurrentItem()+1;
+		intent.putExtra(getString(R.string.intent_catid), catID);
+		intent.putExtra(getString(R.string.intent_catname),mAdapter.getPageTitle(catID-1));
+		startActivity(intent);
 	}
 
 }
