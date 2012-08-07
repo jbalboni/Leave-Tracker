@@ -27,13 +27,7 @@ public final class LeaveStateManager {
 		String startDateStr = prefs.getString("startDate", null);
 		String leaveInterval = prefs.getString("leaveInterval", "Weekly");
 
-		// Changed labels, so converting to new style
-		if (leaveInterval.equals("Day"))
-			leaveInterval = "Daily";
-		else if (leaveInterval.equals("Week"))
-			leaveInterval = "Weekly";
-		else if (leaveInterval.equals("Month"))
-			leaveInterval = "Monthly";
+		leaveInterval = fixLeaveInterval(leaveInterval);
 
 		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL,
 				LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR, LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE,
@@ -63,6 +57,17 @@ public final class LeaveStateManager {
 
 		return new VacationTracker(startDate, historyList, hoursPerYear, initialHours, leaveInterval, accrualOn,
 				leaveCapType, leaveCap);
+	}
+
+	private static String fixLeaveInterval(String leaveInterval) {
+		// Changed labels, so converting to new style
+		if (leaveInterval.equals("Day"))
+			leaveInterval = "Daily";
+		else if (leaveInterval.equals("Week"))
+			leaveInterval = "Weekly";
+		else if (leaveInterval.equals("Month"))
+			leaveInterval = "Monthly";
+		return leaveInterval;
 	}
 
 	private static List<LeaveItem> convertToList(Cursor history) {

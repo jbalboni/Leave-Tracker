@@ -9,7 +9,6 @@ import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.VacationTracker;
-import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;

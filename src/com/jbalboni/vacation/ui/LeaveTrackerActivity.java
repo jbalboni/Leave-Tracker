@@ -20,6 +20,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+/*
+ * Main activity. Manages a fragment for each category in a view pager
+ */
 public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 	LeaveAdapter mAdapter;
@@ -62,19 +65,19 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 		@Override
 		public int getCount() {
-			return titleQuery.query(leaveDB.getReadableDatabase(), projection, selection, null, null, null,
-					sortOrder).getCount();
+			return titleQuery.query(leaveDB.getReadableDatabase(), projection, selection, null, null, null, sortOrder)
+					.getCount();
 		}
 
 		@Override
 		public SherlockFragment getItem(int position) {
-			return LeaveFragment.newInstance(position+1);
+			return LeaveFragment.newInstance(position + 1);
 		}
 
 		@Override
 		public String getPageTitle(int position) {
-			Cursor cursor = titleQuery.query(leaveDB.getReadableDatabase(), projection, selTitle, new String []{Integer.toString(position+1)}, null, null,
-					sortOrder);
+			Cursor cursor = titleQuery.query(leaveDB.getReadableDatabase(), projection, selTitle,
+					new String[] { Integer.toString(position + 1) }, null, null, sortOrder);
 			cursor.moveToFirst();
 			return cursor.getString(0);
 		}
@@ -113,13 +116,17 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		return i;
 	}
-	
+
+	/*
+	 * Clicking on hours available calls this
+	 */
 	public void onClickAvailable(View v) {
 		Intent intent = new Intent();
 		intent.setClass(this, LeaveHistoryActivity.class);
-		int catID = mPager.getCurrentItem()+1;
+		int catID = mPager.getCurrentItem() + 1;
 		intent.putExtra(getString(R.string.intent_catid), catID);
-		intent.putExtra(getString(R.string.intent_catname),mAdapter.getPageTitle(catID-1));
+		//I should figure out a way to remove this title from the intent
+		intent.putExtra(getString(R.string.intent_catname), mAdapter.getPageTitle(catID - 1));
 		startActivity(intent);
 	}
 
