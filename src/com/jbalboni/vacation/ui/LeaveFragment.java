@@ -1,5 +1,7 @@
 package com.jbalboni.vacation.ui;
 
+import java.util.Vector;
+
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -9,26 +11,28 @@ import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.VacationTracker;
+import com.jbalboni.vacation.data.LeaveHistoryProvider;
+import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LeaveFragment extends SherlockFragment {
 	private VacationTracker vacationTracker;
@@ -40,7 +44,7 @@ public class LeaveFragment extends SherlockFragment {
 	static final int DATE_DIALOG_ID = 0;
 	static final int HOURS_DIALOG_ID = 1;
 	static final String HOURS_IN_DAY = "8";
-	DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
+	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
 
 	private SharedPreferences prefs;
 
@@ -87,45 +91,57 @@ public class LeaveFragment extends SherlockFragment {
 		useHoursPicker = (Button) leaveFrag.findViewById(R.id.useHours);
 		useHoursPicker.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				DialogFragment useHoursDialog = new UseHoursDialogFragment();
+				UseHoursDialogFragment useHoursDialog = new UseHoursDialogFragment();
+				useHoursDialog.setCategory(getArguments().getInt(getString(R.string.leave_category_position)));
 				useHoursDialog.show(getFragmentManager(), "hours");
 			}
 		});
 		return leaveFrag;
 	}
 
-	public class UseHoursDialogFragment extends DialogFragment {
+	public class UseHoursDialogFragment extends DialogFragment implements OnClickListener {
+
+		private int catID;
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+			getDialog().setTitle(getString(R.string.quick_use_hours));
+
+			View view = inflater.inflate(R.layout.use_hours_fragment, container);
+			EditText hoursUsedInput = (EditText) view.findViewById(R.id.hours);
+			hoursUsedInput.setText(HOURS_IN_DAY);
+
+			Button button = (Button) view.findViewById(R.id.cancel);
+			button.setOnClickListener(this);
+			button = (Button) view.findViewById(R.id.addHours);
+			button.setOnClickListener(this);
+
+			return view;
+		}
+		
+		public void setCategory(int catID) {
+			this.catID = catID;
+		}
 
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-			AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-
-			alert.setTitle(getString(R.string.quick_use_hours));
-			alert.setMessage(getString(R.string.use_hours_alert_msg));
-
-			// Set an EditText view to get user input
-			final EditText hoursUsedInput = new EditText(getActivity());
-			hoursUsedInput.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-			hoursUsedInput.setText(HOURS_IN_DAY);
-			alert.setView(hoursUsedInput);
-
-			alert.setPositiveButton(getString(R.string.quick_use_hours), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					Float hoursUsed = Float.parseFloat(hoursUsedInput.getText().toString());
-					vacationTracker.addHoursUsed(hoursUsed);
-					updateDisplay();
-					LeaveStateManager.saveVacationTracker(vacationTracker, prefs, getLeavePrefix());
+		public void onClick(View v) {
+			Button clickedButton = (Button) v;
+			if (clickedButton.getId() == R.id.cancel) {
+				getDialog().dismiss();
+			} else if (clickedButton.getId() == R.id.addHours) {
+				ContentResolver content = getActivity().getContentResolver();
+				ContentValues values = new ContentValues();
+				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase
+						.getFloat(((EditText) getView().findViewById(R.id.hours)).getText().toString()));
+				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, ((EditText) getView().findViewById(R.id.notes))
+						.getText().toString());
+				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE, (new LocalDate()).toString());
+				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY, catID);
+				if (content.insert(LeaveHistoryProvider.CONTENT_URI, values) != null) {
+					Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 				}
-			});
-
-			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					// Canceled.
-				}
-			});
-
-			return alert.create();
+				getDialog().dismiss();
+			}
 		}
 	}
 

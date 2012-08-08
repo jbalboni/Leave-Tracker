@@ -1143,7 +1143,9 @@ containing a value of this type.
         public static final int accrual=0x7f050031;
         public static final int accrualLabel=0x7f050030;
         public static final int accrualLayout=0x7f05002f;
+        public static final int addHours=0x7f05004e;
         public static final int asOfDateDesc=0x7f050045;
+        public static final int cancel=0x7f05004f;
         public static final int categoryTitle=0x7f05002e;
         public static final int categoryTitleLabel=0x7f05002d;
         public static final int changeAsOfDate=0x7f050047;
@@ -1151,6 +1153,7 @@ containing a value of this type.
         public static final int dateLabel=0x7f05003c;
         public static final int datePicker=0x7f05003d;
         public static final int disableHome=0x7f05000c;
+        public static final int edit_name=0x7f05004d;
         public static final int homeAsUp=0x7f050009;
         public static final int hours=0x7f05003f;
         public static final int hoursAvailable=0x7f050043;
@@ -1231,6 +1234,7 @@ containing a value of this type.
         public static final int main=0x7f03001f;
         public static final int sherlock_spinner_dropdown_item=0x7f030020;
         public static final int sherlock_spinner_item=0x7f030021;
+        public static final int use_hours_fragment=0x7f030022;
     }
     public static final class string {
         public static final int ItemLabelDate=0x7f0b0028;

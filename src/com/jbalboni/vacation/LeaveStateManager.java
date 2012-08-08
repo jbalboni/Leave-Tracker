@@ -54,6 +54,8 @@ public final class LeaveStateManager {
 		Cursor history = resolver.query(itemUri.build(), historyProjection, null, null, null);
 
 		List<LeaveItem> historyList = convertToList(history);
+		
+		history.close();
 
 		return new VacationTracker(startDate, historyList, hoursPerYear, initialHours, leaveInterval, accrualOn,
 				leaveCapType, leaveCap);
