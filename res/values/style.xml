@@ -23,7 +23,6 @@
     </style>
     <style name="LeaveHistoryLayout">
     	<item name="android:layout_width">fill_parent</item>
-  		<item name="android:orientation">horizontal</item>
   		<item name="android:padding">7pt</item>
   		<item name="android:layout_height">wrap_content</item>
     </style>

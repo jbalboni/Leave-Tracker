@@ -11,19 +11,19 @@ import android.widget.TextView;
 import android.support.v4.view.ViewPager;
 
 import com.jbalboni.vacation.LeaveCategory;
-import com.jbalboni.vacation.LeaveFragment;
+import com.jbalboni.vacation.ui.LeaveFragment;
 import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.VacationTracker;
-import com.jbalboni.vacation.VacationTrackerActivity.LeaveAdapter;
+import com.jbalboni.vacation.ui.LeaveTrackerActivity.LeaveAdapter;
 
-import com.jbalboni.vacation.VacationTrackerActivity;
+import com.jbalboni.vacation.ui.LeaveTrackerActivity;
 
-public class VacationTrackerActivityTest extends ActivityInstrumentationTestCase2<VacationTrackerActivity> {
+public class LeaveTrackerActivityTest extends ActivityInstrumentationTestCase2<LeaveTrackerActivity> {
 
-	VacationTrackerActivity mActivity;
+	LeaveTrackerActivity mActivity;
 	
-	public VacationTrackerActivityTest() {
-		super("com.jbalboni.vacation", VacationTrackerActivity.class);
+	public LeaveTrackerActivityTest() {
+		super("com.jbalboni.vacation.ui", LeaveTrackerActivity.class);
 	} // end of SpinnerActivityTest constructor definition
 
 	@Override

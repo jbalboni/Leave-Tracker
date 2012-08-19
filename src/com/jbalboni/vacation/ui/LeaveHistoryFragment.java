@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class LeaveHistoryFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
@@ -55,15 +54,30 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		String[] uiBindFrom = { LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase.LEAVE_HISTORY.DATE };
-		int[] uiBindTo = { R.id.hours, R.id.date};
+		String[] uiBindFrom = { LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase.LEAVE_HISTORY.DATE, LeaveTrackerDatabase.LEAVE_HISTORY.NOTES };
+		int[] uiBindTo = { R.id.hours, R.id.date, R.id.notes};
 
 		getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
 
 		adapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), R.layout.leave_history_row, null,
 				uiBindFrom, uiBindTo, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-
+		SimpleCursorAdapter.ViewBinder binder = new SimpleCursorAdapter.ViewBinder() {
+			@Override
+			public boolean setViewValue(View view, Cursor cursor, int index) {
+				if (cursor.getColumnName(index).equals(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES)) {
+					if (cursor.getString(index).length() == 0) {
+						view.setVisibility(View.GONE);
+					} else {
+						view.setVisibility(View.VISIBLE);
+					}
+					return true;
+				}
+				return false;
+			}
+		};
+		adapter.setViewBinder(binder);
 		setListAdapter(adapter);
+
 		// Inflate the layout for this fragment
 		return inflater.inflate(R.layout.leave_history_list, container, false);
 	}
@@ -71,7 +85,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		//Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "cast(number as text)||\" hours\" as number", "date" };
+		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "cast(number as text)||\" hours\" as number", "date", "notes" };
 		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null,
 				null, LeaveTrackerDatabase.LEAVE_HISTORY.DATE+" DESC");
@@ -81,10 +95,6 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		adapter.swapCursor(cursor);
-		if (cursor.getCount() == 0) {
-			TextView loadingView = (TextView) getView().findViewById(R.id.loading);
-			loadingView.setText(R.string.no_records);
-		}
 	}
 
 	@Override

@@ -25,7 +25,6 @@ public class VacationTracker {
 	private boolean accrualOn;
 	private LeaveCapType leaveCapType;
 	private float leaveCap;
-	private float leaveSum;
 
 	public VacationTracker() {
 	}
@@ -49,13 +48,8 @@ public class VacationTracker {
 		List<LeaveItem> trimmedHist = trimLeave(asOfDate);
 
 		float vacationHours = 0;
-		if (leaveCapType == LeaveCapType.CARRYOVER) {
-			vacationHours = initialHours;
-		} else {
-			//we only care about the dates when the carryover limit is used
-			leaveSum = sumLeave(trimmedHist);
-			vacationHours = initialHours - leaveSum;
-		}
+		vacationHours = initialHours;
+		
 		if (this.accrualOn == true) {
 			if (leaveInterval.equals("Daily")) {
 				LocalDate currentDate = startDate;
@@ -186,14 +180,6 @@ public class VacationTracker {
 			return leaveCap;
 		else
 			return vacationHours;
-	}
-
-	private float sumLeave(List<LeaveItem> hist) {
-		float leaveSum = 0;
-		for (LeaveItem item : hist) {
-			leaveSum += item.getHours();
-		}
-		return leaveSum;
 	}
 	
 	/*
