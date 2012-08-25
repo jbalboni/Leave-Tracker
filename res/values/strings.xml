@@ -54,4 +54,5 @@
 	<string name="added_msg">Added</string>
 	<string name="deleted_msg">Deleted</string>
 	<string name="error_msg">An error occurred</string>
+	<string name="notes">Notes</string>
 </resources>

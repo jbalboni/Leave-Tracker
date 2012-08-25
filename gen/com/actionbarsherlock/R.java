@@ -1143,12 +1143,13 @@ containing a value of this type.
         public static final int accrual=0x7f050031;
         public static final int accrualLabel=0x7f050030;
         public static final int accrualLayout=0x7f05002f;
-        public static final int addHours=0x7f05004e;
+        public static final int addHours=0x7f05004f;
         public static final int asOfDateDesc=0x7f050045;
-        public static final int cancel=0x7f05004f;
+        public static final int cancel=0x7f050050;
         public static final int categoryTitle=0x7f05002e;
         public static final int categoryTitleLabel=0x7f05002d;
         public static final int changeAsOfDate=0x7f050047;
+        public static final int close=0x7f05004e;
         public static final int date=0x7f050049;
         public static final int dateLabel=0x7f05003c;
         public static final int datePicker=0x7f05003d;
@@ -1232,9 +1233,10 @@ containing a value of this type.
         public static final int leave_history_list=0x7f03001d;
         public static final int leave_history_row=0x7f03001e;
         public static final int main=0x7f03001f;
-        public static final int sherlock_spinner_dropdown_item=0x7f030020;
-        public static final int sherlock_spinner_item=0x7f030021;
-        public static final int use_hours_fragment=0x7f030022;
+        public static final int notes_fragment=0x7f030020;
+        public static final int sherlock_spinner_dropdown_item=0x7f030021;
+        public static final int sherlock_spinner_item=0x7f030022;
+        public static final int use_hours_fragment=0x7f030023;
     }
     public static final class string {
         public static final int ItemLabelDate=0x7f0b0028;
@@ -1315,6 +1317,7 @@ containing a value of this type.
         public static final int menu_save=0x7f0b0033;
         public static final int menu_settings=0x7f0b002e;
         public static final int no_records=0x7f0b002c;
+        public static final int notes=0x7f0b003f;
         public static final int quick_use_date=0x7f0b0013;
         public static final int quick_use_hours=0x7f0b0012;
         public static final int saved_msg=0x7f0b003b;

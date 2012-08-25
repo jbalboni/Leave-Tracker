@@ -5,7 +5,9 @@
     	xmlns:android="http://schemas.android.com/apk/res/android"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:layout_alignParentTop="true"/>
+    	android:layout_alignParentTop="true"
+    	android:focusable="false"  
+      	android:focusableInTouchMode="false"/>
     <TextView android:id="@+id/separator"
 	    xmlns:android="http://schemas.android.com/apk/res/android"
     	android:layout_width="wrap_content"
@@ -13,17 +15,24 @@
     	android:text="@string/separator"
     	android:paddingLeft="7pt"
     	android:paddingRight="7pt"
-    	android:layout_toRightOf="@+id/date"/>
+    	android:layout_toRightOf="@+id/date"
+    	android:focusable="false"  
+      	android:focusableInTouchMode="false"/>
 	<TextView android:id="@+id/hours"
 	    xmlns:android="http://schemas.android.com/apk/res/android"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
-    	android:layout_toRightOf="@+id/separator"/>
+    	android:layout_toRightOf="@+id/separator"
+    	android:focusable="false"  
+      	android:focusableInTouchMode="false"/>
     <Button android:id="@+id/notes"
 	    xmlns:android="http://schemas.android.com/apk/res/android"
     	android:layout_width="wrap_content"
     	android:layout_height="wrap_content"
     	android:layout_alignParentTop="true"
     	android:layout_alignParentRight="true"
-    	android:text="note"/>
+    	android:text="note"
+    	android:focusable="false"  
+      	android:focusableInTouchMode="false"
+    	/>
 </RelativeLayout>

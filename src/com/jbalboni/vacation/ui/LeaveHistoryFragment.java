@@ -1,14 +1,20 @@
 package com.jbalboni.vacation.ui;
 
+import org.joda.time.LocalDate;
+
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
+import com.jbalboni.vacation.ui.LeaveFragment.UseHoursDialogFragment;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri.Builder;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -17,7 +23,12 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class LeaveHistoryFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
@@ -69,6 +80,15 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 						view.setVisibility(View.GONE);
 					} else {
 						view.setVisibility(View.VISIBLE);
+						Button button = (Button) view;
+						final String notes = cursor.getString(index);
+						button.setOnClickListener(new View.OnClickListener() {
+				             public void onClick(View v) {
+				            	 NotesDialogFragment notesDialog = new NotesDialogFragment();
+				 				 notesDialog.setNotes(notes);
+				 				 notesDialog.show(getFragmentManager(), "notes");
+				             }
+				         });
 					}
 					return true;
 				}
@@ -105,5 +125,36 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	public void onResume() {
 		getLoaderManager().restartLoader(LEAVE_HISTORY_LOADER, null, this);
 		super.onResume();
+	}
+	public class NotesDialogFragment extends DialogFragment implements OnClickListener {
+
+		private String notes;
+		
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+			getDialog().setTitle(getString(R.string.notes));
+
+			View view = inflater.inflate(R.layout.notes_fragment, container);
+			TextView notesView = (TextView) view.findViewById(R.id.notes);
+			notesView.setText(notes);
+
+			Button button = (Button) view.findViewById(R.id.close);
+			button.setOnClickListener(this);
+
+			return view;
+		}
+
+		@Override
+		public void onClick(View v) {
+			Button clickedButton = (Button) v;
+			if (clickedButton.getId() == R.id.close) {
+				getDialog().dismiss();
+			}
+		}
+
+		public void setNotes(String notes) {
+			this.notes = notes;
+		}
 	}
 }
