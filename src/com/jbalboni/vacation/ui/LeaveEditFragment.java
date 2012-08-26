@@ -25,7 +25,8 @@ import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>, OnDateChangedListener {
+public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>,
+		OnDateChangedListener {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
 	private static final DateTimeFormatter fmt = ISODateTimeFormat.localDateParser();
 	private int itemID;
@@ -38,9 +39,9 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 			// Restore last state for checked position.
 			itemID = savedInstanceState.getInt("itemID", 0);
 		} else {
-			itemID = getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid),0);
+			itemID = getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid), 0);
 		}
-		
+
 		if (itemID == 0) {
 			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_add);
 		} else {
@@ -70,78 +71,70 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		//Seems wrong to do output formatting here
+		// Seems wrong to do output formatting here
 		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "number", "notes", "date" };
-		Builder itemUri = LeaveHistoryProvider.CONTENT_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid),0)));
-		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null,
-				null, null);
+		Builder itemUri = LeaveHistoryProvider.CONTENT_URI.buildUpon().appendPath(
+				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid), 0)));
+		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null, null, null);
 		return cursorLoader;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		cursor.moveToFirst();
-		
+
 		int notesCol = cursor.getColumnIndex("notes");
 		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
 		editNotes.setText(cursor.getString(notesCol));
-		
+
 		int dateCol = cursor.getColumnIndex("date");
 		LocalDate date = new LocalDate(fmt.parseLocalDate(cursor.getString(dateCol)));
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
-		editDate.init(date.getYear(), date.getMonthOfYear()-1, date.getDayOfMonth(), this);
-		
+		editDate.init(date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth(), this);
+
 		int hoursCol = cursor.getColumnIndex("number");
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		editHours.setText(cursor.getString(hoursCol));
 	}
-	
+
 	public void saveLeaveItem() {
 		ContentValues leaveItemValues = new ContentValues();
 
 		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
 		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, editNotes.getText().toString());
-		
+
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, editHours.getText().toString());
-		
+
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE, new LocalDate(editDate.getYear(),editDate.getMonth()+1,editDate.getDayOfMonth()).toString());
-		
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY, getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
+				new LocalDate(editDate.getYear(), editDate.getMonth() + 1, editDate.getDayOfMonth()).toString());
+
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY,
+				getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 
 		if (itemID == 0) {
-			getActivity().getContentResolver().insert(
-					LeaveHistoryProvider.CONTENT_URI,
-					leaveItemValues
-			);
+			getActivity().getContentResolver().insert(LeaveHistoryProvider.CONTENT_URI, leaveItemValues);
 			Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 		} else {
-			String[] idArgs = {Integer.toString(itemID)};
-			int updatedRows = getActivity().getContentResolver().update(
-					LeaveHistoryProvider.CONTENT_URI,
-					leaveItemValues,
-					LeaveTrackerDatabase.LEAVE_HISTORY.ID+"=?",
-					idArgs
-			);
+			String[] idArgs = { Integer.toString(itemID) };
+			int updatedRows = getActivity().getContentResolver().update(LeaveHistoryProvider.CONTENT_URI,
+					leaveItemValues, LeaveTrackerDatabase.LEAVE_HISTORY.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
 			} else {
 				Toast.makeText(getActivity(), R.string.error_msg, Toast.LENGTH_LONG).show();
 			}
-			
+
 		}
 		getActivity().finish();
 	}
-	
+
 	public void deleteLeaveItem() {
 		if (itemID != 0) {
-			String[] idArgs = {Integer.toString(itemID)};
-			int updatedRows = getActivity().getContentResolver().delete(
-					LeaveHistoryProvider.CONTENT_URI,
-					LeaveTrackerDatabase.LEAVE_HISTORY.ID+"=?",
-					idArgs
-			);
+			String[] idArgs = { Integer.toString(itemID) };
+			int updatedRows = getActivity().getContentResolver().delete(LeaveHistoryProvider.CONTENT_URI,
+					LeaveTrackerDatabase.LEAVE_HISTORY.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.deleted_msg, Toast.LENGTH_LONG).show();
 			} else {
@@ -153,13 +146,13 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> loader) {
-		//adapter.swapCursor(null);
+		// adapter.swapCursor(null);
 	}
 
 	@Override
 	public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

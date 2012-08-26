@@ -35,7 +35,7 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 		}
 
 		String[] uiBindFrom = { "title" };
-		int[] uiBindTo = { R.id.categoryTitle};
+		int[] uiBindTo = { R.id.categoryTitle };
 
 		getLoaderManager().initLoader(LEAVE_CATEGORY_LOADER, null, this);
 
@@ -58,7 +58,8 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), LeaveHistoryActivity.class);
 		intent.putExtra(getString(R.string.intent_catid), categoryID);
-		intent.putExtra(getString(R.string.intent_catname), cursor.getString(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE)));
+		intent.putExtra(getString(R.string.intent_catname),
+				cursor.getString(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE)));
 		startActivity(intent);
 	}
 
@@ -71,8 +72,8 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, "title" };
-		CursorLoader cursorLoader = new CursorLoader(getActivity(), LeaveCategoryProvider.CONTENT_URI, projection, null,
-				null, null);
+		CursorLoader cursorLoader = new CursorLoader(getActivity(), LeaveCategoryProvider.CONTENT_URI, projection,
+				null, null, null);
 		return cursorLoader;
 	}
 
@@ -89,10 +90,10 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
 	}
-	
+
 	@Override
 	public void onResume() {
-		getLoaderManager().restartLoader(LEAVE_CATEGORY_LOADER, null, this);
+		((SimpleCursorAdapter) getListAdapter()).notifyDataSetChanged();
 		super.onResume();
 	}
 }

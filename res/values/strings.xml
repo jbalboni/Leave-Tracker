@@ -9,7 +9,7 @@
     <string name="default_center_name">Paid Leave</string>
     <string name="default_right_name">Comp Time</string>
     <string name="use_hours_alert_msg">Add to your used leave</string>
-	<string name="quick_use_hours">Use Hours</string>
+	<string name="quick_use_hours">Use Leave</string>
 	<string name="quick_use_date">Change As Of Date</string>
 	<string name="leave_category_position">pos</string>
 	<string name="leave_pref_title">Category Title</string>

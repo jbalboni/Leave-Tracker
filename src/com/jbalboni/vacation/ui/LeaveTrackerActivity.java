@@ -89,9 +89,9 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(getString(R.string.menu_settings)).setIcon(R.drawable.ic_menu_settings)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add(getString(R.string.menu_history)).setIcon(R.drawable.ic_menu_list)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add(getString(R.string.menu_settings)).setIcon(R.drawable.ic_menu_settings)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
@@ -124,7 +124,7 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		intent.setClass(this, LeaveHistoryActivity.class);
 		int catID = mPager.getCurrentItem() + 1;
 		intent.putExtra(getString(R.string.intent_catid), catID);
-		//I should figure out a way to remove this title from the intent
+		// I should figure out a way to remove this title from the intent
 		intent.putExtra(getString(R.string.intent_catname), mAdapter.getPageTitle(catID - 1));
 		startActivity(intent);
 	}

@@ -15,19 +15,18 @@ public class LeaveEditActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.leave_edit);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(R.string.menu_save).setIcon(R.drawable.ic_menu_save)
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-		int itemID = getIntent().getIntExtra(getString(R.string.intent_itemid),0);
+		menu.add(R.string.menu_save).setIcon(R.drawable.ic_menu_save).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		int itemID = getIntent().getIntExtra(getString(R.string.intent_itemid), 0);
 		if (itemID != 0) {
 			menu.add(R.string.menu_delete).setIcon(R.drawable.ic_menu_delete)
-			.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+					.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection

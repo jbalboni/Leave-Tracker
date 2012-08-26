@@ -16,10 +16,11 @@ public class LeaveCategoryActivity extends SherlockFragmentActivity {
 		setContentView(R.layout.leave_category);
 		getSupportActionBar().setTitle(R.string.cat_title);
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//menu.add(getString(R.string.menu_add)).setIcon(R.drawable.ic_menu_add)
-        //.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		// menu.add(getString(R.string.menu_add)).setIcon(R.drawable.ic_menu_add)
+		// .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
 

@@ -20,9 +20,10 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	private Context context;
 	public static String LEAVE_HISTORY_TABLE = "leave_history";
 	public static String LEAVE_CATEGORY_TABLE = "leave_categories";
-	//public static String ID = "_id";
-	//public static String TITLE = "title";
-	//public static String CATEGORY_ID = "leave_category_id";
+
+	// public static String ID = "_id";
+	// public static String TITLE = "title";
+	// public static String CATEGORY_ID = "leave_category_id";
 
 	public LeaveTrackerDatabase(Context context) {
 		super(context, context.getString(R.string.database_name), null, DATABASE_VERSION);
@@ -32,71 +33,78 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		LeaveCategory.LEFT.setTitle(prefs.getString(LeaveCategory.LEFT.getPrefix()+"title",context.getString(R.string.default_left_name)));
-		LeaveCategory.CENTER.setTitle(prefs.getString(LeaveCategory.CENTER.getPrefix()+"title",context.getString(R.string.default_center_name)));
-		LeaveCategory.RIGHT.setTitle(prefs.getString(LeaveCategory.RIGHT.getPrefix()+"title",context.getString(R.string.default_right_name)));
-		
+		LeaveCategory.LEFT.setTitle(prefs.getString(LeaveCategory.LEFT.getPrefix() + "title",
+				context.getString(R.string.default_left_name)));
+		LeaveCategory.CENTER.setTitle(prefs.getString(LeaveCategory.CENTER.getPrefix() + "title",
+				context.getString(R.string.default_center_name)));
+		LeaveCategory.RIGHT.setTitle(prefs.getString(LeaveCategory.RIGHT.getPrefix() + "title",
+				context.getString(R.string.default_right_name)));
+
 		db.execSQL(LEAVE_CATEGORY_CREATE);
 
-		//sick leave
+		// sick leave
 		ContentValues categories = new ContentValues();
 		categories.put(LEAVE_CATEGORY.ID, 1);
 		categories.put(LEAVE_CATEGORY.TITLE, LeaveCategory.LEFT.getTitle());
 		categories.put(LEAVE_CATEGORY.DISPLAY, 0);
-		categories.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursPerYear",80));
-		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.LEFT.getPrefix() + "initialHours",0));
+		categories
+				.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursPerYear", 80));
+		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.LEFT.getPrefix() + "initialHours", 0));
 		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.LEFT.getPrefix() + "accrualOn", true));
 		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
 		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
 		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
-		
-		//vacation
+
+		// vacation
 		categories = new ContentValues();
 		categories.put(LEAVE_CATEGORY.ID, 2);
 		categories.put(LEAVE_CATEGORY.TITLE, LeaveCategory.CENTER.getTitle());
 		categories.put(LEAVE_CATEGORY.DISPLAY, 1);
-		categories.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursPerYear",80));
-		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.CENTER.getPrefix() + "initialHours",0));
+		categories.put(LEAVE_CATEGORY.HOURS_PER_YEAR,
+				getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursPerYear", 80));
+		categories
+				.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.CENTER.getPrefix() + "initialHours", 0));
 		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.CENTER.getPrefix() + "accrualOn", true));
 		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
 		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
 		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
-		
-		//comp time
+
+		// comp time
 		categories = new ContentValues();
 		categories.put(LEAVE_CATEGORY.ID, 3);
 		categories.put(LEAVE_CATEGORY.TITLE, LeaveCategory.RIGHT.getTitle());
 		categories.put(LEAVE_CATEGORY.DISPLAY, 2);
-		categories.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursPerYear",0));
-		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "initialHours",0));
+		categories
+				.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursPerYear", 0));
+		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "initialHours", 0));
 		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.RIGHT.getPrefix() + "accrualOn", false));
 		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
 		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
 		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
 
 		db.execSQL(LEAVE_HISTORY_CREATE);
-		
-		if (getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursUsed",0) > 0) {
+
+		if (getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursUsed", 0) > 0) {
 			ContentValues leaveValues = new ContentValues();
 			leaveValues.put(LEAVE_HISTORY.CATEGORY, 1);
 			leaveValues.put(LEAVE_HISTORY.NOTES, "Leave from Hours Used preference");
-			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursUsed",0));
+			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursUsed", 0));
 			leaveValues.put(LEAVE_HISTORY.DATE, (new LocalDate()).toString());
 			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
 		}
-		if (getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed",0) > 0) {
+		if (getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed", 0) > 0) {
 			ContentValues leaveValues = new ContentValues();
 			leaveValues.put(LEAVE_HISTORY.CATEGORY, 2);
 			leaveValues.put(LEAVE_HISTORY.NOTES, "Leave from Hours Used preference");
-			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed",0));
+			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed", 0));
 			leaveValues.put(LEAVE_HISTORY.DATE, (new LocalDate()).toString());
 			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
 		}
-		if (getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed",0) > 0) {
+		if (getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed", 0) > 0) {
 			ContentValues leaveValues = new ContentValues();
 			leaveValues.put(LEAVE_HISTORY.CATEGORY, 3);
 			leaveValues.put(LEAVE_HISTORY.NOTES, "Leave from Hours Used preference");
-			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed",0));
+			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed", 0));
 			leaveValues.put(LEAVE_HISTORY.DATE, (new LocalDate()).toString());
 			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
 		}
@@ -111,7 +119,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		}
 
 	}
-	
+
 	private float getFloatPref(String pref, float defValue) {
 		String val = prefs.getString(pref, "");
 		if (val == null || val.equals("")) {
@@ -120,7 +128,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 			return Float.parseFloat(val);
 		}
 	}
-	
+
 	public static float getFloat(String val) {
 		if (val == null || val.equals("")) {
 			return 0;
@@ -128,7 +136,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 			return Float.parseFloat(val);
 		}
 	}
-	
+
 	public static float getFloat(String val, float defValue) {
 		if (val == null || val.equals("")) {
 			return defValue;
@@ -136,8 +144,9 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 			return Float.parseFloat(val);
 		}
 	}
-	
-	//I'm not happy with this method, but at least my columns are defined somewhere consistently
+
+	// I'm not happy with this method, but at least my columns are defined
+	// somewhere consistently
 	public static class LEAVE_HISTORY {
 		public static final String ID = "_id";
 		public static final String TITLE = "title";
@@ -146,6 +155,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		public static final String NOTES = "notes";
 		public static final String CATEGORY = "leave_category_id";
 	};
+
 	public static class LEAVE_CATEGORY {
 		public static final String ID = "_id";
 		public static final String TITLE = "title";
@@ -156,6 +166,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		public static final String INITIAL_HOURS = "initial_hours";
 		public static final String DISPLAY = "display_pos";
 	};
+
 	public static class LEAVE_CAP_TYPE {
 		public static final int NONE = 0;
 		public static final int MAX = 1;
