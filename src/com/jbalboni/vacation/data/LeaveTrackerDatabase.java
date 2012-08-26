@@ -1,8 +1,11 @@
 package com.jbalboni.vacation.data;
 
+import org.joda.time.LocalDate;
+
 import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.R;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -28,75 +31,107 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	}
 
 	@Override
-	//TODO fix gross string sql statements
 	public void onCreate(SQLiteDatabase db) {
-		LeaveCategory.LEFT.setTitle(context.getString(R.string.default_left_name));
-		LeaveCategory.CENTER.setTitle(context.getString(R.string.default_center_name));
-		LeaveCategory.RIGHT.setTitle(context.getString(R.string.default_right_name));
+		LeaveCategory.LEFT.setTitle(prefs.getString(LeaveCategory.LEFT.getPrefix()+"title",context.getString(R.string.default_left_name)));
+		LeaveCategory.CENTER.setTitle(prefs.getString(LeaveCategory.CENTER.getPrefix()+"title",context.getString(R.string.default_center_name)));
+		LeaveCategory.RIGHT.setTitle(prefs.getString(LeaveCategory.RIGHT.getPrefix()+"title",context.getString(R.string.default_right_name)));
+		
 		db.execSQL(LEAVE_CATEGORY_CREATE);
 
-		db.execSQL(String.format("insert into %s (_id,title,display_pos,hours_per_year,initial_hours,accrual,cap_type) VALUES (1,'%s','%d','%d','%d','%d','%d')",
-				LEAVE_CATEGORY_TABLE, LeaveCategory.LEFT.getTitle(), 0, 80, 0, 1, LEAVE_CAP_TYPE.NONE));
-		db.execSQL(String.format("insert into %s (_id,title,display_pos,hours_per_year,initial_hours,accrual,cap_type) VALUES (2,'%s','%d','%d','%d','%d','%d')",
-				LEAVE_CATEGORY_TABLE, LeaveCategory.CENTER.getTitle(), 1, 80, 0, 1, LEAVE_CAP_TYPE.NONE));
-		db.execSQL(String.format("insert into %s (_id,title,display_pos,hours_per_year,initial_hours,accrual,cap_type) VALUES (3,'%s','%d','%d','%d','%d','%d')",
-				LEAVE_CATEGORY_TABLE, LeaveCategory.RIGHT.getTitle(), 2, 80, 0, 0, LEAVE_CAP_TYPE.NONE));
+		//sick leave
+		ContentValues categories = new ContentValues();
+		categories.put(LEAVE_CATEGORY.ID, 1);
+		categories.put(LEAVE_CATEGORY.TITLE, LeaveCategory.LEFT.getTitle());
+		categories.put(LEAVE_CATEGORY.DISPLAY, 0);
+		categories.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursPerYear",80));
+		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.LEFT.getPrefix() + "initialHours",0));
+		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.LEFT.getPrefix() + "accrualOn", true));
+		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
+		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
+		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
+		
+		//vacation
+		categories = new ContentValues();
+		categories.put(LEAVE_CATEGORY.ID, 2);
+		categories.put(LEAVE_CATEGORY.TITLE, LeaveCategory.CENTER.getTitle());
+		categories.put(LEAVE_CATEGORY.DISPLAY, 1);
+		categories.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursPerYear",80));
+		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.CENTER.getPrefix() + "initialHours",0));
+		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.CENTER.getPrefix() + "accrualOn", true));
+		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
+		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
+		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
+		
+		//comp time
+		categories = new ContentValues();
+		categories.put(LEAVE_CATEGORY.ID, 3);
+		categories.put(LEAVE_CATEGORY.TITLE, LeaveCategory.RIGHT.getTitle());
+		categories.put(LEAVE_CATEGORY.DISPLAY, 2);
+		categories.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursPerYear",0));
+		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "initialHours",0));
+		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.RIGHT.getPrefix() + "accrualOn", false));
+		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
+		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
+		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
 
 		db.execSQL(LEAVE_HISTORY_CREATE);
-		if (!prefs.getString(LeaveCategory.LEFT.getPrefix() + "initialHours", "0").equals("0")) {
-			db.execSQL(String
-					.format("insert into leave_history (notes,number,date,leave_category_id) VALUES ('%s','%s',date('now'),'%f')",
-							"Leave from Initial Hours preference",
-							Float.parseFloat(prefs.getString(LeaveCategory.LEFT.getPrefix() + "initialHours", "0")), 1));
+		
+		if (getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursUsed",0) > 0) {
+			ContentValues leaveValues = new ContentValues();
+			leaveValues.put(LEAVE_HISTORY.CATEGORY, 1);
+			leaveValues.put(LEAVE_HISTORY.NOTES, "Leave from Hours Used preference");
+			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursUsed",0));
+			leaveValues.put(LEAVE_HISTORY.DATE, (new LocalDate()).toString());
+			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
 		}
-		if (!prefs.getString(LeaveCategory.LEFT.getPrefix() + "hoursUsed", "0").equals("0")) {
-			db.execSQL(String
-					.format("insert into leave_history (notes,number,date,leave_category_id) VALUES ('%s','%s',date('now'),'%f')",
-							"Leave from Hours Used preference",
-							Float.parseFloat(prefs.getString(LeaveCategory.LEFT.getPrefix() + "hoursUsed", "0")), 1));
+		if (getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed",0) > 0) {
+			ContentValues leaveValues = new ContentValues();
+			leaveValues.put(LEAVE_HISTORY.CATEGORY, 2);
+			leaveValues.put(LEAVE_HISTORY.NOTES, "Leave from Hours Used preference");
+			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed",0));
+			leaveValues.put(LEAVE_HISTORY.DATE, (new LocalDate()).toString());
+			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
 		}
-		if (!prefs.getString(LeaveCategory.CENTER.getPrefix() + "initialHours", "0").equals("0")) {
-			db.execSQL(String
-					.format("insert into leave_history (notes,number,date,leave_category_id) VALUES ('%s','%s',date('now'),'%f')",
-							"Leave from Initial Hours preference",
-							Float.parseFloat(prefs.getString(LeaveCategory.CENTER.getPrefix() + "initialHours", "0")),
-							1));
+		if (getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed",0) > 0) {
+			ContentValues leaveValues = new ContentValues();
+			leaveValues.put(LEAVE_HISTORY.CATEGORY, 3);
+			leaveValues.put(LEAVE_HISTORY.NOTES, "Leave from Hours Used preference");
+			leaveValues.put(LEAVE_HISTORY.NUMBER, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed",0));
+			leaveValues.put(LEAVE_HISTORY.DATE, (new LocalDate()).toString());
+			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
 		}
-		if (!prefs.getString(LeaveCategory.CENTER.getPrefix() + "hoursUsed", "0").equals("0")) {
-			db.execSQL(String
-					.format("insert into leave_history (notes,number,date,leave_category_id) VALUES ('%s','%s',date('now'),'%f')",
-							"Leave from Hours Used preference",
-							Float.parseFloat(prefs.getString(LeaveCategory.CENTER.getPrefix() + "hoursUsed", "0")), 2));
-		}
-		if (!prefs.getString(LeaveCategory.RIGHT.getPrefix() + "initialHours", "0").equals("0")) {
-			db.execSQL(String
-					.format("insert into leave_history (notes,number,date,leave_category_id) VALUES ('%s','%s',date('now'),'%f')",
-							"Leave from Initial Hours preference",
-							Float.parseFloat(prefs.getString(LeaveCategory.RIGHT.getPrefix() + "initialHours", "0")), 1));
-		}
-		if (!prefs.getString(LeaveCategory.RIGHT.getPrefix() + "hoursUsed", "0").equals("0")) {
-			db.execSQL(String
-					.format("insert into leave_history (notes,number,date,leave_category_id) VALUES ('%s','%s',date('now'),'%f')",
-							"Leave from Hours Used preference",
-							Float.parseFloat(prefs.getString(LeaveCategory.RIGHT.getPrefix() + "hoursUsed", "0")), 3));
-		}
-		db.execSQL(String.format("insert into %s (_id,notes,number,date,leave_category_id) VALUES (1,'%s',%d,%s,%d)",
-				LEAVE_HISTORY_TABLE, "Test note 1", 8,"date('2012-02-03')",1));
-		db.execSQL(String.format("insert into %s (_id,notes,number,date,leave_category_id) VALUES (2,'%s',%d,%s,%d)",
-				LEAVE_HISTORY_TABLE, "Testing notes 2", 5,"date('2012-02-02')",2));
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS " + LEAVE_HISTORY_TABLE);
-		db.execSQL("DROP TABLE IF EXISTS " + LEAVE_CATEGORY_TABLE);
-		onCreate(db);
+		if (newVersion > oldVersion) {
+			db.execSQL("DROP TABLE IF EXISTS " + LEAVE_HISTORY_TABLE);
+			db.execSQL("DROP TABLE IF EXISTS " + LEAVE_CATEGORY_TABLE);
+			onCreate(db);
+		}
 
+	}
+	
+	private float getFloatPref(String pref, float defValue) {
+		String val = prefs.getString(pref, "");
+		if (val == null || val.equals("")) {
+			return defValue;
+		} else {
+			return Float.parseFloat(val);
+		}
 	}
 	
 	public static float getFloat(String val) {
 		if (val == null || val.equals("")) {
 			return 0;
+		} else {
+			return Float.parseFloat(val);
+		}
+	}
+	
+	public static float getFloat(String val, float defValue) {
+		if (val == null || val.equals("")) {
+			return defValue;
 		} else {
 			return Float.parseFloat(val);
 		}
@@ -119,6 +154,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		public static final String CAP_TYPE = "cap_type";
 		public static final String CAP_VAL = "cap_val";
 		public static final String INITIAL_HOURS = "initial_hours";
+		public static final String DISPLAY = "display_pos";
 	};
 	public static class LEAVE_CAP_TYPE {
 		public static final int NONE = 0;

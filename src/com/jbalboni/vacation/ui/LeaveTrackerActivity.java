@@ -41,7 +41,6 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		mPager.setAdapter(mAdapter);
 		mPager.setCurrentItem(1, false);
 
-		// Bind the title indicator to the adapter
 		TitlePageIndicator titleIndicator = (TitlePageIndicator) findViewById(R.id.titles);
 		titleIndicator.setViewPager(mPager);
 		titleIndicator.setCurrentItem(1);
