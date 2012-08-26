@@ -1,15 +1,13 @@
 package com.jbalboni.vacation.ui;
 
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
-import com.jbalboni.vacation.ui.LeaveFragment.UseHoursDialogFragment;
-
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri.Builder;
@@ -25,16 +23,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class LeaveHistoryFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
 	private int currentID;
 
 	private SimpleCursorAdapter adapter;
+	
+	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+	private static DateTimeFormatter fmtNoYear = DateTimeFormat.forPattern("M/d");
+	private static DateTimeFormatter fmtView = DateTimeFormat.forPattern("M/d/yyyy");
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 						view.setVisibility(View.GONE);
 					} else {
 						view.setVisibility(View.VISIBLE);
-						Button button = (Button) view;
+						ImageView button = (ImageView) view;
 						final String notes = cursor.getString(index);
 						button.setOnClickListener(new View.OnClickListener() {
 				             public void onClick(View v) {
@@ -89,6 +90,15 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 				 				 notesDialog.show(getFragmentManager(), "notes");
 				             }
 				         });
+					}
+					return true;
+				} else if (cursor.getColumnName(index).equals(LeaveTrackerDatabase.LEAVE_HISTORY.DATE)) {
+					TextView dateView = (TextView) view;
+					LocalDate date = fmt.parseLocalDate(cursor.getString(index));
+					if (date.getYear() == (new LocalDate()).getYear()) {
+						dateView.setText(fmtNoYear.print(date));
+					} else {
+						dateView.setText(fmtView.print(date));
 					}
 					return true;
 				}
@@ -126,7 +136,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 		getLoaderManager().restartLoader(LEAVE_HISTORY_LOADER, null, this);
 		super.onResume();
 	}
-	public class NotesDialogFragment extends DialogFragment implements OnClickListener {
+	public static class NotesDialogFragment extends DialogFragment implements OnClickListener {
 
 		private String notes;
 		
