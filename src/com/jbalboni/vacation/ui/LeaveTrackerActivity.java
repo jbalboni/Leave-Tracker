@@ -91,7 +91,7 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(getString(R.string.menu_settings)).setIcon(R.drawable.ic_menu_settings)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(getString(R.string.menu_history)).setIcon(R.drawable.ic_menu_recent_history)
+		menu.add(getString(R.string.menu_history)).setIcon(R.drawable.ic_menu_list)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		return true;
 	}
