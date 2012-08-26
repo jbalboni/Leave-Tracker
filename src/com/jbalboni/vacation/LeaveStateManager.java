@@ -61,7 +61,7 @@ public final class LeaveStateManager {
 				leaveCapType, leaveCap);
 	}
 
-	private static String fixLeaveInterval(String leaveInterval) {
+	public static String fixLeaveInterval(String leaveInterval) {
 		// Changed labels, so converting to new style
 		if (leaveInterval.equals("Day"))
 			leaveInterval = "Daily";

@@ -34,6 +34,8 @@
 	<string name="ItemLabelDate">DATE</string>
 	<string name="ItemLabelHours">HOURS</string>
 	<string name="ItemLabelNotes">NOTES</string>
+	<string name="ItemLabelInterval">LEAVE INTERVAL</string>
+	<string name="ItemLabelStartDate">START DATE</string>
 	<string name="separator"> - </string>
 	<string name="no_records">No items to display</string>
 	<string name="load_msg">Loading...</string>
@@ -55,4 +57,6 @@
 	<string name="deleted_msg">Deleted</string>
 	<string name="error_msg">An error occurred</string>
 	<string name="notes">Notes</string>
+	<string name="new_user_pref">newUser</string>
+	<string name="new_user_title">Initial Setup</string>
 </resources>

@@ -177,6 +177,10 @@ public class LeaveFragment extends SherlockFragment {
 	public void onResume() {
 		super.onResume();
 
+		updateFragment();
+	}
+
+	public void updateFragment() {
 		vacationTracker = LeaveStateManager.createVacationTracker(
 				PreferenceManager.getDefaultSharedPreferences(getActivity()), getActivity().getContentResolver(),
 				getArguments().getInt(getString(R.string.leave_category_position)));

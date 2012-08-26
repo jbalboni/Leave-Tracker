@@ -32,7 +32,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	private int currentID;
 
 	private SimpleCursorAdapter adapter;
-	
+
 	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
 	private static DateTimeFormatter fmtNoYear = DateTimeFormat.forPattern("M/d");
 	private static DateTimeFormatter fmtView = DateTimeFormat.forPattern("M/d/yyyy");
@@ -59,15 +59,17 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 		int leaveItemID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ID));
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), LeaveEditActivity.class);
-		intent.putExtra(getString(R.string.intent_catid), getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
+		intent.putExtra(getString(R.string.intent_catid),
+				getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 		intent.putExtra(getString(R.string.intent_itemid), leaveItemID);
 		startActivity(intent);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		String[] uiBindFrom = { LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase.LEAVE_HISTORY.DATE, LeaveTrackerDatabase.LEAVE_HISTORY.NOTES };
-		int[] uiBindTo = { R.id.hours, R.id.date, R.id.notes};
+		String[] uiBindFrom = { LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
+				LeaveTrackerDatabase.LEAVE_HISTORY.NOTES };
+		int[] uiBindTo = { R.id.hours, R.id.date, R.id.notes };
 
 		getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
 
@@ -84,12 +86,12 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 						ImageView button = (ImageView) view;
 						final String notes = cursor.getString(index);
 						button.setOnClickListener(new View.OnClickListener() {
-				             public void onClick(View v) {
-				            	 NotesDialogFragment notesDialog = new NotesDialogFragment();
-				 				 notesDialog.setNotes(notes);
-				 				 notesDialog.show(getFragmentManager(), "notes");
-				             }
-				         });
+							public void onClick(View v) {
+								NotesDialogFragment notesDialog = new NotesDialogFragment();
+								notesDialog.setNotes(notes);
+								notesDialog.show(getFragmentManager(), "notes");
+							}
+						});
 					}
 					return true;
 				} else if (cursor.getColumnName(index).equals(LeaveTrackerDatabase.LEAVE_HISTORY.DATE)) {
@@ -114,11 +116,13 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		//Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "cast(number as text)||\" hours\" as number", "date", "notes" };
-		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
-		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null,
-				null, LeaveTrackerDatabase.LEAVE_HISTORY.DATE+" DESC");
+		// Seems wrong to do output formatting here
+		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "cast(number as text)||\" hours\" as number",
+				"date", "notes" };
+		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(
+				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
+		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null, null,
+				LeaveTrackerDatabase.LEAVE_HISTORY.DATE + " DESC");
 		return cursorLoader;
 	}
 
@@ -131,15 +135,17 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	public void onLoaderReset(Loader<Cursor> loader) {
 		adapter.swapCursor(null);
 	}
+
 	@Override
 	public void onResume() {
 		getLoaderManager().restartLoader(LEAVE_HISTORY_LOADER, null, this);
 		super.onResume();
 	}
+
 	public static class NotesDialogFragment extends DialogFragment implements OnClickListener {
 
 		private String notes;
-		
+
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
