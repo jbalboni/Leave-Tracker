@@ -10,6 +10,7 @@ import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri.Builder;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -138,8 +139,27 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 
 	@Override
 	public void onResume() {
-		getLoaderManager().restartLoader(LEAVE_HISTORY_LOADER, null, this);
+		Cursor cursor = ((SimpleCursorAdapter) getListAdapter()).getCursor();
+		if (cursor != null) {
+			cursor.requery();
+		}
+		setTitle();
 		super.onResume();
+	}
+	
+	private void setTitle() {
+		SQLiteQueryBuilder titleQuery;
+		LeaveTrackerDatabase leaveDB;
+		String selTitle = LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?";
+		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE };
+		leaveDB = new LeaveTrackerDatabase(getActivity());
+		titleQuery = new SQLiteQueryBuilder();
+		titleQuery.setTables(LeaveTrackerDatabase.LEAVE_CATEGORY_TABLE);
+		Cursor cursor = titleQuery.query(leaveDB.getReadableDatabase(), projection, selTitle,
+				new String[] { Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)) }, null, null, null);
+		cursor.moveToFirst();
+		getSherlockActivity().getSupportActionBar().setTitle(cursor.getString(0));
+		leaveDB.close();
 	}
 
 	public static class NotesDialogFragment extends DialogFragment implements OnClickListener {
