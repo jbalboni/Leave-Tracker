@@ -102,7 +102,7 @@ public class VacationTracker {
 					} else {
 						Weeks weeks = Weeks.weeksBetween(currentDate, asOfDate);
 						interval = weeks.getWeeks();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,endOfYear);
+						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,asOfDate);
 						historyIndex = currentUsed.pos;
 						vacationHours += (interval * (hoursPerYear / WEEKS_IN_YEAR)) - currentUsed.sum;
 					}
@@ -135,7 +135,7 @@ public class VacationTracker {
 					} else {
 						Weeks weeks = Weeks.weeksBetween(currentDate, asOfDate);
 						interval = weeks.getWeeks() / 2;
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,endOfYear);
+						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,asOfDate);
 						historyIndex = currentUsed.pos;
 						vacationHours += (interval * (hoursPerYear / (WEEKS_IN_YEAR / 2))) - currentUsed.sum;
 					}
@@ -166,7 +166,7 @@ public class VacationTracker {
 					} else {
 						Months months = Months.monthsBetween(currentDate, asOfDate);
 						interval = months.getMonths();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,endOfYear);
+						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,asOfDate);
 						historyIndex = currentUsed.pos;
 						vacationHours += (interval * (hoursPerYear / MONTHS_IN_YEAR)) - currentUsed.sum;
 					}
@@ -197,7 +197,7 @@ public class VacationTracker {
 	private SumAndPos sumLeave(List<LeaveItem> list, int start, LocalDate endDate) {
 		float leaveSum = 0;
 		int i = start;
-		while (i < list.size() && !endDate.isAfter(list.get(i).getDate())) {
+		while (i < list.size() && list.get(i).getDate().compareTo(endDate) <= 0) {
 			leaveSum += list.get(i).getHours();
 			i++;
 		}

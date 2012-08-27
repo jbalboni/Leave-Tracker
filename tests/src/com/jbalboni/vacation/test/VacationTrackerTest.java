@@ -246,4 +246,21 @@ public class VacationTrackerTest extends AndroidTestCase {
 				accrualOn, leaveCapType, leaveCap);
 		assertEquals(tracker.calculateHours(endDate), 35f);
 	}
+	public void testCarryoverPostMonth() {
+		float initialHours = 0;
+		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+		hoursUsed.add(new LeaveItem(new LocalDate(2012,1,8),8));
+		float hoursPerYear = 120;
+		String leaveInterval = "Monthly";
+		boolean accrualOn = true;
+		LocalDate startDate = new LocalDate(2011,1,2);
+		float leaveCap = 15;
+		LeaveCapType leaveCapType = LeaveCapType.CARRYOVER;
+
+		LocalDate endDate = new LocalDate(2012,1,21);
+
+		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
+				accrualOn, leaveCapType, leaveCap);
+		assertEquals(7f, tracker.calculateHours(endDate));
+	}
 }
