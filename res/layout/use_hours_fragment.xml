@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/edit_name"
-    android:layout_width="wrap_content" android:layout_height="wrap_content"
-    android:layout_gravity="center" android:orientation="vertical"  >
+    android:id="@+id/edit_name" 
+    android:orientation="vertical"
+    style="@style/VacationDialog">
 
 	<TextView
             android:id="@+id/hoursLabel"
@@ -12,7 +12,7 @@
 
         <EditText
             android:id="@+id/hours"
-            android:layout_width="fill_parent"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" >
 
@@ -31,7 +31,7 @@
         <LinearLayout
   			style="@style/ButtonLayout"
   			android:orientation="horizontal"
-  			android:layout_width="fill_parent" 
+  			android:layout_width="match_parent" 
   			android:layout_height="wrap_content">
 
   		<Button android:id="@+id/addHours"

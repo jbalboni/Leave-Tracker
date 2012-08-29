@@ -3,6 +3,13 @@
     <style name="VacationTheme" parent="@style/Theme.Sherlock.Light">
 
 	</style>
+	<style name="VacationDialog" parent="@android:style/Theme.Dialog">
+		<item name="android:windowBackground">@android:color/white</item>
+		<item name="android:textColor">#ff33b5e5</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+    	<item name="android:layout_gravity">center</item>
+	</style>
     <style name="LeaveViewText">
     	<item name="android:textSize">10pt</item>
     	<item name="android:layout_width">wrap_content</item>
@@ -32,7 +39,7 @@
   		<item name="android:weightSum">2.0</item> 
   		<item name="android:padding">1px</item>
   		<item name="android:layout_height">wrap_content</item>
-  		<item name="android:layout_weight">0.05</item>
+  		<item name="android:layout_weight">1</item>
   		<item name="android:layout_alignParentBottom">true</item>
     </style>
     <style name="QuickUseButton">

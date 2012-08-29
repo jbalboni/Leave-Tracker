@@ -1335,18 +1335,18 @@ containing a value of this type.
         public static final int use_hours_alert_msg=0x7f0b0011;
     }
     public static final class style {
-        public static final int ButtonLayout=0x7f0a0062;
+        public static final int ButtonLayout=0x7f0a0063;
         public static final int DialogWindowTitle_Sherlock=0x7f0a0036;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0a0037;
-        public static final int EditLabel=0x7f0a0066;
-        public static final int EditLabelText=0x7f0a0067;
-        public static final int LeaveHistoryLayout=0x7f0a0061;
-        public static final int LeaveViewText=0x7f0a005c;
-        public static final int LeaveViewText_Content=0x7f0a005f;
-        public static final int LeaveViewText_Content_Land=0x7f0a0060;
-        public static final int LeaveViewText_Top=0x7f0a005d;
-        public static final int LeaveViewText_Top_Land=0x7f0a005e;
-        public static final int QuickUseButton=0x7f0a0063;
+        public static final int EditLabel=0x7f0a0067;
+        public static final int EditLabelText=0x7f0a0068;
+        public static final int LeaveHistoryLayout=0x7f0a0062;
+        public static final int LeaveViewText=0x7f0a005d;
+        public static final int LeaveViewText_Content=0x7f0a0060;
+        public static final int LeaveViewText_Content_Land=0x7f0a0061;
+        public static final int LeaveViewText_Top=0x7f0a005e;
+        public static final int LeaveViewText_Top_Land=0x7f0a005f;
+        public static final int QuickUseButton=0x7f0a0064;
         public static final int Sherlock___TextAppearance_Small=0x7f0a004a;
         public static final int Sherlock___Theme=0x7f0a004d;
         public static final int Sherlock___Theme_DarkActionBar=0x7f0a004f;
@@ -1390,9 +1390,10 @@ containing a value of this type.
         public static final int Theme_Sherlock_Light_ForceOverflow=0x7f0a0057;
         public static final int Theme_Sherlock_Light_NoActionBar=0x7f0a0055;
         public static final int Theme_Sherlock_NoActionBar=0x7f0a0054;
+        public static final int VacationDialog=0x7f0a005c;
         public static final int VacationTheme=0x7f0a005b;
-        public static final int ViewPager=0x7f0a0064;
-        public static final int ViewPagerIndicator=0x7f0a0065;
+        public static final int ViewPager=0x7f0a0065;
+        public static final int ViewPagerIndicator=0x7f0a0066;
         public static final int Widget=0x7f0a0001;
         public static final int Widget_Sherlock_ActionBar=0x7f0a0005;
         public static final int Widget_Sherlock_ActionBar_Solid=0x7f0a0006;

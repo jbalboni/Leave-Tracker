@@ -91,6 +91,7 @@ public class LeaveFragment extends SherlockFragment {
 			public void onClick(View v) {
 				UseHoursDialogFragment useHoursDialog = new UseHoursDialogFragment();
 				useHoursDialog.setCategory(getArguments().getInt(getString(R.string.leave_category_position)));
+				useHoursDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
 				useHoursDialog.show(getFragmentManager(), "hours");
 			}
 		});
@@ -139,6 +140,7 @@ public class LeaveFragment extends SherlockFragment {
 					Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 				}
 				getDialog().dismiss();
+				updateFragment();
 			}
 		}
 	}

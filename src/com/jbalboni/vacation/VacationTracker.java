@@ -44,12 +44,12 @@ public class VacationTracker {
 	public float calculateHours(LocalDate asOfDate) {
 		int interval = 0;
 		int historyIndex = 0;
-		//remove before and after leave items
+		// remove before and after leave items
 		List<LeaveItem> trimmedHist = trimLeave(asOfDate);
 
 		float vacationHours = 0;
 		vacationHours = initialHours;
-		
+
 		if (this.accrualOn == true) {
 			if (leaveInterval.equals("Daily")) {
 				LocalDate currentDate = startDate;
@@ -57,10 +57,11 @@ public class VacationTracker {
 					float tempVacationHours;
 					LocalDate endOfYear = currentDate.plusDays(1).withMonthOfYear(DateTimeConstants.DECEMBER)
 							.withDayOfMonth(31);
+					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
 					if (endOfYear.isBefore(asOfDate)) {
 						Days days = Days.daysBetween(currentDate, endOfYear);
 						interval = days.getDays();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,endOfYear);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
 						historyIndex = currentUsed.pos;
 						tempVacationHours = (interval * (hoursPerYear / DAYS_IN_YEAR)) - currentUsed.sum;
 						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
@@ -71,7 +72,7 @@ public class VacationTracker {
 					} else {
 						Days days = Days.daysBetween(currentDate, asOfDate);
 						interval = days.getDays();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,asOfDate);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
 						vacationHours += (interval * (hoursPerYear / DAYS_IN_YEAR)) - currentUsed.sum;
 						historyIndex = currentUsed.pos;
 					}
@@ -88,10 +89,11 @@ public class VacationTracker {
 						endOfYear = newEndOfYear.plusWeeks(1);
 					else
 						endOfYear = newEndOfYear;
+					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
 					if (endOfYear.isBefore(asOfDate)) {
 						Weeks weeks = Weeks.weeksBetween(currentDate, endOfYear);
 						interval = weeks.getWeeks();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,endOfYear);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
 						historyIndex = currentUsed.pos;
 						tempVacationHours = (interval * (hoursPerYear / WEEKS_IN_YEAR)) - currentUsed.sum;
 						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
@@ -102,7 +104,7 @@ public class VacationTracker {
 					} else {
 						Weeks weeks = Weeks.weeksBetween(currentDate, asOfDate);
 						interval = weeks.getWeeks();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,asOfDate);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
 						historyIndex = currentUsed.pos;
 						vacationHours += (interval * (hoursPerYear / WEEKS_IN_YEAR)) - currentUsed.sum;
 					}
@@ -121,10 +123,11 @@ public class VacationTracker {
 						endOfYear = newEndOfYear;
 					if (Weeks.weeksBetween(startDate, endOfYear).getWeeks() % 2 != 0)
 						endOfYear = endOfYear.plusWeeks(1);
+					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
 					if (endOfYear.isBefore(asOfDate)) {
 						Weeks weeks = Weeks.weeksBetween(currentDate, endOfYear);
 						interval = weeks.getWeeks();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,endOfYear);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
 						historyIndex = currentUsed.pos;
 						tempVacationHours = (interval * (hoursPerYear / WEEKS_IN_YEAR)) - currentUsed.sum;
 						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
@@ -135,7 +138,7 @@ public class VacationTracker {
 					} else {
 						Weeks weeks = Weeks.weeksBetween(currentDate, asOfDate);
 						interval = weeks.getWeeks() / 2;
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,asOfDate);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
 						historyIndex = currentUsed.pos;
 						vacationHours += (interval * (hoursPerYear / (WEEKS_IN_YEAR / 2))) - currentUsed.sum;
 					}
@@ -152,10 +155,11 @@ public class VacationTracker {
 						endOfYear = newEndOfYear.plusMonths(1);
 					else
 						endOfYear = newEndOfYear;
+					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
 					if (endOfYear.isBefore(asOfDate)) {
 						Months months = Months.monthsBetween(currentDate, endOfYear);
 						interval = months.getMonths();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,endOfYear);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
 						historyIndex = currentUsed.pos;
 						tempVacationHours = (interval * (hoursPerYear / MONTHS_IN_YEAR)) - currentUsed.sum;
 						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
@@ -166,7 +170,7 @@ public class VacationTracker {
 					} else {
 						Months months = Months.monthsBetween(currentDate, asOfDate);
 						interval = months.getMonths();
-						SumAndPos currentUsed = sumLeave(trimmedHist,historyIndex,asOfDate);
+						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
 						historyIndex = currentUsed.pos;
 						vacationHours += (interval * (hoursPerYear / MONTHS_IN_YEAR)) - currentUsed.sum;
 					}
@@ -181,19 +185,20 @@ public class VacationTracker {
 		else
 			return vacationHours;
 	}
-	
+
 	/*
 	 * Stupid Java
 	 */
 	private static class SumAndPos {
 		public int pos;
 		public float sum;
+
 		public SumAndPos(int pos, float sum) {
 			this.pos = pos;
 			this.sum = sum;
 		}
 	}
-	
+
 	private SumAndPos sumLeave(List<LeaveItem> list, int start, LocalDate endDate) {
 		float leaveSum = 0;
 		int i = start;
@@ -201,7 +206,7 @@ public class VacationTracker {
 			leaveSum += list.get(i).getHours();
 			i++;
 		}
-		return new SumAndPos(i,leaveSum);
+		return new SumAndPos(i, leaveSum);
 	}
 
 	/*
@@ -323,7 +328,7 @@ public class VacationTracker {
 
 	public void addHoursUsed(Float hoursUsed) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
