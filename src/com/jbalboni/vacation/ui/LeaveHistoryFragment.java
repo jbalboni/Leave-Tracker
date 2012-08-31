@@ -90,6 +90,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 							public void onClick(View v) {
 								NotesDialogFragment notesDialog = new NotesDialogFragment();
 								notesDialog.setNotes(notes);
+								notesDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
 								notesDialog.show(getFragmentManager(), "notes");
 							}
 						});

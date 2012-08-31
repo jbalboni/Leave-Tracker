@@ -82,6 +82,7 @@ public class LeaveFragment extends SherlockFragment {
 		asOfDatePicker.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				DialogFragment datePickerDialog = new DatePickerDialogFragment();
+				datePickerDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
 				datePickerDialog.show(getFragmentManager(), "date");
 			}
 		});

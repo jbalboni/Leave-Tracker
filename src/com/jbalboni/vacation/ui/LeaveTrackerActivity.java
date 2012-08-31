@@ -27,6 +27,7 @@ import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -70,6 +71,7 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		Boolean newUser = prefs.getBoolean(getString(R.string.new_user_pref), true);
 		if (newUser) {
 			NewUserFragment userFrag = new NewUserFragment();
+			userFrag.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
 			userFrag.show(getSupportFragmentManager(), "newUser");
 		}
 	}
