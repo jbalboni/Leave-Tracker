@@ -1144,9 +1144,9 @@ containing a value of this type.
         public static final int accrual=0x7f050031;
         public static final int accrualLabel=0x7f050030;
         public static final int accrualLayout=0x7f05002f;
-        public static final int addHours=0x7f050053;
+        public static final int addHours=0x7f050054;
         public static final int asOfDateDesc=0x7f050045;
-        public static final int cancel=0x7f050054;
+        public static final int cancel=0x7f050053;
         public static final int categoryTitle=0x7f05002e;
         public static final int categoryTitleLabel=0x7f05002d;
         public static final int changeAsOfDate=0x7f050047;

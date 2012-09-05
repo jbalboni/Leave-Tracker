@@ -111,10 +111,8 @@ public class LeaveFragment extends SherlockFragment {
 			EditText hoursUsedInput = (EditText) view.findViewById(R.id.hours);
 			hoursUsedInput.setText(HOURS_IN_DAY);
 
-			Button button = (Button) view.findViewById(R.id.cancel);
-			button.setOnClickListener(this);
-			button = (Button) view.findViewById(R.id.addHours);
-			button.setOnClickListener(this);
+			view.findViewById(R.id.cancel).setOnClickListener(this);
+			view.findViewById(R.id.addHours).setOnClickListener(this);
 
 			return view;
 		}
