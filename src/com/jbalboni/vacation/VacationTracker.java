@@ -180,6 +180,12 @@ public class VacationTracker {
 		} else {
 			vacationHours += hoursPerYear;
 		}
+		
+		//this will catch the used leave on the as of date
+		SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
+		historyIndex = currentUsed.pos;
+		vacationHours -= currentUsed.sum;
+		
 		if (leaveCapType == LeaveCapType.MAX && vacationHours > leaveCap)
 			return leaveCap;
 		else
