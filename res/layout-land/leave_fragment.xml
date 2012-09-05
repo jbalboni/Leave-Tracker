@@ -11,6 +11,7 @@
     <TextView
         android:id="@+id/hoursAvailable"
         style="@style/LeaveViewText.Content.Land"
+        android:onClick="onClickAvailable"
         android:layout_below="@+id/hoursAvailableLabel" />
     <TextView
         android:id="@+id/hoursAvailableAsOf"
