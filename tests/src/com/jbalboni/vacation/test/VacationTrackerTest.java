@@ -263,4 +263,45 @@ public class VacationTrackerTest extends AndroidTestCase {
 				accrualOn, leaveCapType, leaveCap);
 		assertEquals(7f, tracker.calculateHours(endDate));
 	}
+	
+	public void testFutureLeave() {
+		float initialHours = 0;
+		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+		hoursUsed.add(new LeaveItem((new LocalDate()).plusWeeks(3),8));
+		float hoursPerYear = 26;
+		String leaveInterval = "Bi-Weekly";
+		boolean accrualOn = true;
+		LocalDate startDate = new LocalDate();
+		float leaveCap = 0;
+		LeaveCapType leaveCapType = LeaveCapType.NONE;
+
+		startDate = startDate.minusWeeks(2).plusDays(1);
+
+		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
+				accrualOn, leaveCapType, leaveCap);
+		assertEquals(tracker.calculateHours(new LocalDate()), initialHours);
+
+		tracker.setStartDate(startDate.minusDays(1));
+		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear / 26.0f);
+	}
+	public void testPastLeave() {
+		float initialHours = 0;
+		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+		float hoursPerYear = 26;
+		String leaveInterval = "Bi-Weekly";
+		boolean accrualOn = true;
+		LocalDate startDate = new LocalDate();
+		float leaveCap = 0;
+		LeaveCapType leaveCapType = LeaveCapType.NONE;
+
+		startDate = startDate.minusWeeks(2).plusDays(1);
+		hoursUsed.add(new LeaveItem(startDate.minusWeeks(3),8));
+
+		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
+				accrualOn, leaveCapType, leaveCap);
+		assertEquals(tracker.calculateHours(new LocalDate()), initialHours);
+
+		tracker.setStartDate(startDate.minusDays(1));
+		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear / 26.0f);
+	}
 }
