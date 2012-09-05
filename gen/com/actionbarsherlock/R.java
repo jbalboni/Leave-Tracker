@@ -1338,6 +1338,7 @@ containing a value of this type.
         public static final int ButtonLayout=0x7f0a0063;
         public static final int DialogWindowTitle_Sherlock=0x7f0a0036;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0a0037;
+        public static final int EditDialog=0x7f0a0069;
         public static final int EditLabel=0x7f0a0067;
         public static final int EditLabelText=0x7f0a0068;
         public static final int LeaveHistoryLayout=0x7f0a0062;

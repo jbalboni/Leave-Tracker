@@ -12,7 +12,7 @@
 
         <EditText
             android:id="@+id/hours"
-            android:layout_width="250sp"
+            style="@style/EditDialog"
             android:layout_height="wrap_content"
             android:inputType="numberDecimal" >
 
@@ -25,24 +25,22 @@
 
         <EditText
             android:id="@+id/notes"
-            android:layout_width="fill_parent"
+            style="@style/EditDialog"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine" />
         <LinearLayout
   			style="@style/ButtonLayout"
   			android:orientation="horizontal"
-  			android:layout_width="match_parent" 
+  			android:layout_width="fill_parent" 
   			android:layout_height="wrap_content">
 
-  		<Button android:id="@+id/addHours"
-  			android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-          	android:text="Add" />
-
   		<Button android:id="@+id/cancel"
-  			android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+  			style="@style/QuickUseButton"
           	android:text="Cancel" />
+          	
+        <Button android:id="@+id/addHours"
+  			style="@style/QuickUseButton"
+          	android:text="Add" />
 
 	</LinearLayout>
 </LinearLayout>

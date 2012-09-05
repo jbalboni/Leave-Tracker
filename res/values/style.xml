@@ -76,4 +76,7 @@
         <item name="android:padding">10px</item>
         <item name="android:textSize">15sp</item>
     </style>
+    <style name="EditDialog">
+        <item name="android:layout_width">250sp</item>
+    </style>
 </resources>
