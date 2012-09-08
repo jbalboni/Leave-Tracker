@@ -230,8 +230,6 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		intent.setClass(this, LeaveHistoryActivity.class);
 		int catID = mPager.getCurrentItem() + 1;
 		intent.putExtra(getString(R.string.intent_catid), catID);
-		// I should figure out a way to remove this title from the intent
-		intent.putExtra(getString(R.string.intent_catname), mAdapter.getPageTitle(catID - 1));
 		startActivity(intent);
 	}
 

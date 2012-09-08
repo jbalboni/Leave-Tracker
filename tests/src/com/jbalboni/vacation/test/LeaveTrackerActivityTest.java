@@ -1,5 +1,8 @@
 package com.jbalboni.vacation.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.joda.time.LocalDate;
 
 import android.app.Instrumentation;
@@ -12,6 +15,8 @@ import android.support.v4.view.ViewPager;
 
 import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.ui.LeaveFragment;
+import com.jbalboni.vacation.LeaveCapType;
+import com.jbalboni.vacation.LeaveItem;
 import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.VacationTracker;
 import com.jbalboni.vacation.ui.LeaveTrackerActivity.LeaveAdapter;
@@ -43,14 +48,17 @@ public class LeaveTrackerActivityTest extends ActivityInstrumentationTestCase2<L
 //	@UiThreadTest
 //	public void testHoursDisplay() {
 //		float initialHours = 2;
-//		float hoursUsed = 5;
+//		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+//		hoursUsed.add(new LeaveItem(new LocalDate(),5));
 //		float hoursPerYear = 70;
 //		String leaveInterval = "Monthly";
 //		boolean accrualOn = true;
 //		LocalDate startDate = (new LocalDate()).minusYears(1);
+//		float leaveCap = 0;
+//		LeaveCapType leaveCapType = LeaveCapType.NONE;
 //
 //		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
-//				accrualOn);
+//				accrualOn, leaveCapType, leaveCap);
 //		
 //		String hoursAvailable = String.format("%.2f",tracker.calculateHours(new LocalDate()));
 //		
@@ -63,6 +71,6 @@ public class LeaveTrackerActivityTest extends ActivityInstrumentationTestCase2<L
 //		LeaveAdapter adapter = (LeaveAdapter)pager.getAdapter();
 //		LeaveFragment currentFrag = (LeaveFragment)adapter.getItem(pager.getCurrentItem());
 //		TextView hoursView = (TextView) currentFrag.getView().findViewById(com.jbalboni.vacation.R.id.hoursAvailable);
-//		assertEquals(hoursView.getText().toString(),hoursAvailable);
+//		assertEquals(hoursAvailable,hoursView.getText().toString());
 //	}
 }
