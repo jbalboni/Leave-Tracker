@@ -8,4 +8,7 @@
 	<style name="EditDialog">
         <item name="android:layout_width">fill_parent</item>
     </style>
+    <style name="NotesButton">
+    	<item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
 </resources>

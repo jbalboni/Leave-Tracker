@@ -79,4 +79,6 @@
     <style name="EditDialog">
         <item name="android:layout_width">250sp</item>
     </style>
+    <style name="NotesButton">
+    </style>
 </resources>

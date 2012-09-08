@@ -1348,6 +1348,7 @@ containing a value of this type.
         public static final int LeaveViewText_Content_Land=0x7f0a0061;
         public static final int LeaveViewText_Top=0x7f0a005e;
         public static final int LeaveViewText_Top_Land=0x7f0a005f;
+        public static final int NotesButton=0x7f0a006a;
         public static final int QuickUseButton=0x7f0a0064;
         public static final int Sherlock___TextAppearance_Small=0x7f0a004a;
         public static final int Sherlock___Theme=0x7f0a004d;
