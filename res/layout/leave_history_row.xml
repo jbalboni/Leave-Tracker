@@ -37,14 +37,14 @@
       	android:focusableInTouchMode="false"
       	android:textSize="20sp"
       	android:textColor="#000"/>
-    <ImageView android:id="@+id/notes"
+    <ImageButton android:id="@+id/notes"
     	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
+    	android:layout_height="fill_parent"
     	android:layout_alignParentRight="true"
     	android:focusable="false"  
       	android:focusableInTouchMode="false"
       	android:src="@drawable/ic_action_info"
       	android:layout_centerInParent="true"
-      	android:paddingRight="5pt"
+      	style="?android:attr/borderlessButtonStyle"
     	/>
 </RelativeLayout>

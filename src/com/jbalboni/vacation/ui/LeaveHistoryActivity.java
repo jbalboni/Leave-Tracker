@@ -15,6 +15,7 @@ public class LeaveHistoryActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.leave_history);
 		getSupportActionBar().setTitle(getIntent().getStringExtra(getString(R.string.intent_catname)));
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -41,6 +42,11 @@ public class LeaveHistoryActivity extends SherlockFragmentActivity {
 			intent.setClass(this, LeaveCategoryEditActivity.class);
 			intent.putExtra(getString(R.string.intent_catid),
 					getIntent().getIntExtra(getString(R.string.intent_catid), 0));
+			startActivity(intent);
+		} else if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent();
+			intent.setClass(this, LeaveCategoryActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}
 		return true;
