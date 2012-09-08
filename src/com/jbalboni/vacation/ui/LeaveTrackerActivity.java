@@ -164,8 +164,9 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		@Override
 		public int getCount() {
 			SQLiteDatabase db = leaveDB.getReadableDatabase();
-			int catCount = titleQuery.query(db, projection, selection, null, null, null,
-					sortOrder).getCount();
+			Cursor cursor = titleQuery.query(db, projection, selection, null, null, null, sortOrder);
+			int catCount = cursor.getCount();
+			cursor.close();
 			db.close();
 			return catCount;
 		}
@@ -178,8 +179,8 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		@Override
 		public String getPageTitle(int position) {
 			SQLiteDatabase db = leaveDB.getReadableDatabase();
-			Cursor cursor = titleQuery.query(db, projection, selTitle,
-					new String[] { Integer.toString(position + 1) }, null, null, sortOrder);
+			Cursor cursor = titleQuery.query(db, projection, selTitle, new String[] { Integer.toString(position + 1) },
+					null, null, sortOrder);
 			cursor.moveToFirst();
 			String title = cursor.getString(0);
 			cursor.close();

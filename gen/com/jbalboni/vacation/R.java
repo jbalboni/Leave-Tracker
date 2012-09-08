@@ -1393,6 +1393,12 @@ containing a value of this type.
         public static final int Theme_Sherlock_Light_ForceOverflow=0x7f0a0057;
         public static final int Theme_Sherlock_Light_NoActionBar=0x7f0a0055;
         public static final int Theme_Sherlock_NoActionBar=0x7f0a0054;
+        /** <item name="android:windowBackground">@android:color/white</item>
+		<item name="android:textColor">#ff33b5e5</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+    	<item name="android:layout_gravity">center</item>
+         */
         public static final int VacationDialog=0x7f0a005c;
         public static final int VacationTheme=0x7f0a005b;
         public static final int ViewPager=0x7f0a0065;
