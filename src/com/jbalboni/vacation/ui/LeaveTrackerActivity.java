@@ -14,6 +14,7 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -162,8 +163,11 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 		@Override
 		public int getCount() {
-			return titleQuery.query(leaveDB.getReadableDatabase(), projection, selection, null, null, null, sortOrder)
-					.getCount();
+			SQLiteDatabase db = leaveDB.getReadableDatabase();
+			int catCount = titleQuery.query(db, projection, selection, null, null, null,
+					sortOrder).getCount();
+			db.close();
+			return catCount;
 		}
 
 		@Override
@@ -173,10 +177,14 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 
 		@Override
 		public String getPageTitle(int position) {
-			Cursor cursor = titleQuery.query(leaveDB.getReadableDatabase(), projection, selTitle,
+			SQLiteDatabase db = leaveDB.getReadableDatabase();
+			Cursor cursor = titleQuery.query(db, projection, selTitle,
 					new String[] { Integer.toString(position + 1) }, null, null, sortOrder);
 			cursor.moveToFirst();
-			return cursor.getString(0);
+			String title = cursor.getString(0);
+			cursor.close();
+			db.close();
+			return title;
 		}
 	}
 

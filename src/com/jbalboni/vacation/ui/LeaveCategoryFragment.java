@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class LeaveCategoryFragment extends SherlockListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 	private static final int LEAVE_CATEGORY_LOADER = 0x02;
@@ -78,10 +77,6 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 	@Override
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		adapter.swapCursor(cursor);
-		if (cursor.getCount() == 0) {
-			TextView loadingView = (TextView) getView().findViewById(R.id.loading);
-			loadingView.setText(R.string.no_records);
-		}
 	}
 
 	@Override

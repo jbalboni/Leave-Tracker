@@ -15,6 +15,7 @@ public class LeaveCategoryActivity extends SherlockFragmentActivity {
 
 		setContentView(R.layout.leave_category);
 		getSupportActionBar().setTitle(R.string.cat_title);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -29,6 +30,11 @@ public class LeaveCategoryActivity extends SherlockFragmentActivity {
 		if (item.getTitle().equals(getString(R.string.menu_add))) {
 			Intent intent = new Intent();
 			intent.setClass(this, LeaveCategoryEditActivity.class);
+			startActivity(intent);
+		} else if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent();
+			intent.setClass(this, LeaveTrackerActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);
 		}
 		return true;
