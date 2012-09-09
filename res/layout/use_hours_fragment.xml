@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/edit_name" 
     android:orientation="vertical"
-    style="@style/VacationDialog">
+    android:textColor="#ff000000"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
 	<TextView
             android:id="@+id/hoursLabel"

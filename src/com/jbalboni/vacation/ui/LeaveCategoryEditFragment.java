@@ -139,7 +139,7 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL, LeaveTrackerDatabase.getFloat(editView.getText().toString()));
 		
 		CheckBox accrualOn = (CheckBox) getView().findViewById(R.id.accrual);
-		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL, accrualOn.isChecked() ? 1 : 0);
+		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL, accrualOn.isChecked() ? 1 : 0);
 		
 		Spinner leaveCapType = (Spinner) getView().findViewById(R.id.leaveCapType);
 		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE, leaveCapType.getSelectedItemPosition());

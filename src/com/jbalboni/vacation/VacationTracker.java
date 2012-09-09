@@ -8,6 +8,7 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 import org.joda.time.Weeks;
+import org.joda.time.Years;
 
 /*
  * Main logic class. Does the leave calculation based on used hours, accrued leave, and limit
@@ -42,7 +43,6 @@ public class VacationTracker {
 	}
 
 	public float calculateHours(LocalDate asOfDate) {
-		int interval = 0;
 		int historyIndex = 0;
 		// remove before and after leave items
 		List<LeaveItem> trimmedHist = trimLeave(asOfDate);
@@ -51,132 +51,25 @@ public class VacationTracker {
 		vacationHours = initialHours;
 
 		if (this.accrualOn == true) {
-			if (leaveInterval.equals("Daily")) {
-				LocalDate currentDate = startDate;
-				while (currentDate.isBefore(asOfDate)) {
-					float tempVacationHours;
-					LocalDate endOfYear = currentDate.plusDays(1).withMonthOfYear(DateTimeConstants.DECEMBER)
-							.withDayOfMonth(31);
-					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
-					if (endOfYear.isBefore(asOfDate)) {
-						Days days = Days.daysBetween(currentDate, endOfYear);
-						interval = days.getDays();
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
-						historyIndex = currentUsed.pos;
-						tempVacationHours = (interval * (hoursPerYear / DAYS_IN_YEAR)) - currentUsed.sum;
-						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
-							vacationHours = leaveCap;
-						} else {
-							vacationHours += tempVacationHours;
-						}
-					} else {
-						Days days = Days.daysBetween(currentDate, asOfDate);
-						interval = days.getDays();
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
-						vacationHours += (interval * (hoursPerYear / DAYS_IN_YEAR)) - currentUsed.sum;
-						historyIndex = currentUsed.pos;
-					}
-					currentDate = endOfYear;
-				}
-			} else if (leaveInterval.equals("Weekly")) {
-				LocalDate currentDate = startDate;
-				while (currentDate.isBefore(asOfDate)) {
-					float tempVacationHours;
-					LocalDate endOfYear = currentDate.plusDays(1).withMonthOfYear(DateTimeConstants.DECEMBER)
-							.withDayOfMonth(31);
-					LocalDate newEndOfYear = endOfYear.withDayOfWeek(startDate.getDayOfWeek());
-					if (endOfYear.isAfter(newEndOfYear))
-						endOfYear = newEndOfYear.plusWeeks(1);
-					else
-						endOfYear = newEndOfYear;
-					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
-					if (endOfYear.isBefore(asOfDate)) {
-						Weeks weeks = Weeks.weeksBetween(currentDate, endOfYear);
-						interval = weeks.getWeeks();
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
-						historyIndex = currentUsed.pos;
-						tempVacationHours = (interval * (hoursPerYear / WEEKS_IN_YEAR)) - currentUsed.sum;
-						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
-							vacationHours = leaveCap;
-						} else {
-							vacationHours += tempVacationHours;
-						}
-					} else {
-						Weeks weeks = Weeks.weeksBetween(currentDate, asOfDate);
-						interval = weeks.getWeeks();
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
-						historyIndex = currentUsed.pos;
-						vacationHours += (interval * (hoursPerYear / WEEKS_IN_YEAR)) - currentUsed.sum;
-					}
-					currentDate = endOfYear;
-				}
-			} else if (leaveInterval.equals("Bi-Weekly")) {
-				LocalDate currentDate = startDate;
-				while (currentDate.isBefore(asOfDate)) {
-					float tempVacationHours;
-					LocalDate endOfYear = currentDate.plusDays(1).withMonthOfYear(DateTimeConstants.DECEMBER)
-							.withDayOfMonth(31);
-					LocalDate newEndOfYear = endOfYear.withDayOfWeek(startDate.getDayOfWeek());
-					if (endOfYear.isAfter(newEndOfYear))
-						endOfYear = newEndOfYear.plusWeeks(1);
-					else
-						endOfYear = newEndOfYear;
-					if (Weeks.weeksBetween(startDate, endOfYear).getWeeks() % 2 != 0)
-						endOfYear = endOfYear.plusWeeks(1);
-					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
-					if (endOfYear.isBefore(asOfDate)) {
-						Weeks weeks = Weeks.weeksBetween(currentDate, endOfYear);
-						interval = weeks.getWeeks();
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
-						historyIndex = currentUsed.pos;
-						tempVacationHours = (interval * (hoursPerYear / WEEKS_IN_YEAR)) - currentUsed.sum;
-						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
-							vacationHours = leaveCap;
-						} else {
-							vacationHours += tempVacationHours;
-						}
-					} else {
-						Weeks weeks = Weeks.weeksBetween(currentDate, asOfDate);
-						interval = weeks.getWeeks() / 2;
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
-						historyIndex = currentUsed.pos;
-						vacationHours += (interval * (hoursPerYear / (WEEKS_IN_YEAR / 2))) - currentUsed.sum;
-					}
-					currentDate = endOfYear;
-				}
-			} else if (leaveInterval.equals("Monthly")) {
-				LocalDate currentDate = startDate;
-				while (currentDate.isBefore(asOfDate)) {
-					float tempVacationHours;
-					LocalDate endOfYear = currentDate.plusDays(1).withMonthOfYear(DateTimeConstants.DECEMBER)
-							.withDayOfMonth(31);
-					LocalDate newEndOfYear = endOfYear.withDayOfMonth(startDate.getDayOfMonth());
-					if (endOfYear.isAfter(newEndOfYear))
-						endOfYear = newEndOfYear.plusMonths(1);
-					else
-						endOfYear = newEndOfYear;
-					//If there's an end of year before the asOfDate, calculate leave up until then and check leave cap policy
-					if (endOfYear.isBefore(asOfDate)) {
-						Months months = Months.monthsBetween(currentDate, endOfYear);
-						interval = months.getMonths();
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, endOfYear);
-						historyIndex = currentUsed.pos;
-						tempVacationHours = (interval * (hoursPerYear / MONTHS_IN_YEAR)) - currentUsed.sum;
-						if (leaveCapType == LeaveCapType.CARRYOVER && tempVacationHours + vacationHours > leaveCap) {
-							vacationHours = leaveCap;
-						} else {
-							vacationHours += tempVacationHours;
-						}
-					} else {
-						Months months = Months.monthsBetween(currentDate, asOfDate);
-						interval = months.getMonths();
-						SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
-						historyIndex = currentUsed.pos;
-						vacationHours += (interval * (hoursPerYear / MONTHS_IN_YEAR)) - currentUsed.sum;
-					}
-					currentDate = endOfYear;
-				}
+			LocalDate currentDate = addInterval(startDate);
+			LocalDate previousDate = startDate;
+			float hoursPerPeriod = getIntervalHours();
+			//Go period by period and add accrued leave
+			while (currentDate.compareTo(asOfDate) <= 0) {
+				if (previousDate.getYear() < currentDate.getYear() && leaveCapType == LeaveCapType.CARRYOVER && vacationHours > leaveCap) {
+					vacationHours = leaveCap;
+				} 
+				vacationHours += hoursPerPeriod;
+				SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, currentDate);
+				historyIndex = currentUsed.pos;
+				vacationHours -= currentUsed.sum;
+				previousDate = currentDate;
+				currentDate = addInterval(currentDate);
 			}
+			//Check to see if a year was passed after period but before as of date
+			if (previousDate.getYear() < asOfDate.getYear() && leaveCapType == LeaveCapType.CARRYOVER && vacationHours > leaveCap) {
+				vacationHours = leaveCap;
+			} 
 		} else {
 			vacationHours += hoursPerYear;
 		}
@@ -190,6 +83,36 @@ public class VacationTracker {
 			return leaveCap;
 		else
 			return vacationHours;
+	}
+	
+	private LocalDate addInterval(LocalDate date) {
+		if (leaveInterval.equals("Yearly")) {
+			return date.plusYears(1);
+		} else if (leaveInterval.equals("Monthly")) {
+			return date.plusMonths(1);
+		} else if (leaveInterval.equals("Weekly")) {
+			return date.plusWeeks(1);
+		} else if (leaveInterval.equals("Bi-Weekly")) {
+			return date.plusWeeks(2);
+		} else if (leaveInterval.equals("Daily")) {
+			return date.plusDays(1);
+		}
+		return date;
+	}
+	
+	private float getIntervalHours() {
+		if (leaveInterval.equals("Yearly")) {
+			return hoursPerYear;
+		} else if (leaveInterval.equals("Monthly")) {
+			return hoursPerYear / MONTHS_IN_YEAR;
+		} else if (leaveInterval.equals("Weekly")) {
+			return hoursPerYear / WEEKS_IN_YEAR;
+		} else if (leaveInterval.equals("Bi-Weekly")) {
+			return hoursPerYear / (WEEKS_IN_YEAR / 2);
+		} else if (leaveInterval.equals("Daily")) {
+			return hoursPerYear / DAYS_IN_YEAR;
+		}
+		return 0;
 	}
 
 	/*
