@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="VacationTheme" parent="@style/Theme.Sherlock.Light">
+    <style name="VacationTheme" parent="@style/Theme.Sherlock.Light.ForceOverflow">
 
 	</style>
 	<style name="VacationDialog" parent="@android:style/Theme.Dialog">

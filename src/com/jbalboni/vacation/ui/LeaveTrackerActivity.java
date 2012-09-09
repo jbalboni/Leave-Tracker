@@ -200,6 +200,7 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add(getString(R.string.menu_settings)).setIcon(R.drawable.ic_menu_settings)
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		menu.add(getString(R.string.menu_edit_cat)).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
 		return true;
 	}
 
@@ -213,6 +214,12 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 		} else if (title.equals(getString(R.string.menu_history))) {
 			Intent leaveCategory = new Intent(this, LeaveCategoryActivity.class);
 			startActivity(leaveCategory);
+		} else if (title.equals(getString(R.string.menu_edit_cat))) {
+			Intent intent = new Intent();
+			intent.setClass(this, LeaveCategoryEditActivity.class);
+			int catID = mPager.getCurrentItem() + 1;
+			intent.putExtra(getString(R.string.intent_catid), catID);
+			startActivity(intent);
 		}
 		return true;
 	}

@@ -38,16 +38,19 @@
         </activity>
         <activity
             android:name=".ui.LeaveCategoryEditActivity" 
-            android:theme="@style/VacationTheme">
+            android:theme="@style/VacationTheme"
+            android:windowSoftInputMode="stateUnchanged">
         </activity>
         <provider
     		android:authorities="com.jbalboni.vacation.data.LeaveHistoryProvider"
     		android:multiprocess="true"
-    		android:name="com.jbalboni.vacation.data.LeaveHistoryProvider"></provider>
+    		android:name="com.jbalboni.vacation.data.LeaveHistoryProvider"
+    		android:exported="false"></provider>
     	<provider
     		android:authorities="com.jbalboni.vacation.data.LeaveCategoryProvider"
     		android:multiprocess="true"
-    		android:name="com.jbalboni.vacation.data.LeaveCategoryProvider"></provider>
+    		android:name="com.jbalboni.vacation.data.LeaveCategoryProvider"
+    		android:exported="false"></provider>
     </application>
 
 </manifest>
