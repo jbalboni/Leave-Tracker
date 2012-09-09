@@ -2,13 +2,7 @@ package com.jbalboni.vacation;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.joda.time.DateTimeConstants;
-import org.joda.time.Days;
 import org.joda.time.LocalDate;
-import org.joda.time.Months;
-import org.joda.time.Weeks;
-import org.joda.time.Years;
 
 /*
  * Main logic class. Does the leave calculation based on used hours, accrued leave, and limit

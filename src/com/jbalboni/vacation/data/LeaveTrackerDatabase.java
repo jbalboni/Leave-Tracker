@@ -13,8 +13,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 
 public class LeaveTrackerDatabase extends SQLiteOpenHelper {
-	private static final int DATABASE_VERSION = 1;
-	private static final String LEAVE_HISTORY_CREATE = "CREATE TABLE leave_history ( _id INTEGER PRIMARY KEY AUTOINCREMENT, notes TEXT, number REAL, date DATE, leave_category_id INTEGER NOT NULL, FOREIGN KEY(leave_category_id) REFERENCES leave_categories(_id))";
+	private static final int DATABASE_VERSION = 2;
+	private static final String LEAVE_HISTORY_CREATE = "CREATE TABLE leave_history ( _id INTEGER PRIMARY KEY AUTOINCREMENT, notes TEXT, number REAL, date DATE, leave_category_id INTEGER NOT NULL, FOREIGN KEY(leave_category_id) REFERENCES leave_categories(_id), add_or_use INTEGER)";
 	private static final String LEAVE_CATEGORY_CREATE = "CREATE TABLE leave_categories ( _id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, display_pos INTEGER, hours_per_year REAL NOT NULL, initial_hours REAL NOT NULL, accrual INTEGER NOT NULL, cap_type INTEGER NOT NULL, cap_val REAL)";
 	private SharedPreferences prefs;
 	private Context context;
@@ -112,12 +112,10 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		if (newVersion > oldVersion) {
-			db.execSQL("DROP TABLE IF EXISTS " + LEAVE_HISTORY_TABLE);
-			db.execSQL("DROP TABLE IF EXISTS " + LEAVE_CATEGORY_TABLE);
-			onCreate(db);
+		if (oldVersion == 1) {
+			db.execSQL("alter table leave_history add column add_or_use INTEGER");
+			db.execSQL("update leave_history set add_or_use = 0");
 		}
-
 	}
 
 	private float getFloatPref(String pref, float defValue) {
@@ -154,6 +152,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		public static final String DATE = "date";
 		public static final String NOTES = "notes";
 		public static final String CATEGORY = "leave_category_id";
+		public static final String ADD_OR_USE = "add_or_use";
 	};
 
 	public static class LEAVE_CATEGORY {
