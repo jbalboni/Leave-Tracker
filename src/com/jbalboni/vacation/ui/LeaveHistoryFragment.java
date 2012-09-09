@@ -160,6 +160,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 				new String[] { Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)) }, null, null, null);
 		cursor.moveToFirst();
 		getSherlockActivity().getSupportActionBar().setTitle(cursor.getString(0));
+		cursor.close();
 		leaveDB.close();
 	}
 
