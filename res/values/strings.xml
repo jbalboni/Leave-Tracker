@@ -23,6 +23,7 @@
 	<string name="leave_pref_start">Start Date</string>
 	<string name="leave_pref_start_sum">The date when you want your leave to begin accruing</string>
 	<string name="leave_pref_interval">LEAVE INTERVAL</string>
+	<string name="leave_interval">Leave Interval</string>
 	<string name="leave_pref_interval_sum">How often your leave accrues</string>
 	<string name="leave_pref_cap_type">LEAVE ACCRUAL LIMIT TYPE</string>
 	<string name="leave_pref_cap_type_summary">Set the type of leave hours limiting you have</string>

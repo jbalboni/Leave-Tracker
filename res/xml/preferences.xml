@@ -11,7 +11,7 @@
 
 	<ListPreference
 			android:key="leaveInterval"
-			android:title="@string/leave_pref_interval"
+			android:title="@string/leave_interval"
 			android:summary="@string/leave_pref_interval_sum"
 			android:defaultValue="Daily"
 			android:entries="@array/leave_intervals"

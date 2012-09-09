@@ -105,6 +105,16 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 						dateView.setText(fmtView.print(date));
 					}
 					return true;
+				} else if (cursor.getColumnName(index).equals(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER)) {
+					TextView hoursView = (TextView) view;
+					int addOrUse = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE));
+					float hours = cursor.getFloat(index);
+					if (addOrUse == 1) {
+						hoursView.setText(String.format("%.1f hours added", hours));
+					} else {
+						hoursView.setText(String.format("%.1f hours used", hours));
+					}
+					return true;
 				}
 				return false;
 			}
@@ -119,8 +129,9 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		// Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "cast(number as text)||\" hours\" as number",
-				"date", "notes" };
+		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER,
+				LeaveTrackerDatabase.LEAVE_HISTORY.DATE, LeaveTrackerDatabase.LEAVE_HISTORY.NOTES,
+				LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE };
 		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(
 				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null, null,
@@ -147,7 +158,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 		setTitle();
 		super.onResume();
 	}
-	
+
 	private void setTitle() {
 		SQLiteQueryBuilder titleQuery;
 		LeaveTrackerDatabase leaveDB;
@@ -156,8 +167,12 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 		leaveDB = new LeaveTrackerDatabase(getActivity());
 		titleQuery = new SQLiteQueryBuilder();
 		titleQuery.setTables(LeaveTrackerDatabase.LEAVE_CATEGORY_TABLE);
-		Cursor cursor = titleQuery.query(leaveDB.getReadableDatabase(), projection, selTitle,
-				new String[] { Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)) }, null, null, null);
+		Cursor cursor = titleQuery.query(
+				leaveDB.getReadableDatabase(),
+				projection,
+				selTitle,
+				new String[] { Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid),
+						2)) }, null, null, null);
 		cursor.moveToFirst();
 		getSherlockActivity().getSupportActionBar().setTitle(cursor.getString(0));
 		cursor.close();
