@@ -35,8 +35,8 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	private SimpleCursorAdapter adapter;
 
 	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
-	private static DateTimeFormatter fmtNoYear = DateTimeFormat.forPattern("M/d");
-	private static DateTimeFormatter fmtView = DateTimeFormat.forPattern("M/d/yyyy");
+	private static DateTimeFormatter fmtNoYear = DateTimeFormat.forPattern("MMM dd");
+	private static DateTimeFormatter fmtView = DateTimeFormat.forPattern("MMM dd, yyyy");
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 
 		adapter = new SimpleCursorAdapter(getActivity().getApplicationContext(), R.layout.leave_history_row, null,
 				uiBindFrom, uiBindTo, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+		//formatting for list view
 		SimpleCursorAdapter.ViewBinder binder = new SimpleCursorAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Cursor cursor, int index) {

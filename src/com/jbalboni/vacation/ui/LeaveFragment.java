@@ -42,7 +42,7 @@ public class LeaveFragment extends SherlockFragment {
 	static final int DATE_DIALOG_ID = 0;
 	static final int HOURS_DIALOG_ID = 1;
 	static final String HOURS_IN_DAY = "8";
-	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
+	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd, yyyy");
 
 	private SharedPreferences prefs;
 
