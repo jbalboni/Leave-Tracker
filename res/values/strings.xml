@@ -33,7 +33,8 @@
 	<string name="leave_pref_cap_val_summary_max">Set max number of leave hours you can have</string>
 	<string name="database_name">leavetracker.db</string>
 	<string name="ItemLabelDate">DATE</string>
-	<string name="ItemLabelHours">HOURS</string>
+	<string name="ItemLabelHours">HOURS USED</string>
+	<string name="ItemLabelHoursAdd">HOURS ADDED</string>
 	<string name="ItemLabelNotes">NOTES</string>
 	<string name="ItemLabelInterval">LEAVE INTERVAL</string>
 	<string name="ItemLabelStartDate">START DATE</string>
@@ -44,7 +45,7 @@
 	<string name="menu_history">Leave History</string>
 	<string name="menu_edit">Edit</string>
 	<string name="menu_delete">Delete</string>
-	<string name="menu_add">Add</string>
+	<string name="menu_add">Add or Use</string>
 	<string name="menu_save">Save</string>
 	<string name="menu_edit_cat">Edit Category</string>
 	<string name="menu_add_cat">Add Category</string>

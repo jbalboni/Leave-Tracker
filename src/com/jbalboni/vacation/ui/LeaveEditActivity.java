@@ -1,19 +1,31 @@
 package com.jbalboni.vacation.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbalboni.vacation.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
-public class LeaveEditActivity extends SherlockFragmentActivity {
+public class LeaveEditActivity extends SherlockFragmentActivity implements ActionBar.TabListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.leave_edit);
+		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ActionBar.Tab useTab = getSupportActionBar().newTab();
+        useTab.setText("Use Hours");
+        useTab.setTabListener(this);
+        getSupportActionBar().addTab(useTab);
+        ActionBar.Tab addTab = getSupportActionBar().newTab();
+        addTab.setText("Add Hours");
+        addTab.setTabListener(this);
+        getSupportActionBar().addTab(addTab);
 	}
 
 	@Override
@@ -41,5 +53,24 @@ public class LeaveEditActivity extends SherlockFragmentActivity {
 			fragment.deleteLeaveItem();
 		}
 		return true;
+	}
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		FragmentManager fm = getSupportFragmentManager();
+		LeaveEditFragment fragment = (LeaveEditFragment) fm.findFragmentById(R.id.leaveEditFragment);
+		fragment.changeAddOrUse(tab.getPosition());
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1248,9 +1248,10 @@ containing a value of this type.
     public static final class string {
         public static final int ItemLabelDate=0x7f0b0029;
         public static final int ItemLabelHours=0x7f0b002a;
-        public static final int ItemLabelInterval=0x7f0b002c;
-        public static final int ItemLabelNotes=0x7f0b002b;
-        public static final int ItemLabelStartDate=0x7f0b002d;
+        public static final int ItemLabelHoursAdd=0x7f0b002b;
+        public static final int ItemLabelInterval=0x7f0b002d;
+        public static final int ItemLabelNotes=0x7f0b002c;
+        public static final int ItemLabelStartDate=0x7f0b002e;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f0b0000;
@@ -1281,21 +1282,21 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f0b0009;
-        public static final int added_msg=0x7f0b003f;
+        public static final int added_msg=0x7f0b0040;
         public static final int app_name=0x7f0b000d;
-        public static final int cat_title=0x7f0b003d;
+        public static final int cat_title=0x7f0b003e;
         public static final int database_name=0x7f0b0028;
         public static final int default_as_of_date=0x7f0b000c;
         public static final int default_center_name=0x7f0b000f;
         public static final int default_left_name=0x7f0b000e;
         public static final int default_right_name=0x7f0b0010;
-        public static final int deleted_msg=0x7f0b0040;
-        public static final int error_msg=0x7f0b0041;
+        public static final int deleted_msg=0x7f0b0041;
+        public static final int error_msg=0x7f0b0042;
         public static final int hours_avail=0x7f0b000a;
         public static final int hours_avail_as_of=0x7f0b000b;
-        public static final int intent_catid=0x7f0b003a;
-        public static final int intent_catname=0x7f0b003b;
-        public static final int intent_itemid=0x7f0b003c;
+        public static final int intent_catid=0x7f0b003b;
+        public static final int intent_catname=0x7f0b003c;
+        public static final int intent_itemid=0x7f0b003d;
         public static final int leave_category_position=0x7f0b0014;
         public static final int leave_interval=0x7f0b0020;
         public static final int leave_pref_accrual=0x7f0b0016;
@@ -1316,24 +1317,24 @@ containing a value of this type.
         public static final int leave_pref_start_sum=0x7f0b001e;
         public static final int leave_pref_title=0x7f0b0015;
         public static final int leave_pref_used=0x7f0b0019;
-        public static final int load_msg=0x7f0b0030;
-        public static final int menu_add=0x7f0b0035;
-        public static final int menu_add_cat=0x7f0b0038;
-        public static final int menu_delete=0x7f0b0034;
-        public static final int menu_delete_cat=0x7f0b0039;
-        public static final int menu_edit=0x7f0b0033;
-        public static final int menu_edit_cat=0x7f0b0037;
-        public static final int menu_history=0x7f0b0032;
-        public static final int menu_save=0x7f0b0036;
-        public static final int menu_settings=0x7f0b0031;
-        public static final int new_user_pref=0x7f0b0043;
-        public static final int new_user_title=0x7f0b0044;
-        public static final int no_records=0x7f0b002f;
-        public static final int notes=0x7f0b0042;
+        public static final int load_msg=0x7f0b0031;
+        public static final int menu_add=0x7f0b0036;
+        public static final int menu_add_cat=0x7f0b0039;
+        public static final int menu_delete=0x7f0b0035;
+        public static final int menu_delete_cat=0x7f0b003a;
+        public static final int menu_edit=0x7f0b0034;
+        public static final int menu_edit_cat=0x7f0b0038;
+        public static final int menu_history=0x7f0b0033;
+        public static final int menu_save=0x7f0b0037;
+        public static final int menu_settings=0x7f0b0032;
+        public static final int new_user_pref=0x7f0b0044;
+        public static final int new_user_title=0x7f0b0045;
+        public static final int no_records=0x7f0b0030;
+        public static final int notes=0x7f0b0043;
         public static final int quick_use_date=0x7f0b0013;
         public static final int quick_use_hours=0x7f0b0012;
-        public static final int saved_msg=0x7f0b003e;
-        public static final int separator=0x7f0b002e;
+        public static final int saved_msg=0x7f0b003f;
+        public static final int separator=0x7f0b002f;
         public static final int use_hours_alert_msg=0x7f0b0011;
     }
     public static final class style {

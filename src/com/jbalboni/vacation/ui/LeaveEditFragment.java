@@ -4,6 +4,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LeaveEditFragment extends SherlockFragment implements LoaderManager.LoaderCallbacks<Cursor>,
@@ -30,6 +32,7 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	private static final int LEAVE_HISTORY_LOADER = 0x01;
 	private static final DateTimeFormatter fmt = ISODateTimeFormat.localDateParser();
 	private int itemID;
+	private int addOrUse;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 
 		if (itemID == 0) {
 			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_add);
+			changeAddOrUse(0);
 		} else {
 			getSherlockActivity().getSupportActionBar().setTitle(R.string.menu_edit);
 			getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
@@ -72,7 +76,9 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		// Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, "number", "notes", "date" };
+		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER,
+				LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
+				LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE };
 		Builder itemUri = LeaveHistoryProvider.CONTENT_URI.buildUpon().appendPath(
 				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid), 0)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null, null, null);
@@ -83,18 +89,28 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		cursor.moveToFirst();
 
-		int notesCol = cursor.getColumnIndex("notes");
+		int notesCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES);
 		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
 		editNotes.setText(cursor.getString(notesCol));
 
-		int dateCol = cursor.getColumnIndex("date");
+		int dateCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.DATE);
 		LocalDate date = new LocalDate(fmt.parseLocalDate(cursor.getString(dateCol)));
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
 		editDate.init(date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth(), this);
 
-		int hoursCol = cursor.getColumnIndex("number");
+		int hoursCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER);
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		editHours.setText(cursor.getString(hoursCol));
+		
+		ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+		int addOrUseCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE);
+		if (cursor.getInt(addOrUseCol) == 1) {
+			actionBar.getTabAt(1).select();
+			changeAddOrUse(1);
+		} else {
+			actionBar.getTabAt(0).select();
+			changeAddOrUse(0);
+		}
 	}
 
 	public void saveLeaveItem() {
@@ -105,6 +121,8 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, editHours.getText().toString());
+		
+		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE, addOrUse);
 
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
 		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
@@ -153,6 +171,16 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void changeAddOrUse(int addOrUse) {
+		this.addOrUse = addOrUse;
+		TextView hoursLabel = (TextView) getView().findViewById(R.id.hoursLabel);
+		if (addOrUse == 1) {
+			hoursLabel.setText(R.string.ItemLabelHoursAdd);
+		} else {
+			hoursLabel.setText(R.string.ItemLabelHours);
+		}
 	}
 
 }
