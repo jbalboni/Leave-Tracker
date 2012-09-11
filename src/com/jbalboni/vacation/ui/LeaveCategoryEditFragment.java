@@ -4,6 +4,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.jbalboni.vacation.LeaveCapType;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
+import com.jbalboni.vacation.data.LeaveCategoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.content.ContentValues;
@@ -78,10 +79,10 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		// Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL,
-				LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR, LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE,
-				LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE, LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL,
-				LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS };
+		String[] projection = { LeaveCategoryTable.ID.toString(), LeaveCategoryTable.ACCRUAL.toString(),
+				LeaveCategoryTable.HOURS_PER_YEAR.toString(), LeaveCategoryTable.TITLE.toString(),
+				LeaveCategoryTable.CAP_TYPE.toString(), LeaveCategoryTable.CAP_VAL.toString(),
+				LeaveCategoryTable.INITIAL_HOURS.toString() };
 		Builder itemUri = LeaveCategoryProvider.CONTENT_URI.buildUpon().appendPath(
 				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null, null, null);
@@ -95,28 +96,28 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		int colNum = 0;
 		EditText editView;
 
-		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE);
+		colNum = cursor.getColumnIndex(LeaveCategoryTable.TITLE.toString());
 		editView = (EditText) getView().findViewById(R.id.categoryTitle);
 		editView.setText(cursor.getString(colNum));
 
-		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE);
+		colNum = cursor.getColumnIndex(LeaveCategoryTable.CAP_TYPE.toString());
 		Spinner spinner = (Spinner) getView().findViewById(R.id.leaveCapType);
 		spinner.setSelection(cursor.getInt(colNum));
 		setLeaveCapVal(cursor.getInt(colNum));
 		
-		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL);
+		colNum = cursor.getColumnIndex(LeaveCategoryTable.CAP_VAL.toString());
 		editView = (EditText) getView().findViewById(R.id.leaveCapVal);
 		editView.setText(Float.toString(cursor.getFloat(colNum)));	
 
-		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR);
+		colNum = cursor.getColumnIndex(LeaveCategoryTable.HOURS_PER_YEAR.toString());
 		editView = (EditText) getView().findViewById(R.id.hoursPerYear);
 		editView.setText(Float.toString(cursor.getFloat(colNum)));
 
-		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS);
+		colNum = cursor.getColumnIndex(LeaveCategoryTable.INITIAL_HOURS.toString());
 		editView = (EditText) getView().findViewById(R.id.initialHours);
 		editView.setText(Float.toString(cursor.getFloat(colNum)));
 
-		colNum = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL);
+		colNum = cursor.getColumnIndex(LeaveCategoryTable.ACCRUAL.toString());
 		CheckBox editBox = (CheckBox) getView().findViewById(R.id.accrual);
 		editBox.setChecked(cursor.getInt(colNum) == 1);
 		toggleAccrual(editBox.isChecked());
@@ -128,22 +129,22 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		EditText editView;
 		
 		editView = (EditText) getView().findViewById(R.id.categoryTitle);
-		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE, editView.getText().toString());
+		categoryValues.put(LeaveCategoryTable.TITLE.toString(), editView.getText().toString());
 		
 		editView = (EditText) getView().findViewById(R.id.hoursPerYear);
-		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR, LeaveTrackerDatabase.getFloat(editView.getText().toString()));
+		categoryValues.put(LeaveCategoryTable.HOURS_PER_YEAR.toString(), LeaveTrackerDatabase.getFloat(editView.getText().toString()));
 		
 		editView = (EditText) getView().findViewById(R.id.initialHours);
-		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS, LeaveTrackerDatabase.getFloat(editView.getText().toString()));
+		categoryValues.put(LeaveCategoryTable.INITIAL_HOURS.toString(), LeaveTrackerDatabase.getFloat(editView.getText().toString()));
 		
 		editView = (EditText) getView().findViewById(R.id.leaveCapVal);
-		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL, LeaveTrackerDatabase.getFloat(editView.getText().toString()));
+		categoryValues.put(LeaveCategoryTable.CAP_VAL.toString(), LeaveTrackerDatabase.getFloat(editView.getText().toString()));
 		
 		CheckBox accrualOn = (CheckBox) getView().findViewById(R.id.accrual);
-		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL, accrualOn.isChecked() ? 1 : 0);
+		categoryValues.put(LeaveCategoryTable.ACCRUAL.toString(), accrualOn.isChecked() ? 1 : 0);
 		
 		Spinner leaveCapType = (Spinner) getView().findViewById(R.id.leaveCapType);
-		categoryValues.put(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE, leaveCapType.getSelectedItemPosition());
+		categoryValues.put(LeaveCategoryTable.CAP_TYPE.toString(), leaveCapType.getSelectedItemPosition());
 
 		if (catID == 0) {
 			getActivity().getContentResolver().insert(LeaveCategoryProvider.CONTENT_URI, categoryValues);
@@ -151,7 +152,7 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		} else {
 			String[] idArgs = { Integer.toString(catID) };
 			int updatedRows = getActivity().getContentResolver().update(LeaveCategoryProvider.CONTENT_URI,
-					categoryValues, LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?", idArgs);
+					categoryValues, LeaveCategoryTable.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
 			} else {
@@ -166,7 +167,7 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		if (catID != 0) {
 			String[] idArgs = { Integer.toString(catID) };
 			int updatedRows = getActivity().getContentResolver().delete(LeaveCategoryProvider.CONTENT_URI,
-					LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?", idArgs);
+					LeaveCategoryTable.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.deleted_msg, Toast.LENGTH_LONG).show();
 			} else {

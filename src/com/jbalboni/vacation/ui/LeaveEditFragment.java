@@ -8,6 +8,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
+import com.jbalboni.vacation.data.LeaveHistoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.annotation.SuppressLint;
@@ -76,9 +77,9 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		// Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER,
-				LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
-				LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE };
+		String[] projection = { LeaveHistoryTable.ID.toString(), LeaveHistoryTable.NUMBER.toString(),
+				LeaveHistoryTable.NOTES.toString(), LeaveHistoryTable.DATE.toString(),
+				LeaveHistoryTable.ADD_OR_USE.toString() };
 		Builder itemUri = LeaveHistoryProvider.CONTENT_URI.buildUpon().appendPath(
 				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_itemid), 0)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), itemUri.build(), projection, null, null, null);
@@ -89,21 +90,21 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		cursor.moveToFirst();
 
-		int notesCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES);
+		int notesCol = cursor.getColumnIndex(LeaveHistoryTable.NOTES.toString());
 		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
 		editNotes.setText(cursor.getString(notesCol));
 
-		int dateCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.DATE);
+		int dateCol = cursor.getColumnIndex(LeaveHistoryTable.DATE.toString());
 		LocalDate date = new LocalDate(fmt.parseLocalDate(cursor.getString(dateCol)));
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
 		editDate.init(date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth(), this);
 
-		int hoursCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER);
+		int hoursCol = cursor.getColumnIndex(LeaveHistoryTable.NUMBER.toString());
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
 		editHours.setText(cursor.getString(hoursCol));
 		
 		ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-		int addOrUseCol = cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE);
+		int addOrUseCol = cursor.getColumnIndex(LeaveHistoryTable.ADD_OR_USE.toString());
 		if (cursor.getInt(addOrUseCol) == 1) {
 			actionBar.getTabAt(1).select();
 			changeAddOrUse(1);
@@ -117,18 +118,18 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		ContentValues leaveItemValues = new ContentValues();
 
 		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, editNotes.getText().toString());
+		leaveItemValues.put(LeaveHistoryTable.NOTES.toString(), editNotes.getText().toString());
 
 		EditText editHours = (EditText) getView().findViewById(R.id.hours);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, editHours.getText().toString());
+		leaveItemValues.put(LeaveHistoryTable.NUMBER.toString(), editHours.getText().toString());
 		
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE, addOrUse);
+		leaveItemValues.put(LeaveHistoryTable.ADD_OR_USE.toString(), addOrUse);
 
 		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
+		leaveItemValues.put(LeaveHistoryTable.DATE.toString(),
 				new LocalDate(editDate.getYear(), editDate.getMonth() + 1, editDate.getDayOfMonth()).toString());
 
-		leaveItemValues.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY,
+		leaveItemValues.put(LeaveHistoryTable.CATEGORY.toString(),
 				getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
 
 		if (itemID == 0) {
@@ -137,7 +138,7 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		} else {
 			String[] idArgs = { Integer.toString(itemID) };
 			int updatedRows = getActivity().getContentResolver().update(LeaveHistoryProvider.CONTENT_URI,
-					leaveItemValues, LeaveTrackerDatabase.LEAVE_HISTORY.ID + "=?", idArgs);
+					leaveItemValues, LeaveHistoryTable.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
 			} else {
@@ -152,7 +153,7 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 		if (itemID != 0) {
 			String[] idArgs = { Integer.toString(itemID) };
 			int updatedRows = getActivity().getContentResolver().delete(LeaveHistoryProvider.CONTENT_URI,
-					LeaveTrackerDatabase.LEAVE_HISTORY.ID + "=?", idArgs);
+					LeaveHistoryTable.ID + "=?", idArgs);
 			if (updatedRows > 0) {
 				Toast.makeText(getActivity(), R.string.deleted_msg, Toast.LENGTH_LONG).show();
 			} else {

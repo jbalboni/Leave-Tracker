@@ -6,7 +6,9 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.data.LeaveCategoryTable;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
+import com.jbalboni.vacation.data.LeaveHistoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 import android.content.Intent;
 import android.database.Cursor;
@@ -57,7 +59,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Cursor cursor = (Cursor) adapter.getItem(position);
-		int leaveItemID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ID));
+		int leaveItemID = cursor.getInt(cursor.getColumnIndex(LeaveHistoryTable.ID.toString()));
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), LeaveEditActivity.class);
 		intent.putExtra(getString(R.string.intent_catid),
@@ -68,8 +70,8 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		String[] uiBindFrom = { LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
-				LeaveTrackerDatabase.LEAVE_HISTORY.NOTES };
+		String[] uiBindFrom = { LeaveHistoryTable.NUMBER.toString(), LeaveHistoryTable.DATE.toString(),
+				LeaveHistoryTable.NOTES.toString() };
 		int[] uiBindTo = { R.id.hours, R.id.date, R.id.notes };
 
 		getLoaderManager().initLoader(LEAVE_HISTORY_LOADER, null, this);
@@ -80,7 +82,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 		SimpleCursorAdapter.ViewBinder binder = new SimpleCursorAdapter.ViewBinder() {
 			@Override
 			public boolean setViewValue(View view, Cursor cursor, int index) {
-				if (cursor.getColumnName(index).equals(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES)) {
+				if (cursor.getColumnName(index).equals(LeaveHistoryTable.NOTES.toString())) {
 					if (cursor.getString(index).length() == 0) {
 						view.setVisibility(View.GONE);
 					} else {
@@ -97,7 +99,7 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 						});
 					}
 					return true;
-				} else if (cursor.getColumnName(index).equals(LeaveTrackerDatabase.LEAVE_HISTORY.DATE)) {
+				} else if (cursor.getColumnName(index).equals(LeaveHistoryTable.DATE.toString())) {
 					TextView dateView = (TextView) view;
 					LocalDate date = fmt.parseLocalDate(cursor.getString(index));
 					if (date.getYear() == (new LocalDate()).getYear()) {
@@ -106,9 +108,9 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 						dateView.setText(fmtView.print(date));
 					}
 					return true;
-				} else if (cursor.getColumnName(index).equals(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER)) {
+				} else if (cursor.getColumnName(index).equals(LeaveHistoryTable.NUMBER.toString())) {
 					TextView hoursView = (TextView) view;
-					int addOrUse = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE));
+					int addOrUse = cursor.getInt(cursor.getColumnIndex(LeaveHistoryTable.ADD_OR_USE.toString()));
 					float hours = cursor.getFloat(index);
 					if (addOrUse == 1) {
 						hoursView.setText(String.format("%.1f hours added", hours));
@@ -130,13 +132,13 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		// Seems wrong to do output formatting here
-		String[] projection = { LeaveTrackerDatabase.LEAVE_HISTORY.ID, LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER,
-				LeaveTrackerDatabase.LEAVE_HISTORY.DATE, LeaveTrackerDatabase.LEAVE_HISTORY.NOTES,
-				LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE };
+		String[] projection = { LeaveHistoryTable.ID.toString(), LeaveHistoryTable.NUMBER.toString(),
+				LeaveHistoryTable.DATE.toString(), LeaveHistoryTable.NOTES.toString(),
+				LeaveHistoryTable.ADD_OR_USE.toString() };
 		Builder listUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(
 				Integer.toString(getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 2)));
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), listUri.build(), projection, null, null,
-				LeaveTrackerDatabase.LEAVE_HISTORY.DATE + " DESC");
+				LeaveHistoryTable.DATE + " DESC");
 		return cursorLoader;
 	}
 
@@ -163,11 +165,11 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 	private void setTitle() {
 		SQLiteQueryBuilder titleQuery;
 		LeaveTrackerDatabase leaveDB;
-		String selTitle = LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?";
-		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE };
+		String selTitle = LeaveCategoryTable.ID.toString() + "=?";
+		String[] projection = { LeaveCategoryTable.TITLE.toString() };
 		leaveDB = new LeaveTrackerDatabase(getActivity());
 		titleQuery = new SQLiteQueryBuilder();
-		titleQuery.setTables(LeaveTrackerDatabase.LEAVE_CATEGORY_TABLE);
+		titleQuery.setTables(LeaveCategoryTable.getName());
 		Cursor cursor = titleQuery.query(
 				leaveDB.getReadableDatabase(),
 				projection,

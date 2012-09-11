@@ -3,6 +3,7 @@ package com.jbalboni.vacation.ui;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
+import com.jbalboni.vacation.data.LeaveCategoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.content.Intent;
@@ -53,7 +54,7 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Cursor cursor = (Cursor) adapter.getItem(position);
-		int categoryID = cursor.getInt(cursor.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ID));
+		int categoryID = cursor.getInt(cursor.getColumnIndex(LeaveCategoryTable.ID.toString()));
 		Intent intent = new Intent();
 		intent.setClass(getActivity(), LeaveHistoryActivity.class);
 		intent.putExtra(getString(R.string.intent_catid), categoryID);
@@ -68,7 +69,7 @@ public class LeaveCategoryFragment extends SherlockListFragment implements Loade
 
 	@Override
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, "title" };
+		String[] projection = { LeaveCategoryTable.ID.toString(), "title" };
 		CursorLoader cursorLoader = new CursorLoader(getActivity(), LeaveCategoryProvider.CONTENT_URI, projection,
 				null, null, null);
 		return cursorLoader;

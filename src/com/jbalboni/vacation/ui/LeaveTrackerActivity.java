@@ -26,6 +26,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.data.LeaveCategoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.support.v4.app.DialogFragment;
@@ -140,16 +141,16 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 	public static class LeaveAdapter extends FragmentPagerAdapter {
 		private SQLiteQueryBuilder titleQuery;
 		private LeaveTrackerDatabase leaveDB;
-		private String selection = LeaveTrackerDatabase.LEAVE_CATEGORY.ID + " in (1,2,3)";
-		private String selTitle = LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "=?";
-		private String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE };
-		private String sortOrder = LeaveTrackerDatabase.LEAVE_CATEGORY.ID;
+		private String selection = LeaveCategoryTable.ID + " in (1,2,3)";
+		private String selTitle = LeaveCategoryTable.ID + "=?";
+		private String[] projection = { LeaveCategoryTable.TITLE.toString() };
+		private String sortOrder = LeaveCategoryTable.ID.toString();
 
 		public LeaveAdapter(FragmentManager fm, Context context) {
 			super(fm);
 			leaveDB = new LeaveTrackerDatabase(context);
 			titleQuery = new SQLiteQueryBuilder();
-			titleQuery.setTables(LeaveTrackerDatabase.LEAVE_CATEGORY_TABLE);
+			titleQuery.setTables(LeaveCategoryTable.getName());
 		}
 
 		// This gets called when notify changed is called from the new user

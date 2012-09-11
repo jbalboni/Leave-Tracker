@@ -62,7 +62,7 @@ public class LeaveCategoryProvider extends ContentProvider {
 	    int uriType = sURIMatcher.match(uri);
 	    switch (uriType) {
 	    case CATEGORY_ID:
-	        queryBuilder.appendWhere(LeaveTrackerDatabase.LEAVE_CATEGORY.ID + "="
+	        queryBuilder.appendWhere(LeaveCategoryTable.ID + "="
 	                + uri.getLastPathSegment());
 	        break;
 	    case CATEGORY_LIST:

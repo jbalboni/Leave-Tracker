@@ -10,6 +10,7 @@ import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.VacationTracker;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
+import com.jbalboni.vacation.data.LeaveHistoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.app.DatePickerDialog;
@@ -129,12 +130,12 @@ public class LeaveFragment extends SherlockFragment {
 			} else if (clickedButton.getId() == R.id.addHours) {
 				ContentResolver content = getActivity().getContentResolver();
 				ContentValues values = new ContentValues();
-				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase
+				values.put(LeaveHistoryTable.NUMBER.toString(), LeaveTrackerDatabase
 						.getFloat(((EditText) getView().findViewById(R.id.hours)).getText().toString()));
-				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.NOTES, ((EditText) getView().findViewById(R.id.notes))
+				values.put(LeaveHistoryTable.NOTES.toString(), ((EditText) getView().findViewById(R.id.notes))
 						.getText().toString());
-				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.DATE, (new LocalDate()).toString());
-				values.put(LeaveTrackerDatabase.LEAVE_HISTORY.CATEGORY, catID);
+				values.put(LeaveHistoryTable.DATE.toString(), (new LocalDate()).toString());
+				values.put(LeaveHistoryTable.CATEGORY.toString(), catID);
 				if (content.insert(LeaveHistoryProvider.CONTENT_URI, values) != null) {
 					Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 				}

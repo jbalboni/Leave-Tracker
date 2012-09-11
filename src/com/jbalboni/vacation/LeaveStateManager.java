@@ -8,8 +8,9 @@ import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
+import com.jbalboni.vacation.data.LeaveCategoryTable;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
-import com.jbalboni.vacation.data.LeaveTrackerDatabase;
+import com.jbalboni.vacation.data.LeaveHistoryTable;
 
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
@@ -29,28 +30,28 @@ public final class LeaveStateManager {
 
 		leaveInterval = fixLeaveInterval(leaveInterval);
 
-		String[] projection = { LeaveTrackerDatabase.LEAVE_CATEGORY.ID, LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL,
-				LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR, LeaveTrackerDatabase.LEAVE_CATEGORY.TITLE,
-				LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE, LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL,
-				LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS };
+		String[] projection = { LeaveCategoryTable.ID.toString(), LeaveCategoryTable.ACCRUAL.toString(),
+				LeaveCategoryTable.HOURS_PER_YEAR.toString(), LeaveCategoryTable.TITLE.toString(),
+				LeaveCategoryTable.CAP_TYPE.toString(), LeaveCategoryTable.CAP_VAL.toString(),
+				LeaveCategoryTable.INITIAL_HOURS.toString() };
 		Builder itemUri = LeaveCategoryProvider.CONTENT_URI.buildUpon().appendPath(Integer.toString(pos));
 		Cursor category = resolver.query(itemUri.build(), projection, null, null, null);
 		category.moveToFirst();
 
 		LocalDate startDate = startDateStr == null ? new LocalDate() : fmt.parseLocalDate(startDateStr);
 		float hoursPerYear = category.getFloat(category
-				.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.HOURS_PER_YEAR));
+				.getColumnIndex(LeaveCategoryTable.HOURS_PER_YEAR.toString()));
 		float initialHours = category.getFloat(category
-				.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS));
-		boolean accrualOn = category.getInt(category.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL)) == 1;
-		float leaveCap = category.getFloat(category.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL));
+				.getColumnIndex(LeaveCategoryTable.INITIAL_HOURS.toString()));
+		boolean accrualOn = category.getInt(category.getColumnIndex(LeaveCategoryTable.ACCRUAL.toString())) == 1;
+		float leaveCap = category.getFloat(category.getColumnIndex(LeaveCategoryTable.CAP_VAL.toString()));
 		LeaveCapType leaveCapType = LeaveCapType.getLeaveCapType(category.getInt(category
-				.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE)));
+				.getColumnIndex(LeaveCategoryTable.CAP_TYPE.toString())));
 
 		category.close();
 
-		String[] historyProjection = { LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
-				LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE };
+		String[] historyProjection = { LeaveHistoryTable.DATE.toString(),
+				LeaveHistoryTable.NUMBER.toString(), LeaveHistoryTable.ADD_OR_USE.toString() };
 		itemUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(pos));
 		Cursor history = resolver.query(itemUri.build(), historyProjection, null, null, null);
 
@@ -78,9 +79,9 @@ public final class LeaveStateManager {
 		List<LeaveItem> list = new LinkedList<LeaveItem>();
 		while (!history.isAfterLast()) {
 			LeaveItem item = new LeaveItem(new LocalDate(fmt.parseLocalDate(history.getString(history
-					.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.DATE)))), history.getFloat(history
-					.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER)), LeaveRecType.getLeaveRecType(history
-					.getInt(history.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE))));
+					.getColumnIndex(LeaveHistoryTable.DATE.toString())))), history.getFloat(history
+					.getColumnIndex(LeaveHistoryTable.NUMBER.toString())), LeaveRecType.getLeaveRecType(history
+					.getInt(history.getColumnIndex(LeaveHistoryTable.ADD_OR_USE.toString()))));
 			list.add(item);
 			history.moveToNext();
 		}
