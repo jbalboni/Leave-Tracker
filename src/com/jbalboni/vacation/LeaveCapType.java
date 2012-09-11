@@ -2,9 +2,13 @@ package com.jbalboni.vacation;
 
 public enum LeaveCapType {
 	NONE(0), MAX(1), CARRYOVER(2);
-	// private int capType;
+	private int capType;
 	private LeaveCapType(int capType) {
-		// this.capType = capType;
+		 this.capType = capType;
+	}
+	
+	public int getVal() {
+		return capType; 
 	}
 
 	public static LeaveCapType getLeaveCapType(int capType) {

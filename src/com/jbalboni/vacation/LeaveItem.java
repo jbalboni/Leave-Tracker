@@ -8,10 +8,12 @@ import org.joda.time.LocalDate;
 public class LeaveItem {
 	private LocalDate date;
 	private float hours;
-
-	public LeaveItem(LocalDate date, float hours) {
+	private LeaveRecType addOrUse;
+	
+	public LeaveItem(LocalDate date, float hours, LeaveRecType leaveRecType) {
 		this.date = date;
 		this.hours = hours;
+		this.addOrUse = leaveRecType;
 	}
 
 	public float getHours() {
@@ -21,4 +23,9 @@ public class LeaveItem {
 	public LocalDate getDate() {
 		return date;
 	}
+
+	public LeaveRecType getAddOrUse() {
+		return addOrUse;
+	}
+
 }

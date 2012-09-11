@@ -2,6 +2,7 @@ package com.jbalboni.vacation.data;
 
 import org.joda.time.LocalDate;
 
+import com.jbalboni.vacation.LeaveCapType;
 import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.R;
 
@@ -51,7 +52,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 				.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursPerYear", 80));
 		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.LEFT.getPrefix() + "initialHours", 0));
 		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.LEFT.getPrefix() + "accrualOn", true));
-		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
+		categories.put(LEAVE_CATEGORY.CAP_TYPE, LeaveCapType.NONE.getVal());
 		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
 		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
 
@@ -65,7 +66,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		categories
 				.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.CENTER.getPrefix() + "initialHours", 0));
 		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.CENTER.getPrefix() + "accrualOn", true));
-		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
+		categories.put(LEAVE_CATEGORY.CAP_TYPE, LeaveCapType.NONE.getVal());
 		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
 		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
 
@@ -78,7 +79,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 				.put(LEAVE_CATEGORY.HOURS_PER_YEAR, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursPerYear", 0));
 		categories.put(LEAVE_CATEGORY.INITIAL_HOURS, getFloatPref(LeaveCategory.RIGHT.getPrefix() + "initialHours", 0));
 		categories.put(LEAVE_CATEGORY.ACCRUAL, prefs.getBoolean(LeaveCategory.RIGHT.getPrefix() + "accrualOn", false));
-		categories.put(LEAVE_CATEGORY.CAP_TYPE, LEAVE_CAP_TYPE.NONE);
+		categories.put(LEAVE_CATEGORY.CAP_TYPE, LeaveCapType.NONE.getVal());
 		categories.put(LEAVE_CATEGORY.CAP_VAL, 0);
 		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
 
@@ -164,11 +165,5 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		public static final String CAP_VAL = "cap_val";
 		public static final String INITIAL_HOURS = "initial_hours";
 		public static final String DISPLAY = "display_pos";
-	};
-
-	public static class LEAVE_CAP_TYPE {
-		public static final int NONE = 0;
-		public static final int MAX = 1;
-		public static final int CARRY_OVER = 2;
 	};
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.LocalDate;
 
+import com.jbalboni.vacation.data.LeaveTrackerDatabase;
+
 /*
  * Main logic class. Does the leave calculation based on used hours, accrued leave, and limit
  */
@@ -126,7 +128,12 @@ public class VacationTracker {
 		float leaveSum = 0;
 		int i = start;
 		while (i < list.size() && list.get(i).getDate().compareTo(endDate) <= 0) {
-			leaveSum += list.get(i).getHours();
+			if (list.get(i).getAddOrUse() == LeaveRecType.ADD) {
+				leaveSum -= list.get(i).getHours();
+			} else {
+				leaveSum += list.get(i).getHours();
+			}
+			
 			i++;
 		}
 		return new SumAndPos(i, leaveSum);

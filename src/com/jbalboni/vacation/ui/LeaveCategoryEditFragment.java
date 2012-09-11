@@ -1,6 +1,7 @@
 package com.jbalboni.vacation.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.jbalboni.vacation.LeaveCapType;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
@@ -190,14 +191,15 @@ public class LeaveCategoryEditFragment extends SherlockFragment implements Loade
 		EditText editView = (EditText) getView().findViewById(R.id.leaveCapVal);
 		TextView view = (TextView) getView().findViewById(R.id.leaveCapValLabel);
 		//Need to hide the leave cap value field if there is no cap
-		if (position == LeaveTrackerDatabase.LEAVE_CAP_TYPE.NONE) {
+		LeaveCapType capType = LeaveCapType.getLeaveCapType(position);
+		if (capType == LeaveCapType.NONE) {
 			editView.setVisibility(View.GONE);
 			view.setVisibility(View.GONE);
-		} else if (position == LeaveTrackerDatabase.LEAVE_CAP_TYPE.MAX) {
+		} else if (capType == LeaveCapType.MAX) {
 			view.setText(R.string.leave_pref_cap_val_max);
 			editView.setVisibility(View.VISIBLE);
 			view.setVisibility(View.VISIBLE);
-		} else if (position == LeaveTrackerDatabase.LEAVE_CAP_TYPE.CARRY_OVER) {
+		} else if (capType == LeaveCapType.CARRYOVER) {
 			view.setText(R.string.leave_pref_cap_val_carry);
 			editView.setVisibility(View.VISIBLE);
 			view.setVisibility(View.VISIBLE);

@@ -44,17 +44,18 @@ public final class LeaveStateManager {
 				.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.INITIAL_HOURS));
 		boolean accrualOn = category.getInt(category.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.ACCRUAL)) == 1;
 		float leaveCap = category.getFloat(category.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_VAL));
-		LeaveCapType leaveCapType = LeaveCapType.getLeaveCapType(category.getInt(category.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE)));
+		LeaveCapType leaveCapType = LeaveCapType.getLeaveCapType(category.getInt(category
+				.getColumnIndex(LeaveTrackerDatabase.LEAVE_CATEGORY.CAP_TYPE)));
 
 		category.close();
 
 		String[] historyProjection = { LeaveTrackerDatabase.LEAVE_HISTORY.DATE,
-				LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER };
+				LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER, LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE };
 		itemUri = LeaveHistoryProvider.LIST_URI.buildUpon().appendPath(Integer.toString(pos));
 		Cursor history = resolver.query(itemUri.build(), historyProjection, null, null, null);
 
 		List<LeaveItem> historyList = convertToList(history);
-		
+
 		history.close();
 
 		return new VacationTracker(startDate, historyList, hoursPerYear, initialHours, leaveInterval, accrualOn,
@@ -78,7 +79,8 @@ public final class LeaveStateManager {
 		while (!history.isAfterLast()) {
 			LeaveItem item = new LeaveItem(new LocalDate(fmt.parseLocalDate(history.getString(history
 					.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.DATE)))), history.getFloat(history
-					.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER)));
+					.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.NUMBER)), LeaveRecType.getLeaveRecType(history
+					.getInt(history.getColumnIndex(LeaveTrackerDatabase.LEAVE_HISTORY.ADD_OR_USE))));
 			list.add(item);
 			history.moveToNext();
 		}

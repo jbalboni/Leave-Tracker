@@ -8,8 +8,10 @@ import org.joda.time.LocalDate;
 import android.test.AndroidTestCase;
 
 import com.jbalboni.vacation.LeaveCapType;
+import com.jbalboni.vacation.LeaveRecType;
 import com.jbalboni.vacation.VacationTracker;
 import com.jbalboni.vacation.LeaveItem;
+import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 public class VacationTrackerTest extends AndroidTestCase {
 	public VacationTrackerTest() {
@@ -60,7 +62,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 	public void testHoursUsed() {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
-		hoursUsed.add(new LeaveItem((new LocalDate()).minusDays(2), 17));
+		hoursUsed.add(new LeaveItem((new LocalDate()).minusDays(2), 17, LeaveRecType.USE));
 		float hoursPerYear = 120;
 		String leaveInterval = "Daily";
 		boolean accrualOn = true;
@@ -258,7 +260,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 	public void testCarryoverPostMonth() {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
-		hoursUsed.add(new LeaveItem(new LocalDate(2012, 1, 8), 8));
+		hoursUsed.add(new LeaveItem(new LocalDate(2012, 1, 8), 8, LeaveRecType.USE));
 		float hoursPerYear = 120;
 		String leaveInterval = "Monthly";
 		boolean accrualOn = true;
@@ -276,7 +278,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 	public void testFutureLeave() {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
-		hoursUsed.add(new LeaveItem((new LocalDate()).plusWeeks(3), 8));
+		hoursUsed.add(new LeaveItem((new LocalDate()).plusWeeks(3), 8, LeaveRecType.USE));
 		float hoursPerYear = 26;
 		String leaveInterval = "Bi-Weekly";
 		boolean accrualOn = true;
@@ -305,7 +307,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		LeaveCapType leaveCapType = LeaveCapType.NONE;
 
 		startDate = startDate.minusWeeks(2).plusDays(1);
-		hoursUsed.add(new LeaveItem(startDate.minusWeeks(3), 8));
+		hoursUsed.add(new LeaveItem(startDate.minusWeeks(3), 8, LeaveRecType.USE));
 
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
 				accrualOn, leaveCapType, leaveCap);
@@ -333,5 +335,26 @@ public class VacationTrackerTest extends AndroidTestCase {
 
 		tracker.setStartDate(startDate.minusDays(1));
 		assertEquals(hoursPerYear, tracker.calculateHours(new LocalDate()));
+	}
+
+	public void testAddedLeave() {
+		float initialHours = 0;
+		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+		hoursUsed.add(new LeaveItem((new LocalDate()).minusWeeks(1), 8, LeaveRecType.ADD));
+		float hoursPerYear = 12;
+		String leaveInterval = "Monthly";
+		boolean accrualOn = true;
+		LocalDate startDate = new LocalDate();
+		float leaveCap = 0;
+		LeaveCapType leaveCapType = LeaveCapType.NONE;
+
+		startDate = startDate.minusMonths(1).plusDays(1);
+
+		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
+				accrualOn, leaveCapType, leaveCap);
+		assertEquals(initialHours + 8, tracker.calculateHours(new LocalDate()));
+
+		tracker.setStartDate(startDate.minusDays(1));
+		assertEquals((hoursPerYear / 12.0f) + 8f, tracker.calculateHours(new LocalDate()));
 	}
 }
