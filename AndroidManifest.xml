@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:theme="@style/VacationTheme"
             android:name=".ui.SettingsActivity" >
         </activity>
         <activity
