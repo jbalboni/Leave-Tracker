@@ -9,7 +9,6 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveHistoryTable;
-import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;

@@ -11,7 +11,6 @@ import com.jbalboni.vacation.LeaveCapType;
 import com.jbalboni.vacation.LeaveRecType;
 import com.jbalboni.vacation.VacationTracker;
 import com.jbalboni.vacation.LeaveItem;
-import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 public class VacationTrackerTest extends AndroidTestCase {
 	public VacationTrackerTest() {
@@ -356,5 +355,42 @@ public class VacationTrackerTest extends AndroidTestCase {
 
 		tracker.setStartDate(startDate.minusDays(1));
 		assertEquals((hoursPerYear / 12.0f) + 8f, tracker.calculateHours(new LocalDate()));
+	}
+
+	public void testTwiceMonthly() {
+		float initialHours = 0;
+		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+		float hoursPerYear = 24;
+		String leaveInterval = "Twice Monthly";
+		boolean accrualOn = true;
+		LocalDate startDate = new LocalDate();
+		float leaveCap = 0;
+		LeaveCapType leaveCapType = LeaveCapType.NONE;
+
+		startDate = startDate.withDayOfMonth(1);
+
+		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
+				accrualOn, leaveCapType, leaveCap);
+		assertEquals(initialHours, tracker.calculateHours(startDate.withDayOfMonth(14)));
+
+		assertEquals(hoursPerYear / 24.0f, tracker.calculateHours(startDate.withDayOfMonth(15)));
+	}
+	
+	public void testCarryoverTwoYearAddedLeave() {
+		float initialHours = 0;
+		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+		hoursUsed.add(new LeaveItem((new LocalDate(2010, 1, 2)).plusWeeks(1), 8, LeaveRecType.ADD));
+		float hoursPerYear = 120;
+		String leaveInterval = "Monthly";
+		boolean accrualOn = true;
+		LocalDate startDate = new LocalDate(2010, 1, 2);
+		float leaveCap = 15;
+		LeaveCapType leaveCapType = LeaveCapType.CARRYOVER;
+
+		LocalDate endDate = new LocalDate(2012, 3, 2);
+
+		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
+				accrualOn, leaveCapType, leaveCap);
+		assertEquals(45f, tracker.calculateHours(endDate));
 	}
 }

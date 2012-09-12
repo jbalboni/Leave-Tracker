@@ -17,8 +17,6 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 2;
 	private SharedPreferences prefs;
 	private Context context;
-	public static String LEAVE_HISTORY_TABLE = "leave_history";
-	public static String LEAVE_CATEGORY_TABLE = "leave_categories";
 
 	// public static String ID = "_id";
 	// public static String TITLE = "title";
@@ -52,7 +50,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		categories.put(LeaveCategoryTable.ACCRUAL.toString(), prefs.getBoolean(LeaveCategory.LEFT.getPrefix() + "accrualOn", true));
 		categories.put(LeaveCategoryTable.CAP_TYPE.toString(), LeaveCapType.NONE.getVal());
 		categories.put(LeaveCategoryTable.CAP_VAL.toString(), 0);
-		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
+		db.insert(LeaveCategoryTable.getName(), null, categories);
 
 		// vacation
 		categories = new ContentValues();
@@ -66,7 +64,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 		categories.put(LeaveCategoryTable.ACCRUAL.toString(), prefs.getBoolean(LeaveCategory.CENTER.getPrefix() + "accrualOn", true));
 		categories.put(LeaveCategoryTable.CAP_TYPE.toString(), LeaveCapType.NONE.getVal());
 		categories.put(LeaveCategoryTable.CAP_VAL.toString(), 0);
-		db.insert(LEAVE_CATEGORY_TABLE, null, categories);
+		db.insert(LeaveCategoryTable.getName(), null, categories);
 
 		// comp time
 		categories = new ContentValues();
@@ -89,7 +87,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 			leaveValues.put(LeaveHistoryTable.NOTES.toString(), "Leave from Hours Used preference");
 			leaveValues.put(LeaveHistoryTable.NUMBER.toString(), getFloatPref(LeaveCategory.LEFT.getPrefix() + "hoursUsed", 0));
 			leaveValues.put(LeaveHistoryTable.DATE.toString(), (new LocalDate()).toString());
-			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
+			db.insert(LeaveHistoryTable.getName(), null, leaveValues);
 		}
 		if (getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed", 0) > 0) {
 			ContentValues leaveValues = new ContentValues();
@@ -97,7 +95,7 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 			leaveValues.put(LeaveHistoryTable.NOTES.toString(), "Leave from Hours Used preference");
 			leaveValues.put(LeaveHistoryTable.NUMBER.toString(), getFloatPref(LeaveCategory.CENTER.getPrefix() + "hoursUsed", 0));
 			leaveValues.put(LeaveHistoryTable.DATE.toString(), (new LocalDate()).toString());
-			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
+			db.insert(LeaveHistoryTable.getName(), null, leaveValues);
 		}
 		if (getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed", 0) > 0) {
 			ContentValues leaveValues = new ContentValues();
@@ -105,15 +103,21 @@ public class LeaveTrackerDatabase extends SQLiteOpenHelper {
 			leaveValues.put(LeaveHistoryTable.NOTES.toString(), "Leave from Hours Used preference");
 			leaveValues.put(LeaveHistoryTable.NUMBER.toString(), getFloatPref(LeaveCategory.RIGHT.getPrefix() + "hoursUsed", 0));
 			leaveValues.put(LeaveHistoryTable.DATE.toString(), (new LocalDate()).toString());
-			db.insert(LEAVE_HISTORY_TABLE, null, leaveValues);
+			db.insert(LeaveHistoryTable.getName(), null, leaveValues);
 		}
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		if (oldVersion == 1) {
-			db.execSQL("alter table leave_history add column add_or_use INTEGER");
-			db.execSQL("update leave_history set add_or_use = 0");
+		if (newVersion > oldVersion) {
+			if (oldVersion == 1) {
+				db.execSQL("alter table leave_history add column add_or_use INTEGER");
+				db.execSQL("update leave_history set add_or_use = 0");
+			} else {
+				db.execSQL("DROP TABLE IF EXISTS " + LeaveHistoryTable.getName());
+				db.execSQL("DROP TABLE IF EXISTS " + LeaveCategoryTable.getName());
+				onCreate(db);
+			}
 		}
 	}
 

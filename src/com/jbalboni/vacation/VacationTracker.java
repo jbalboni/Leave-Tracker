@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.LocalDate;
 
-import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 /*
  * Main logic class. Does the leave calculation based on used hours, accrued leave, and limit
@@ -92,7 +91,13 @@ public class VacationTracker {
 			return date.plusWeeks(2);
 		} else if (leaveInterval.equals("Daily")) {
 			return date.plusDays(1);
-		}
+		} else if (leaveInterval.equals("Twice Monthly")) {
+			if (date.getDayOfMonth() == 1) {
+				return date.withDayOfMonth(15);
+			} else {
+				return date.withDayOfMonth(1).plusMonths(1);
+			}
+		} 
 		return date;
 	}
 	
@@ -107,6 +112,8 @@ public class VacationTracker {
 			return hoursPerYear / (WEEKS_IN_YEAR / 2);
 		} else if (leaveInterval.equals("Daily")) {
 			return hoursPerYear / DAYS_IN_YEAR;
+		} else if (leaveInterval.equals("Twice Monthly")) {
+			return hoursPerYear / (MONTHS_IN_YEAR * 2);
 		}
 		return 0;
 	}

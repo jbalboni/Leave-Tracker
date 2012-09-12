@@ -4,7 +4,6 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveCategoryProvider;
 import com.jbalboni.vacation.data.LeaveCategoryTable;
-import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
 import android.content.Intent;
 import android.database.Cursor;

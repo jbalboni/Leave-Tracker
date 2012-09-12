@@ -43,7 +43,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		SQLiteDatabase db = leaveDB.getReadableDatabase();
-		int rows = db.delete(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE, selection, selectionArgs);
+		int rows = db.delete(LeaveHistoryTable.getName(), selection, selectionArgs);
 		return rows;
 	}
 
@@ -56,7 +56,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	@Override
 	public Uri insert(Uri uri, ContentValues values) {
 		SQLiteDatabase db = leaveDB.getReadableDatabase();
-		long newID = db.insert(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE, null, values);
+		long newID = db.insert(LeaveHistoryTable.getName(), null, values);
 		return uri.buildUpon().appendPath(Long.toString(newID)).build();
 	}
 
@@ -64,7 +64,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection,
 	        String[] selectionArgs, String sortOrder) {
 	    SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-	    queryBuilder.setTables(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE);
+	    queryBuilder.setTables(LeaveHistoryTable.getName());
 	 
 	    //Choosing between single leave item and list of items by category
 	    int uriType = sURIMatcher.match(uri);
@@ -90,7 +90,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	@Override
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		SQLiteDatabase db = leaveDB.getReadableDatabase();
-		int rows = db.update(LeaveTrackerDatabase.LEAVE_HISTORY_TABLE, values, selection, selectionArgs);
+		int rows = db.update(LeaveHistoryTable.getName(), values, selection, selectionArgs);
 		return rows;
 	}
 }
