@@ -26,9 +26,7 @@ public final class LeaveStateManager {
 
 	public static VacationTracker createVacationTracker(SharedPreferences prefs, ContentResolver resolver, int pos) {
 		String startDateStr = prefs.getString("startDate", null);
-		String leaveInterval = prefs.getString("leaveInterval", "Weekly");
-
-		leaveInterval = fixLeaveInterval(leaveInterval);
+		LeaveFrequency leaveInterval = LeaveFrequency.getLeaveFrequency(fixLeaveInterval(prefs.getString("leaveInterval", "Weekly")));
 
 		String[] projection = { LeaveCategoryTable.ID.toString(), LeaveCategoryTable.ACCRUAL.toString(),
 				LeaveCategoryTable.HOURS_PER_YEAR.toString(), LeaveCategoryTable.TITLE.toString(),
@@ -92,7 +90,7 @@ public final class LeaveStateManager {
 			String categoryPrefix) {
 		Editor prefsEditor = prefs.edit();
 
-		prefsEditor.putString("leaveInterval", vacationTracker.getLeaveInterval());
+		prefsEditor.putString("leaveInterval", vacationTracker.getLeaveInterval().toString());
 		prefsEditor.putString("startDate", String.format("%4d-%02d-%02d", vacationTracker.getStartDate().getYear(),
 				vacationTracker.getStartDate().getMonthOfYear(), vacationTracker.getStartDate().getDayOfMonth()));
 		prefsEditor.commit();

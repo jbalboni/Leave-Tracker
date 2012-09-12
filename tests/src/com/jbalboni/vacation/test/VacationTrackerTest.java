@@ -8,6 +8,7 @@ import org.joda.time.LocalDate;
 import android.test.AndroidTestCase;
 
 import com.jbalboni.vacation.LeaveCapType;
+import com.jbalboni.vacation.LeaveFrequency;
 import com.jbalboni.vacation.LeaveRecType;
 import com.jbalboni.vacation.VacationTracker;
 import com.jbalboni.vacation.LeaveItem;
@@ -20,7 +21,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 	public void testInitial() {
 		float initialHours = 6;
 		VacationTracker tracker = new VacationTracker(new LocalDate(), new ArrayList<LeaveItem>(), 80.0f, initialHours,
-				"Daily", true, LeaveCapType.NONE, 0);
+				LeaveFrequency.DAILY, true, LeaveCapType.NONE, 0);
 		assertEquals(tracker.calculateHours(new LocalDate()), initialHours);
 	}
 
@@ -28,7 +29,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 80;
-		String leaveInterval = "Daily";
+		LeaveFrequency leaveInterval = LeaveFrequency.DAILY;
 		boolean accrualOn = false;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -45,7 +46,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 120;
-		String leaveInterval = "Daily";
+		LeaveFrequency leaveInterval = LeaveFrequency.DAILY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -63,7 +64,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		hoursUsed.add(new LeaveItem((new LocalDate()).minusDays(2), 17, LeaveRecType.USE));
 		float hoursPerYear = 120;
-		String leaveInterval = "Daily";
+		LeaveFrequency leaveInterval = LeaveFrequency.DAILY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -81,7 +82,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 52;
-		String leaveInterval = "Weekly";
+		LeaveFrequency leaveInterval = LeaveFrequency.WEEKLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -101,7 +102,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 12;
-		String leaveInterval = "Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.MONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -121,7 +122,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 26;
-		String leaveInterval = "Bi-Weekly";
+		LeaveFrequency leaveInterval = LeaveFrequency.BIWEEKLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -141,7 +142,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 120;
-		String leaveInterval = "Daily";
+		LeaveFrequency leaveInterval = LeaveFrequency.DAILY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 100;
@@ -158,7 +159,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 60;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 120;
-		String leaveInterval = "Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.MONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2011, 12, 2);
 		float leaveCap = 40;
@@ -175,7 +176,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 120;
-		String leaveInterval = "Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.MONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2011, 11, 2);
 		float leaveCap = 5;
@@ -192,7 +193,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 365;
-		String leaveInterval = "Daily";
+		LeaveFrequency leaveInterval = LeaveFrequency.DAILY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2011, 12, 2);
 		float leaveCap = 5;
@@ -209,7 +210,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 52;
-		String leaveInterval = "Weekly";
+		LeaveFrequency leaveInterval = LeaveFrequency.WEEKLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2011, 12, 2);
 		float leaveCap = 4;
@@ -226,7 +227,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 52;
-		String leaveInterval = "Bi-Weekly";
+		LeaveFrequency leaveInterval = LeaveFrequency.BIWEEKLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2011, 11, 2);
 		float leaveCap = 2;
@@ -243,7 +244,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 120;
-		String leaveInterval = "Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.MONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2010, 1, 2);
 		float leaveCap = 15;
@@ -261,7 +262,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		hoursUsed.add(new LeaveItem(new LocalDate(2012, 1, 8), 8, LeaveRecType.USE));
 		float hoursPerYear = 120;
-		String leaveInterval = "Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.MONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2011, 1, 2);
 		float leaveCap = 15;
@@ -279,7 +280,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		hoursUsed.add(new LeaveItem((new LocalDate()).plusWeeks(3), 8, LeaveRecType.USE));
 		float hoursPerYear = 26;
-		String leaveInterval = "Bi-Weekly";
+		LeaveFrequency leaveInterval = LeaveFrequency.BIWEEKLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -299,7 +300,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 26;
-		String leaveInterval = "Bi-Weekly";
+		LeaveFrequency leaveInterval = LeaveFrequency.BIWEEKLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -320,7 +321,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 12;
-		String leaveInterval = "Yearly";
+		LeaveFrequency leaveInterval = LeaveFrequency.YEARLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -341,7 +342,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		hoursUsed.add(new LeaveItem((new LocalDate()).minusWeeks(1), 8, LeaveRecType.ADD));
 		float hoursPerYear = 12;
-		String leaveInterval = "Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.MONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -361,7 +362,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 24;
-		String leaveInterval = "Twice Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.TWICEMONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate();
 		float leaveCap = 0;
@@ -381,7 +382,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		hoursUsed.add(new LeaveItem((new LocalDate(2010, 1, 2)).plusWeeks(1), 8, LeaveRecType.ADD));
 		float hoursPerYear = 120;
-		String leaveInterval = "Monthly";
+		LeaveFrequency leaveInterval = LeaveFrequency.MONTHLY;
 		boolean accrualOn = true;
 		LocalDate startDate = new LocalDate(2010, 1, 2);
 		float leaveCap = 15;

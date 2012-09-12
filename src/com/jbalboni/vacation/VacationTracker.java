@@ -17,7 +17,7 @@ public class VacationTracker {
 	private List<LeaveItem> history;
 	private float hoursPerYear;
 	private float initialHours;
-	private String leaveInterval;
+	private LeaveFrequency leaveInterval;
 	private boolean accrualOn;
 	private LeaveCapType leaveCapType;
 	private float leaveCap;
@@ -26,7 +26,7 @@ public class VacationTracker {
 	}
 
 	public VacationTracker(LocalDate startDate, List<LeaveItem> history, float hoursPerYear, float initialHours,
-			String leaveInterval, boolean accrualOn, LeaveCapType leaveCapType, float leaveCap) {
+			LeaveFrequency leaveInterval, boolean accrualOn, LeaveCapType leaveCapType, float leaveCap) {
 		this.startDate = startDate;
 		this.history = history;
 		this.hoursPerYear = hoursPerYear;
@@ -81,41 +81,45 @@ public class VacationTracker {
 	}
 	
 	private LocalDate addInterval(LocalDate date) {
-		if (leaveInterval.equals("Yearly")) {
-			return date.plusYears(1);
-		} else if (leaveInterval.equals("Monthly")) {
-			return date.plusMonths(1);
-		} else if (leaveInterval.equals("Weekly")) {
-			return date.plusWeeks(1);
-		} else if (leaveInterval.equals("Bi-Weekly")) {
-			return date.plusWeeks(2);
-		} else if (leaveInterval.equals("Daily")) {
-			return date.plusDays(1);
-		} else if (leaveInterval.equals("Twice Monthly")) {
-			if (date.getDayOfMonth() == 1) {
-				return date.withDayOfMonth(15);
-			} else {
-				return date.withDayOfMonth(1).plusMonths(1);
-			}
-		} 
-		return date;
+		switch (leaveInterval) {
+			case YEARLY:
+				return date.plusYears(1);
+			case MONTHLY:
+				return date.plusMonths(1);
+			case WEEKLY:
+				return date.plusWeeks(1);
+			case BIWEEKLY:
+				return date.plusWeeks(2);
+			case DAILY:
+				return date.plusDays(1);
+			case TWICEMONTHLY:
+				if (date.getDayOfMonth() == 1) {
+					return date.withDayOfMonth(15);
+				} else {
+					return date.withDayOfMonth(1).plusMonths(1);
+				}
+			default:
+				return date.plusWeeks(1);
+		}
 	}
 	
 	private float getIntervalHours() {
-		if (leaveInterval.equals("Yearly")) {
-			return hoursPerYear;
-		} else if (leaveInterval.equals("Monthly")) {
-			return hoursPerYear / MONTHS_IN_YEAR;
-		} else if (leaveInterval.equals("Weekly")) {
-			return hoursPerYear / WEEKS_IN_YEAR;
-		} else if (leaveInterval.equals("Bi-Weekly")) {
-			return hoursPerYear / (WEEKS_IN_YEAR / 2);
-		} else if (leaveInterval.equals("Daily")) {
-			return hoursPerYear / DAYS_IN_YEAR;
-		} else if (leaveInterval.equals("Twice Monthly")) {
-			return hoursPerYear / (MONTHS_IN_YEAR * 2);
+		switch (leaveInterval) {
+			case YEARLY:
+				return hoursPerYear;
+			case MONTHLY:
+				return hoursPerYear / MONTHS_IN_YEAR;
+			case WEEKLY:
+				return hoursPerYear / WEEKS_IN_YEAR;
+			case BIWEEKLY:
+				return hoursPerYear / (WEEKS_IN_YEAR / 2);
+			case DAILY:
+				return hoursPerYear / DAYS_IN_YEAR;
+			case TWICEMONTHLY:
+				return hoursPerYear / (MONTHS_IN_YEAR * 2);
+			default:
+				return hoursPerYear / WEEKS_IN_YEAR;
 		}
-		return 0;
 	}
 
 	/*
@@ -199,16 +203,16 @@ public class VacationTracker {
 		this.initialHours = initialHours;
 	}
 
-	public boolean isAccrualOn() {
-		return accrualOn;
-	}
-
-	public String getLeaveInterval() {
+	public LeaveFrequency getLeaveInterval() {
 		return leaveInterval;
 	}
 
-	public void setLeaveInterval(String leaveInterval) {
+	public void setLeaveInterval(LeaveFrequency leaveInterval) {
 		this.leaveInterval = leaveInterval;
+	}
+	
+	public boolean isAccrualOn() {
+		return accrualOn;
 	}
 
 	@Override
