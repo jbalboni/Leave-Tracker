@@ -1,6 +1,7 @@
 package com.jbalboni.vacation.ui;
 
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveCategoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
@@ -16,8 +17,10 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+		
 		getSupportActionBar().setTitle(R.string.menu_settings);
-		this.setTheme(R.style.VacationTheme);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 		LeaveTrackerDatabase leaveDB = new LeaveTrackerDatabase(getApplicationContext());
 		SQLiteDatabase db = leaveDB.getReadableDatabase();
 		SQLiteQueryBuilder titlesQuery = new SQLiteQueryBuilder();
@@ -27,19 +30,27 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 				null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			Preference linkPref = new Preference(getApplicationContext());
-			linkPref.setKey(String.format("editCategory%d",cursor.getInt(1)));
-			linkPref.setTitle(String.format("Edit %s category",cursor.getString(0)));
+			Preference linkPref = getPreferenceScreen().findPreference(String.format("editCat%d",cursor.getInt(1)));
+			linkPref.setTitle(String.format("%s Settings",cursor.getString(0)));
 			Intent intent = new Intent();
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.setClass(this, LeaveCategoryEditActivity.class);
 			int catID = cursor.getInt(1);
 			intent.putExtra(getString(R.string.intent_catid), catID);
 			linkPref.setIntent(intent);
-			getPreferenceScreen().addPreference(linkPref);
 			cursor.moveToNext();
 		}
 		cursor.close();
 		db.close();
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			Intent intent = new Intent();
+			intent.setClass(this, LeaveTrackerActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+		}
+		return true;
 	}
 }

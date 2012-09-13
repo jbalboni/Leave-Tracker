@@ -16,5 +16,15 @@
 			android:defaultValue="Daily"
 			android:entries="@array/leave_intervals"
 			android:entryValues="@array/leave_intervals" />
+			
+	<Preference
+			android:key="editCat1"
+			android:title="" />
+	<Preference
+			android:key="editCat2"
+			android:title="" />
+	<Preference
+			android:key="editCat3"
+			android:title="" />
     
 </PreferenceScreen>
