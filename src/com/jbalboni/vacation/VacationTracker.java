@@ -2,6 +2,8 @@ package com.jbalboni.vacation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.joda.time.Days;
 import org.joda.time.LocalDate;
 
 
@@ -54,7 +56,7 @@ public class VacationTracker {
 				if (previousDate.getYear() < currentDate.getYear() && leaveCapType == LeaveCapType.CARRYOVER && vacationHours > leaveCap) {
 					vacationHours = leaveCap;
 				} 
-				vacationHours += hoursPerPeriod;
+				vacationHours = addHours(vacationHours, hoursPerPeriod, previousDate, currentDate);
 				SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, currentDate);
 				historyIndex = currentUsed.pos;
 				vacationHours -= currentUsed.sum;
@@ -79,6 +81,16 @@ public class VacationTracker {
 		else
 			return vacationHours;
 	}
+
+	private float addHours(float vacationHours, float hoursPerPeriod, LocalDate previousDate, LocalDate currentDate) {
+		if (leaveInterval == LeaveFrequency.TWICEMONTHLY && previousDate.getDayOfMonth() != 1 && previousDate.getDayOfMonth() != 15) {
+			Days interval = Days.daysBetween(previousDate, currentDate);
+			return vacationHours + (hoursPerPeriod * (interval.getDays() / 15f));
+		} else {
+			return vacationHours + hoursPerPeriod;
+		}
+		
+	}
 	
 	private LocalDate addInterval(LocalDate date) {
 		switch (leaveInterval) {
@@ -93,7 +105,7 @@ public class VacationTracker {
 			case DAILY:
 				return date.plusDays(1);
 			case TWICEMONTHLY:
-				if (date.getDayOfMonth() == 1) {
+				if (date.getDayOfMonth() < 15) {
 					return date.withDayOfMonth(15);
 				} else {
 					return date.withDayOfMonth(1).plusMonths(1);

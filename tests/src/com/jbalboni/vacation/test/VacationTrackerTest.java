@@ -377,6 +377,25 @@ public class VacationTrackerTest extends AndroidTestCase {
 		assertEquals(hoursPerYear / 24.0f, tracker.calculateHours(startDate.withDayOfMonth(15)));
 	}
 	
+	public void testTwiceMonthlyFrag() {
+		float initialHours = 0;
+		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
+		float hoursPerYear = 24;
+		LeaveFrequency leaveInterval = LeaveFrequency.TWICEMONTHLY;
+		boolean accrualOn = true;
+		LocalDate startDate = new LocalDate();
+		float leaveCap = 0;
+		LeaveCapType leaveCapType = LeaveCapType.NONE;
+
+		startDate = startDate.withDayOfMonth(8);
+
+		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
+				accrualOn, leaveCapType, leaveCap);
+		assertEquals(initialHours+.46666667f, tracker.calculateHours(startDate.withDayOfMonth(15)));
+
+		assertEquals(initialHours+.46666667f+(hoursPerYear / 24.0f), tracker.calculateHours(startDate.withDayOfMonth(1).plusMonths(1)));
+	}
+	
 	public void testCarryoverTwoYearAddedLeave() {
 		float initialHours = 0;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();

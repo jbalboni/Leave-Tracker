@@ -13,7 +13,7 @@
 	<string name="quick_use_date">Change As Of Date</string>
 	<string name="leave_category_position">pos</string>
 	<string name="leave_pref_title">CATEGORY TITLE</string>
-	<string name="leave_pref_accrual">LEAVE ACCRUAL</string>
+	<string name="leave_pref_accrual">ACCRUE LEAVE</string>
 	<string name="leave_pref_accrual_on">Leave accrues based on hours per year</string>
 	<string name="leave_pref_accrual_off">Leave does not accrue for this category</string>
 	<string name="leave_pref_used">USED</string>
