@@ -9,6 +9,7 @@ import com.jbalboni.vacation.LeaveCategory;
 import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.VacationTracker;
+import com.jbalboni.vacation.calendar.CalendarViewActivity;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveHistoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
@@ -95,6 +96,11 @@ public class LeaveFragment extends SherlockFragment {
 				useHoursDialog.setCategory(getArguments().getInt(getString(R.string.leave_category_position)));
 				useHoursDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
 				useHoursDialog.show(getFragmentManager(), "hours");
+				//Intent intent = new Intent(v.getContext(),CalendarViewActivity.class);
+
+				//LocalDate dp = new LocalDate();
+	    		//intent.putExtra("date", dp.getYear()+"-"+dp.getMonthOfYear()+"-"+dp.getDayOfMonth());
+	    		//startActivityForResult(intent, 1);	
 			}
 		});
 		return leaveFrag;
