@@ -113,9 +113,9 @@ public class LeaveHistoryFragment extends SherlockListFragment implements Loader
 					int addOrUse = cursor.getInt(cursor.getColumnIndex(LeaveHistoryTable.ADD_OR_USE.toString()));
 					float hours = cursor.getFloat(index);
 					if (addOrUse == 1) {
-						hoursView.setText(String.format("%.1f hours added", hours));
+						hoursView.setText(String.format("%.2f hours added", hours));
 					} else {
-						hoursView.setText(String.format("%.1f hours used", hours));
+						hoursView.setText(String.format("%.2f hours used", hours));
 					}
 					return true;
 				}
