@@ -42,7 +42,7 @@
           	
         <Button android:id="@+id/addHours"
   			style="@style/QuickUseButton"
-          	android:text="Add" />
+          	android:text="Use" />
 
 	</LinearLayout>
 </LinearLayout>
