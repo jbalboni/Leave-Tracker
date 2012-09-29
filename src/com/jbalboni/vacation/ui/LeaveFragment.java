@@ -1,10 +1,14 @@
 package com.jbalboni.vacation.ui;
 
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.jbalboni.vacation.LeaveCategory;
+import com.jbalboni.vacation.LeaveStateManager;
 import com.jbalboni.vacation.R;
+import com.jbalboni.vacation.VacationTracker;
 import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveHistoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
@@ -15,6 +19,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -25,10 +30,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LeaveFragment extends SherlockFragment {
-	//private VacationTracker vacationTracker;
+	private VacationTracker vacationTracker;
 	private LocalDate asOfDate = new LocalDate();
 	private LeaveCategory leaveCategory;
 
@@ -37,6 +43,9 @@ public class LeaveFragment extends SherlockFragment {
 	static final int DATE_DIALOG_ID = 0;
 	static final int HOURS_DIALOG_ID = 1;
 	static final String HOURS_IN_DAY = "8";
+	private static DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd, yyyy");
+
+	private SharedPreferences prefs;
 
 	public static LeaveFragment newInstance(int position) {
 		LeaveFragment f = new LeaveFragment();
@@ -53,24 +62,23 @@ public class LeaveFragment extends SherlockFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		//ContentResolver content = getActivity().getContentResolver();
+		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		ContentResolver content = getActivity().getContentResolver();
 		// leaveCategory = LeaveCategory.getCategoryByPosition(getArguments() !=
 		// null ? getArguments().getInt(
 		// getString(R.string.leave_category_position)) : null);
-		//vacationTracker = LeaveStateManager.createVacationTracker(prefs, content,
-		//		getArguments().getInt(getString(R.string.leave_category_position)));
+		vacationTracker = LeaveStateManager.createVacationTracker(prefs, content,
+				getArguments().getInt(getString(R.string.leave_category_position)));
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View leaveFrag = inflater.inflate(R.layout.leave_fragment, container, false);
 
-		//TextView hoursAvailable = (TextView) leaveFrag.findViewById(R.id.hoursAvailable);
-		//hoursAvailable.setText(String.format("%s %.2f", getString(R.string.hours_avail),
-		//		vacationTracker.calculateHours(asOfDate)));
+		TextView hoursAvailable = (TextView) leaveFrag.findViewById(R.id.hoursAvailable);
+		hoursAvailable.setText(String.format("%s %.2f", getString(R.string.hours_avail),
+				vacationTracker.calculateHours(asOfDate)));
 
-		updateFragment(leaveFrag);
 		asOfDatePicker = (Button) leaveFrag.findViewById(R.id.changeAsOfDate);
 		asOfDatePicker.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -95,7 +103,6 @@ public class LeaveFragment extends SherlockFragment {
 	public class UseHoursDialogFragment extends DialogFragment implements OnClickListener {
 
 		private int catID;
-
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -110,7 +117,7 @@ public class LeaveFragment extends SherlockFragment {
 
 			return view;
 		}
-
+		
 		public void setCategory(int catID) {
 			this.catID = catID;
 		}
@@ -123,8 +130,8 @@ public class LeaveFragment extends SherlockFragment {
 			} else if (clickedButton.getId() == R.id.addHours) {
 				ContentResolver content = getActivity().getContentResolver();
 				ContentValues values = new ContentValues();
-				values.put(LeaveHistoryTable.NUMBER.toString(), LeaveTrackerDatabase.getFloat(((EditText) getView()
-						.findViewById(R.id.hours)).getText().toString()));
+				values.put(LeaveHistoryTable.NUMBER.toString(), LeaveTrackerDatabase
+						.getFloat(((EditText) getView().findViewById(R.id.hours)).getText().toString()));
 				values.put(LeaveHistoryTable.NOTES.toString(), ((EditText) getView().findViewById(R.id.notes))
 						.getText().toString());
 				values.put(LeaveHistoryTable.DATE.toString(), (new LocalDate()).toString());
@@ -133,7 +140,7 @@ public class LeaveFragment extends SherlockFragment {
 					Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 				}
 				getDialog().dismiss();
-				updateFragment(null);
+				updateFragment();
 			}
 		}
 	}
@@ -150,7 +157,7 @@ public class LeaveFragment extends SherlockFragment {
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 			setAsOfDate(new LocalDate(year, monthOfYear + 1, dayOfMonth));
-			updateFragment(null);
+			updateDisplay();
 		}
 	};
 
@@ -158,6 +165,10 @@ public class LeaveFragment extends SherlockFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+	}
+
+	public void addHoursUsed(float hoursUsed) {
+		vacationTracker.addHoursUsed(hoursUsed);
 	}
 
 	public void setAsOfDate(LocalDate asOfDate) {
@@ -168,21 +179,26 @@ public class LeaveFragment extends SherlockFragment {
 	public void onResume() {
 		super.onResume();
 
-		updateFragment(null);
+		updateFragment();
 	}
 
-	public void updateFragment(View fragmentView) {
-		View viewToPass;
-		if (fragmentView == null) {
-			viewToPass = getView();
-		} else {
-			viewToPass = fragmentView;
-		}
-		LeaveTrackerUpdaterTask task = new LeaveTrackerUpdaterTask(viewToPass,
+	public void updateFragment() {
+		vacationTracker = LeaveStateManager.createVacationTracker(
 				PreferenceManager.getDefaultSharedPreferences(getActivity()), getActivity().getContentResolver(),
-				getArguments().getInt(getString(R.string.leave_category_position)), getActivity()
-						.getApplicationContext());
-		task.execute(asOfDate);
+				getArguments().getInt(getString(R.string.leave_category_position)));
+
+		updateDisplay();
+	}
+
+	public void updateDisplay() {
+		TextView hoursAvailable = (TextView) getView().findViewById(R.id.hoursAvailable);
+		hoursAvailable.setText(String.format("%.2f", vacationTracker.calculateHours(asOfDate)));
+		TextView asOfDateTextView = (TextView) getView().findViewById(R.id.asOfDateDesc);
+		if (asOfDate.compareTo(new LocalDate()) != 0) {
+			asOfDateTextView.setText(" " + fmt.print(asOfDate));
+		} else {
+			asOfDateTextView.setText(" " + getString(R.string.default_as_of_date));
+		}
 	}
 
 	public static Intent createIntent(Context context) {
