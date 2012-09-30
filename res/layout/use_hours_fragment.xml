@@ -4,7 +4,8 @@
     android:orientation="vertical"
     android:textColor="#ff000000"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    style="@style/DialogLayout">
 
 	<TextView
             android:id="@+id/hoursLabel"

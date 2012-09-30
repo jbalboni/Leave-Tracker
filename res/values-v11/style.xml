@@ -11,4 +11,6 @@
     <style name="NotesButton">
     	<item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
+    <style name="DialogLayout">
+    </style>
 </resources>

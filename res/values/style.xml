@@ -81,4 +81,8 @@
     </style>
     <style name="NotesButton">
     </style>
+    <style name="DialogLayout">
+    	<item name="android:background">@drawable/topborder</item>
+    	<item name="android:paddingTop">2dp</item>
+    </style>
 </resources>

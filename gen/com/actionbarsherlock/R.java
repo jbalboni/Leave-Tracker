@@ -1103,14 +1103,15 @@ containing a value of this type.
         public static final int ic_menu_list=0x7f02005b;
         public static final int ic_menu_save=0x7f02005c;
         public static final int ic_menu_settings=0x7f02005d;
-        public static final int underline=0x7f02005e;
-        public static final int vpi__tab_indicator=0x7f02005f;
-        public static final int vpi__tab_selected_focused_holo=0x7f020060;
-        public static final int vpi__tab_selected_holo=0x7f020061;
-        public static final int vpi__tab_selected_pressed_holo=0x7f020062;
-        public static final int vpi__tab_unselected_focused_holo=0x7f020063;
-        public static final int vpi__tab_unselected_holo=0x7f020064;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020065;
+        public static final int topborder=0x7f02005e;
+        public static final int underline=0x7f02005f;
+        public static final int vpi__tab_indicator=0x7f020060;
+        public static final int vpi__tab_selected_focused_holo=0x7f020061;
+        public static final int vpi__tab_selected_holo=0x7f020062;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020063;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020064;
+        public static final int vpi__tab_unselected_holo=0x7f020065;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020066;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050025;
@@ -1338,6 +1339,7 @@ containing a value of this type.
     }
     public static final class style {
         public static final int ButtonLayout=0x7f0a0063;
+        public static final int DialogLayout=0x7f0a006b;
         public static final int DialogWindowTitle_Sherlock=0x7f0a0036;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0a0037;
         public static final int EditDialog=0x7f0a0069;
