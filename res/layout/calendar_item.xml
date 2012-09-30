@@ -13,7 +13,7 @@
 
 		    android:textSize="14sp"
 		    android:textStyle="bold"
-		    android:paddingBottom="16dp"
+		    android:paddingBottom="24dp"
 		    android:paddingRight="8dp"
 		    >
 </TextView>
