@@ -92,15 +92,15 @@ public class LeaveFragment extends SherlockFragment {
 		useHoursPicker = (Button) leaveFrag.findViewById(R.id.useHours);
 		useHoursPicker.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				UseHoursDialogFragment useHoursDialog = new UseHoursDialogFragment();
-				useHoursDialog.setCategory(getArguments().getInt(getString(R.string.leave_category_position)));
-				useHoursDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
-				useHoursDialog.show(getFragmentManager(), "hours");
-				//Intent intent = new Intent(v.getContext(),CalendarViewActivity.class);
+//				UseHoursDialogFragment useHoursDialog = new UseHoursDialogFragment();
+//				useHoursDialog.setCategory(getArguments().getInt(getString(R.string.leave_category_position)));
+//				useHoursDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
+//				useHoursDialog.show(getFragmentManager(), "hours");
+				Intent intent = new Intent(v.getContext(),CalendarViewActivity.class);
 
-				//LocalDate dp = new LocalDate();
-	    		//intent.putExtra("date", dp.getYear()+"-"+dp.getMonthOfYear()+"-"+dp.getDayOfMonth());
-	    		//startActivityForResult(intent, 1);	
+				LocalDate dp = new LocalDate();
+	    		intent.putExtra("date", dp.getYear()+"-"+dp.getMonthOfYear()+"-"+dp.getDayOfMonth());
+	    		startActivityForResult(intent, 1);	
 			}
 		});
 		return leaveFrag;
