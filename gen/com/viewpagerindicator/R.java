@@ -1297,6 +1297,7 @@ containing a value of this type.
         public static final int intent_catid=0x7f0b0039;
         public static final int intent_catname=0x7f0b003a;
         public static final int intent_itemid=0x7f0b003b;
+        public static final int invalid_date=0x7f0b0044;
         public static final int leave_category_position=0x7f0b0014;
         public static final int leave_interval=0x7f0b0020;
         public static final int leave_pref_accrual=0x7f0b0016;

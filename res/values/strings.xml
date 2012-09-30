@@ -59,4 +59,5 @@
 	<string name="notes">Notes</string>
 	<string name="new_user_pref">newUser</string>
 	<string name="new_user_title">Initial Setup</string>
+	<string name="invalid_date">Invalid Date</string>
 </resources>

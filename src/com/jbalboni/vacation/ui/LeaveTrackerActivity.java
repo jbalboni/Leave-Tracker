@@ -1,5 +1,6 @@
 package com.jbalboni.vacation.ui;
 
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -126,10 +127,19 @@ public class LeaveTrackerActivity extends SherlockFragmentActivity {
 			prefsEditor.putString("leaveInterval", intervals.getString(((Spinner) getView().findViewById(
 					R.id.leaveInterval)).getSelectedItemPosition()));
 			DatePicker dateView = (DatePicker) getView().findViewById(R.id.datePicker);
-			prefsEditor.putString(
-					"startDate",
-					String.format("%4d-%02d-%02d", dateView.getYear(), dateView.getMonth() + 1,
-							dateView.getDayOfMonth()));
+			String dateStr = "";
+			try {
+				LocalDate test = new LocalDate(dateView.getYear(), dateView.getMonth() + 1,
+						dateView.getDayOfMonth());
+				dateStr = String.format("%4d-%02d-%02d", dateView.getYear(), dateView.getMonth() + 1,
+						dateView.getDayOfMonth());
+			} catch (IllegalFieldValueException e) {
+				Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+				LocalDate current = new LocalDate();
+				dateStr = String.format("%4d-%02d-%02d", current.getYear(), current.getMonthOfYear(),
+						current.getDayOfMonth());
+			}
+			prefsEditor.putString("startDate", dateStr);
 			prefsEditor.putBoolean(getString(R.string.new_user_pref), false);
 			prefsEditor.commit();
 			Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();

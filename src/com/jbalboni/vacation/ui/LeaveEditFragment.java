@@ -1,5 +1,6 @@
 package com.jbalboni.vacation.ui;
 
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -114,38 +115,42 @@ public class LeaveEditFragment extends SherlockFragment implements LoaderManager
 	}
 
 	public void saveLeaveItem() {
-		ContentValues leaveItemValues = new ContentValues();
-
-		EditText editNotes = (EditText) getView().findViewById(R.id.notes);
-		leaveItemValues.put(LeaveHistoryTable.NOTES.toString(), editNotes.getText().toString());
-
-		EditText editHours = (EditText) getView().findViewById(R.id.hours);
-		leaveItemValues.put(LeaveHistoryTable.NUMBER.toString(), editHours.getText().toString());
-		
-		leaveItemValues.put(LeaveHistoryTable.ADD_OR_USE.toString(), addOrUse);
-
-		DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
-		leaveItemValues.put(LeaveHistoryTable.DATE.toString(),
-				new LocalDate(editDate.getYear(), editDate.getMonth() + 1, editDate.getDayOfMonth()).toString());
-
-		leaveItemValues.put(LeaveHistoryTable.CATEGORY.toString(),
-				getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
-
-		if (itemID == 0) {
-			getActivity().getContentResolver().insert(LeaveHistoryProvider.CONTENT_URI, leaveItemValues);
-			Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
-		} else {
-			String[] idArgs = { Integer.toString(itemID) };
-			int updatedRows = getActivity().getContentResolver().update(LeaveHistoryProvider.CONTENT_URI,
-					leaveItemValues, LeaveHistoryTable.ID + "=?", idArgs);
-			if (updatedRows > 0) {
-				Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
+		try {
+			ContentValues leaveItemValues = new ContentValues();
+	
+			EditText editNotes = (EditText) getView().findViewById(R.id.notes);
+			leaveItemValues.put(LeaveHistoryTable.NOTES.toString(), editNotes.getText().toString());
+	
+			EditText editHours = (EditText) getView().findViewById(R.id.hours);
+			leaveItemValues.put(LeaveHistoryTable.NUMBER.toString(), editHours.getText().toString());
+			
+			leaveItemValues.put(LeaveHistoryTable.ADD_OR_USE.toString(), addOrUse);
+	
+			DatePicker editDate = (DatePicker) getView().findViewById(R.id.datePicker);
+			leaveItemValues.put(LeaveHistoryTable.DATE.toString(),
+					new LocalDate(editDate.getYear(), editDate.getMonth() + 1, editDate.getDayOfMonth()).toString());
+	
+			leaveItemValues.put(LeaveHistoryTable.CATEGORY.toString(),
+					getActivity().getIntent().getIntExtra(getString(R.string.intent_catid), 0));
+	
+			if (itemID == 0) {
+				getActivity().getContentResolver().insert(LeaveHistoryProvider.CONTENT_URI, leaveItemValues);
+				Toast.makeText(getActivity(), R.string.added_msg, Toast.LENGTH_LONG).show();
 			} else {
-				Toast.makeText(getActivity(), R.string.error_msg, Toast.LENGTH_LONG).show();
+				String[] idArgs = { Integer.toString(itemID) };
+				int updatedRows = getActivity().getContentResolver().update(LeaveHistoryProvider.CONTENT_URI,
+						leaveItemValues, LeaveHistoryTable.ID + "=?", idArgs);
+				if (updatedRows > 0) {
+					Toast.makeText(getActivity(), R.string.saved_msg, Toast.LENGTH_LONG).show();
+				} else {
+					Toast.makeText(getActivity(), R.string.error_msg, Toast.LENGTH_LONG).show();
+				}
+	
 			}
-
-		}
-		getActivity().finish();
+			getActivity().finish();
+		} catch (IllegalFieldValueException e) {
+			Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+		} 
 	}
 
 	public void deleteLeaveItem() {

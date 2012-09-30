@@ -1,5 +1,6 @@
 package com.jbalboni.vacation.ui;
 
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -156,7 +157,11 @@ public class LeaveFragment extends SherlockFragment {
 
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-			setAsOfDate(new LocalDate(year, monthOfYear + 1, dayOfMonth));
+			try {
+				setAsOfDate(new LocalDate(year, monthOfYear + 1, dayOfMonth));
+			} catch (IllegalFieldValueException e) {
+				Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+			}
 			updateDisplay();
 		}
 	};

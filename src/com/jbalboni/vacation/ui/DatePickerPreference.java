@@ -1,24 +1,35 @@
 package com.jbalboni.vacation.ui;
 
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 
+import com.jbalboni.vacation.R;
+
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.Toast;
 import android.widget.DatePicker.OnDateChangedListener;
 
 public class DatePickerPreference extends DialogPreference implements OnDateChangedListener, OnDateSetListener {
 
+	@SuppressLint("NewApi")
 	@Override
 	protected View onCreateDialogView() {
 		DatePicker picker = new DatePicker(getContext());
 		strDate = getPersistedString(null);
-		LocalDate startDate = strDate == null ? new LocalDate() : fmt.parseLocalDate(strDate);
+		LocalDate startDate;
+		try {
+			startDate = strDate == null ? new LocalDate() : fmt.parseLocalDate(strDate);
+		} catch (IllegalFieldValueException e) {
+			startDate = new LocalDate();
+		}
 
 		if (android.os.Build.VERSION.SDK_INT >= 11) {
 			picker.setCalendarViewShown(false);
@@ -46,7 +57,12 @@ public class DatePickerPreference extends DialogPreference implements OnDateChan
 
 		if (positiveResult) {
 			if (isPersistent()) {
-				persistString(strDate);
+				try {
+					LocalDate startDate = fmt.parseLocalDate(strDate);
+					persistString(strDate);
+				} catch (IllegalFieldValueException e) {
+					Toast.makeText(getContext(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+				} 
 			}
 			callChangeListener(strDate);
 		}

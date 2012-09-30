@@ -3,6 +3,7 @@ package com.jbalboni.vacation;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.joda.time.IllegalFieldValueException;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -36,7 +37,13 @@ public final class LeaveStateManager {
 		Cursor category = resolver.query(itemUri.build(), projection, null, null, null);
 		category.moveToFirst();
 
-		LocalDate startDate = startDateStr == null ? new LocalDate() : fmt.parseLocalDate(startDateStr);
+		LocalDate startDate;
+		try {
+			startDate = startDateStr == null ? new LocalDate() : fmt.parseLocalDate(startDateStr);
+		} catch (IllegalFieldValueException e) {
+			//Toast.makeText(getActivity(), R.string.invalid_date, Toast.LENGTH_SHORT).show();
+			startDate = new LocalDate();
+		}
 		float hoursPerYear = category.getFloat(category
 				.getColumnIndex(LeaveCategoryTable.HOURS_PER_YEAR.toString()));
 		float initialHours = category.getFloat(category
