@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/edit_name" 
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:textColor="#ff000000"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:padding="15dp">
 
-	<EditText
-            android:id="@+id/hours"
+	<TextView
+            android:id="@+id/calDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:inputType="numberDecimal" />
+            android:gravity="center_vertical" />
 
-  		<ImageButton android:id="@+id/calButton"
-  			android:src="@drawable/ic_action_calendar"/>
+  		<ImageView android:id="@+id/calButton"
+  			android:src="@drawable/ic_action_calendar"
+  			style="@style/NotesButton"/>
 </LinearLayout>

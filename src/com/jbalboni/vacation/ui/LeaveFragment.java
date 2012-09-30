@@ -92,15 +92,11 @@ public class LeaveFragment extends SherlockFragment {
 		useHoursPicker = (Button) leaveFrag.findViewById(R.id.useHours);
 		useHoursPicker.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-//				UseHoursDialogFragment useHoursDialog = new UseHoursDialogFragment();
-//				useHoursDialog.setCategory(getArguments().getInt(getString(R.string.leave_category_position)));
-//				useHoursDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
-//				useHoursDialog.show(getFragmentManager(), "hours");
-				Intent intent = new Intent(v.getContext(),CalendarViewActivity.class);
-
-				LocalDate dp = new LocalDate();
-	    		intent.putExtra("date", dp.getYear()+"-"+dp.getMonthOfYear()+"-"+dp.getDayOfMonth());
-	    		startActivityForResult(intent, 1);	
+				UseHoursDialogFragment useHoursDialog = new UseHoursDialogFragment();
+				useHoursDialog.setCategory(getArguments().getInt(getString(R.string.leave_category_position)));
+				useHoursDialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.VacationDialog);
+				useHoursDialog.show(getFragmentManager(), "hours");
+					
 			}
 		});
 		return leaveFrag;
@@ -151,12 +147,29 @@ public class LeaveFragment extends SherlockFragment {
 		}
 	}
 
-	public class DatePickerDialogFragment extends DialogFragment {
+	public class DatePickerDialogFragment extends DialogFragment implements OnClickListener {
 
 		@Override
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			return new DatePickerDialog(getActivity(), mDateSetListener, asOfDate.getYear(),
-					asOfDate.getMonthOfYear() - 1, asOfDate.getDayOfMonth());
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+			getDialog().setTitle(getString(R.string.quick_use_date));
+
+			View view = inflater.inflate(R.layout.date_picker_fragment, container);
+			view.findViewById(R.id.calButton).setOnClickListener(this);
+			TextView dateView = (TextView) view.findViewById(R.id.calDate);
+			dateView.setText((new LocalDate()).toString(fmt));
+
+			return view;
+		}
+
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(v.getContext(),CalendarViewActivity.class);
+
+			LocalDate dp = new LocalDate();
+    		intent.putExtra("date", dp.getYear()+"-"+dp.getMonthOfYear()+"-"+dp.getDayOfMonth());
+    		startActivityForResult(intent, 1);
+			
 		}
 	}
 
