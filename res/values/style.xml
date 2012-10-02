@@ -42,6 +42,17 @@
   		<item name="android:layout_weight">1</item>
   		<item name="android:layout_alignParentBottom">true</item>
     </style>
+    <style name="DialogButtonLayout">
+    	<item name="android:layout_width">fill_parent</item>
+  		<item name="android:orientation">horizontal</item>
+  		<item name="android:weightSum">2.0</item> 
+  		<item name="android:paddingTop">1px</item>
+  		<item name="android:layout_height">wrap_content</item>
+  		<item name="android:layout_weight">1</item>
+  		<item name="android:layout_alignParentBottom">true</item>
+  		<item name="android:layout_marginTop">5dp</item>
+  		<item name="android:background">@drawable/topbuttonborder</item>
+    </style>
     <style name="QuickUseButton">
     	<item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>
@@ -84,5 +95,15 @@
     <style name="DialogLayout">
     	<item name="android:background">@drawable/topborder</item>
     	<item name="android:paddingTop">2dp</item>
+    </style>
+    <style name="DialogButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
+    	<item name="android:layout_height">wrap_content</item>
+    	<item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+    <style name="DialogButtonDivider">
+    	<item name="android:layout_height">fill_parent</item>
+    	<item name="android:layout_width">1px</item>
+        <item name="android:background">#dddddd</item>
     </style>
 </resources>

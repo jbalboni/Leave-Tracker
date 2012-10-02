@@ -1104,14 +1104,15 @@ containing a value of this type.
         public static final int ic_menu_save=0x7f02005c;
         public static final int ic_menu_settings=0x7f02005d;
         public static final int topborder=0x7f02005e;
-        public static final int underline=0x7f02005f;
-        public static final int vpi__tab_indicator=0x7f020060;
-        public static final int vpi__tab_selected_focused_holo=0x7f020061;
-        public static final int vpi__tab_selected_holo=0x7f020062;
-        public static final int vpi__tab_selected_pressed_holo=0x7f020063;
-        public static final int vpi__tab_unselected_focused_holo=0x7f020064;
-        public static final int vpi__tab_unselected_holo=0x7f020065;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020066;
+        public static final int topbuttonborder=0x7f02005f;
+        public static final int underline=0x7f020060;
+        public static final int vpi__tab_indicator=0x7f020061;
+        public static final int vpi__tab_selected_focused_holo=0x7f020062;
+        public static final int vpi__tab_selected_holo=0x7f020063;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020064;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020065;
+        public static final int vpi__tab_unselected_holo=0x7f020066;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020067;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050025;
@@ -1146,9 +1147,9 @@ containing a value of this type.
         public static final int accrual=0x7f050031;
         public static final int accrualLabel=0x7f050030;
         public static final int accrualLayout=0x7f05002f;
-        public static final int addHours=0x7f050054;
+        public static final int addHours=0x7f050056;
         public static final int asOfDateDesc=0x7f050045;
-        public static final int cancel=0x7f050053;
+        public static final int cancel=0x7f050054;
         public static final int categoryTitle=0x7f05002e;
         public static final int categoryTitleLabel=0x7f05002d;
         public static final int changeAsOfDate=0x7f050047;
@@ -1157,6 +1158,8 @@ containing a value of this type.
         public static final int dateLabel=0x7f05003c;
         public static final int datePicker=0x7f05003d;
         public static final int disableHome=0x7f05000c;
+        public static final int divider=0x7f050055;
+        public static final int edit_inner=0x7f050053;
         public static final int edit_name=0x7f050051;
         public static final int homeAsUp=0x7f050009;
         public static final int hours=0x7f05003f;
@@ -1339,20 +1342,23 @@ containing a value of this type.
     }
     public static final class style {
         public static final int ButtonLayout=0x7f0a0063;
-        public static final int DialogLayout=0x7f0a006b;
+        public static final int DialogButton=0x7f0a006d;
+        public static final int DialogButtonDivider=0x7f0a006e;
+        public static final int DialogButtonLayout=0x7f0a0064;
+        public static final int DialogLayout=0x7f0a006c;
         public static final int DialogWindowTitle_Sherlock=0x7f0a0036;
         public static final int DialogWindowTitle_Sherlock_Light=0x7f0a0037;
-        public static final int EditDialog=0x7f0a0069;
-        public static final int EditLabel=0x7f0a0067;
-        public static final int EditLabelText=0x7f0a0068;
+        public static final int EditDialog=0x7f0a006a;
+        public static final int EditLabel=0x7f0a0068;
+        public static final int EditLabelText=0x7f0a0069;
         public static final int LeaveHistoryLayout=0x7f0a0062;
         public static final int LeaveViewText=0x7f0a005d;
         public static final int LeaveViewText_Content=0x7f0a0060;
         public static final int LeaveViewText_Content_Land=0x7f0a0061;
         public static final int LeaveViewText_Top=0x7f0a005e;
         public static final int LeaveViewText_Top_Land=0x7f0a005f;
-        public static final int NotesButton=0x7f0a006a;
-        public static final int QuickUseButton=0x7f0a0064;
+        public static final int NotesButton=0x7f0a006b;
+        public static final int QuickUseButton=0x7f0a0065;
         public static final int Sherlock___TextAppearance_Small=0x7f0a004a;
         public static final int Sherlock___Theme=0x7f0a004d;
         public static final int Sherlock___Theme_DarkActionBar=0x7f0a004f;
@@ -1398,8 +1404,8 @@ containing a value of this type.
         public static final int Theme_Sherlock_NoActionBar=0x7f0a0054;
         public static final int VacationDialog=0x7f0a005c;
         public static final int VacationTheme=0x7f0a005b;
-        public static final int ViewPager=0x7f0a0065;
-        public static final int ViewPagerIndicator=0x7f0a0066;
+        public static final int ViewPager=0x7f0a0066;
+        public static final int ViewPagerIndicator=0x7f0a0067;
         public static final int Widget=0x7f0a0001;
         public static final int Widget_Sherlock_ActionBar=0x7f0a0005;
         public static final int Widget_Sherlock_ActionBar_Solid=0x7f0a0006;

@@ -2,11 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/edit_name" 
     android:orientation="vertical"
-    android:textColor="#ff000000"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     style="@style/DialogLayout">
 
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:id="@+id/edit_inner" 
+    	android:orientation="vertical"
+    	android:textColor="#ff000000"
+    	android:paddingLeft="10dp"
+    	android:paddingRight="10dp"
+    	android:layout_width="fill_parent">
 	<TextView
             android:id="@+id/hoursLabel"
             android:layout_height="wrap_content"
@@ -31,19 +35,19 @@
             style="@style/EditDialog"
             android:layout_height="wrap_content"
             android:inputType="textMultiLine" />
+     </LinearLayout>
         <LinearLayout
-  			style="@style/ButtonLayout"
+  			style="@style/DialogButtonLayout"
   			android:orientation="horizontal"
   			android:layout_width="fill_parent" 
   			android:layout_height="wrap_content">
-
   		<Button android:id="@+id/cancel"
-  			style="@style/QuickUseButton"
+  			style="@style/DialogButton"
           	android:text="Cancel" />
-          	
+        <View android:id="@+id/divider"
+        	style="@style/DialogButtonDivider" />
         <Button android:id="@+id/addHours"
-  			style="@style/QuickUseButton"
+  			style="@style/DialogButton"
           	android:text="Use" />
-
 	</LinearLayout>
 </LinearLayout>

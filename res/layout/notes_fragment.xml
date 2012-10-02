@@ -12,15 +12,13 @@
             android:layout_width="250sp"
             android:padding="10px" />
 
-        <LinearLayout
-  			style="@style/ButtonLayout"
+		<LinearLayout
+  			style="@style/DialogButtonLayout"
   			android:orientation="horizontal"
   			android:layout_width="fill_parent" 
   			android:layout_height="wrap_content">
-
   		<Button android:id="@+id/close"
-  			style="@style/QuickUseButton"
+  			style="@style/DialogButton"
           	android:text="Close" />
-
-	</LinearLayout>
+		</LinearLayout>
 </LinearLayout>
