@@ -13,4 +13,9 @@
     </style>
     <style name="DialogLayout">
     </style>
+    <style name="DialogButton" parent="@android:style/Widget.Holo.Light.Button.Borderless.Small">
+    	<item name="android:layout_height">wrap_content</item>
+    	<item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 </resources>
