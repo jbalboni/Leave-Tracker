@@ -1007,6 +1007,7 @@ containing a value of this type.
         public static final int default_title_indicator_text_size=0x7f09000a;
         public static final int default_title_indicator_title_padding=0x7f09000b;
         public static final int default_title_indicator_top_padding=0x7f09000c;
+        public static final int widget_margin=0x7f090019;
     }
     public static final class drawable {
         public static final int abs__ab_bottom_solid_dark_holo=0x7f020000;
@@ -1150,6 +1151,7 @@ containing a value of this type.
         public static final int addHours=0x7f050056;
         public static final int asOfDateDesc=0x7f050045;
         public static final int cancel=0x7f050054;
+        public static final int categoryLabel=0x7f050057;
         public static final int categoryTitle=0x7f05002e;
         public static final int categoryTitleLabel=0x7f05002d;
         public static final int changeAsOfDate=0x7f050047;
@@ -1248,6 +1250,7 @@ containing a value of this type.
         public static final int sherlock_spinner_dropdown_item=0x7f030022;
         public static final int sherlock_spinner_item=0x7f030023;
         public static final int use_hours_fragment=0x7f030024;
+        public static final int widget=0x7f030025;
     }
     public static final class string {
         public static final int ItemLabelDate=0x7f0b0029;
@@ -1455,6 +1458,7 @@ containing a value of this type.
     }
     public static final class xml {
         public static final int preferences=0x7f040000;
+        public static final int widget=0x7f040001;
     }
     public static final class styleable {
         /** Attributes that can be used with a CirclePageIndicator.
