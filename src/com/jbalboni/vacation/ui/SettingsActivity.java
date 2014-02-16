@@ -6,14 +6,17 @@ import com.jbalboni.vacation.R;
 import com.jbalboni.vacation.data.LeaveCategoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
+import android.app.backup.BackupManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 
-public class SettingsActivity extends SherlockPreferenceActivity {
+public class SettingsActivity extends SherlockPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
@@ -42,6 +45,8 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 		}
 		cursor.close();
 		db.close();
+		
+		PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -53,4 +58,10 @@ public class SettingsActivity extends SherlockPreferenceActivity {
 		}
 		return true;
 	}
+	@Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+            String key) {
+		(new BackupManager(this)).dataChanged();
+
+    }
 }

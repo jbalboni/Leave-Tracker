@@ -5,6 +5,7 @@
  */
 package com.jbalboni.vacation.data;
 
+import android.app.backup.BackupManager;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -16,6 +17,7 @@ import android.net.Uri;
 
 public class LeaveHistoryProvider extends ContentProvider {
 	private LeaveTrackerDatabase leaveDB;
+	private BackupManager backupManager;
 	private static final String AUTHORITY = "com.jbalboni.vacation.data.LeaveHistoryProvider";
 	public static final int LEAVE_HISTORY = 100;
 	public static final int LEAVE_HISTORY_ID = 110;
@@ -37,6 +39,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		leaveDB = new LeaveTrackerDatabase(getContext());
+		backupManager = new BackupManager(getContext());
 		return true;
 	}
 
@@ -44,6 +47,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		SQLiteDatabase db = leaveDB.getReadableDatabase();
 		int rows = db.delete(LeaveHistoryTable.getName(), selection, selectionArgs);
+		backupManager.dataChanged();
 		return rows;
 	}
 
@@ -57,6 +61,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		SQLiteDatabase db = leaveDB.getReadableDatabase();
 		long newID = db.insert(LeaveHistoryTable.getName(), null, values);
+		backupManager.dataChanged();
 		return uri.buildUpon().appendPath(Long.toString(newID)).build();
 	}
 
@@ -91,6 +96,7 @@ public class LeaveHistoryProvider extends ContentProvider {
 	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		SQLiteDatabase db = leaveDB.getReadableDatabase();
 		int rows = db.update(LeaveHistoryTable.getName(), values, selection, selectionArgs);
+		backupManager.dataChanged();
 		return rows;
 	}
 }
