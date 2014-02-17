@@ -14,6 +14,7 @@ import com.jbalboni.vacation.data.LeaveHistoryProvider;
 import com.jbalboni.vacation.data.LeaveHistoryTable;
 import com.jbalboni.vacation.data.LeaveTrackerDatabase;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -34,6 +35,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//yep, this is pretty bad
+@SuppressLint("ValidFragment")
 public class LeaveFragment extends SherlockFragment {
 	private VacationTracker vacationTracker;
 	private LocalDate asOfDate = new LocalDate();
