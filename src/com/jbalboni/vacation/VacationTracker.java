@@ -67,9 +67,7 @@ public class VacationTracker {
 			if (previousDate.getYear() < asOfDate.getYear() && leaveCapType == LeaveCapType.CARRYOVER && vacationHours > leaveCap) {
 				vacationHours = leaveCap;
 			} 
-		} else {
-			vacationHours += hoursPerYear;
-		}
+		} 
 		
 		//this will catch the used leave on the as of date
 		SumAndPos currentUsed = sumLeave(trimmedHist, historyIndex, asOfDate);
