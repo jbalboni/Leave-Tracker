@@ -26,7 +26,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 	}
 
 	public void testAccrualOff() {
-		float initialHours = 0;
+		float initialHours = 60;
 		List<LeaveItem> hoursUsed = new ArrayList<LeaveItem>();
 		float hoursPerYear = 80;
 		LeaveFrequency leaveInterval = LeaveFrequency.DAILY;
@@ -39,7 +39,7 @@ public class VacationTrackerTest extends AndroidTestCase {
 
 		VacationTracker tracker = new VacationTracker(startDate, hoursUsed, hoursPerYear, initialHours, leaveInterval,
 				accrualOn, leaveCapType, leaveCap);
-		assertEquals(tracker.calculateHours(new LocalDate()), hoursPerYear);
+		assertEquals(tracker.calculateHours(new LocalDate()), initialHours);
 	}
 
 	public void testAccrualOn() {
